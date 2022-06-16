@@ -29,3 +29,10 @@ Use [Aspera training downloader](aspera_training_downloader.ipynb) to download t
 The downloader works in 2 steps:
 1) This downloader first determines which wells from which plates have labels (from training data sent by Heriche) and saves these plates/wells to `training_locations.tsv`.
 2) Next, the downloader uses these locations to run an Aspera download command and save the [CellH5](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3673213/) file corresponding to each training location.
+
+### Step 2a: Execute Download
+
+```bash
+# Run this script to download training movies
+bash 0.download_training_movies.sh
+```
