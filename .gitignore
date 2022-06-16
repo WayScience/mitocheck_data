@@ -2,3 +2,5 @@
 .ipynb_checkpoints
 # Python files
 __pycache__/
+#downloaded CH5 files from IDR
+0.download_data/labeled_movies_ch5/*
