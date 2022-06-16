@@ -27,7 +27,7 @@ In order to run ascp without a password do the following:
 
 Use [Aspera training downloader](aspera_training_downloader.ipynb) to download the raw data that has been manually annotated by Mitocheck as described in the [original paper](https://www.nature.com/articles/nature08869#Sec2).
 The downloader works in 2 steps:
-1) This downloader first determines which wells from which plates have labels (from training data sent by Heriche) and saves these plates/wells to `training_locations.tsv`.
+1) This downloader first determines which wells from which plates have labels (from training data sent by J-K Heriche) and saves these plates/wells to `training_locations.tsv`.
 2) Next, the downloader uses these locations to run an Aspera download command and save the [CellH5](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3673213/) file corresponding to each training location.
 
 ### Step 2a: Execute Training Data Download
