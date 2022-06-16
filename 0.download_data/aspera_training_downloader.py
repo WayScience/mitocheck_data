@@ -5,7 +5,7 @@
 # ### Download training movies from IDR using the Aspera high-speed transfer client
 # #### Import libraries
 
-# In[14]:
+# In[1]:
 
 
 import pandas as pd
@@ -17,7 +17,7 @@ import os
 # #### Determine Labeled Data
 # Save plate/well of feature data to `training_locations.tsv`
 
-# In[15]:
+# In[2]:
 
 
 #Read plates listed in features dataset to figure out which wells from which plates have labeled data
@@ -43,7 +43,7 @@ save_training_wells(features_path, save_path)
 # #### Download movies that have labels
 # Use Aspera to download wells listed in `training_locations.tsv`
 
-# In[16]:
+# In[3]:
 
 
 def download_labeled_data(training_locations_path, screens_path, aspera_path, key_path, download_path):
