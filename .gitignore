@@ -4,3 +4,5 @@
 __pycache__/
 #downloaded CH5 files from IDR
 0.download_data/labeled_movies_ch5/*
+#private ssh key
+0.download_data/asperaweb_id_dsa.openssh
