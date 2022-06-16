@@ -5,31 +5,37 @@
 # ### Download training movies from IDR using the Aspera high-speed transfer client
 # #### Import libraries
 
-# In[2]:
+# In[14]:
 
 
-import os
 import pandas as pd
+import pathlib
+import re
+import os
 
 
 # #### Determine Labeled Data
 # Save plate/well of feature data to `training_locations.tsv`
 
-# In[3]:
+# In[15]:
 
 
 #Read plates listed in features dataset to figure out which wells from which plates have labeled data
 #Save these training locations into a file
 
-def save_training_wells(features_path, save_path):
+def save_training_wells(traingset_path, save_path):
     data_list = []
-    for plate in os.listdir(features_path):
-        for well in os.listdir(features_path + plate + "/features"):
-            data_list.append([plate, well])
+    with open(traingset_path) as labels_file:
+        for line in labels_file:
+            if ".tif" in line: #look at lines with plates/wells
+                plate = re.search('(.*)--W00', line).group(1)
+                well = re.search('--W00(.*)--P0', line).group(1)
+                if [plate, well] not in data_list:
+                    data_list.append([plate, well])
     dataframe = pd.DataFrame(data_list, columns=['Plate', 'Well'])
     dataframe.to_csv(save_path, sep="\t")
     
-features_path = "training_set/features/"
+features_path = "trainingset.dat"
 save_path = "training_locations.tsv"
 save_training_wells(features_path, save_path)
 
@@ -37,11 +43,11 @@ save_training_wells(features_path, save_path)
 # #### Download movies that have labels
 # Use Aspera to download wells listed in `training_locations.tsv`
 
-# In[4]:
+# In[16]:
 
 
 def download_labeled_data(training_locations_path, screens_path, aspera_path, key_path, download_path):
-    training_locations = pd.read_csv(training_locations_path, sep="\t")
+    training_locations = pd.read_csv(training_locations_path, sep="\t", dtype=object)
     screens = pd.read_csv(screens_path, sep="\t", header=None)
     screens.columns = ["Plate", "Screen"]
     
@@ -57,11 +63,14 @@ def download_labeled_data(training_locations_path, screens_path, aspera_path, ke
             #get location of screen
             screen_loc = screens.loc[screens['Plate'] == row['Plate'], 'Screen'].item().replace("../screens/", "").replace(".screen", "")
             
-            well_path = "20150916-mitocheck-analysis/mitocheck/" + screen_loc + "/hdf5/00" + "{:03d}".format(row['Well']) + "_01.ch5"
+            well_path = f"20150916-mitocheck-analysis/mitocheck/{screen_loc}/hdf5/00{row['Well']}_01.ch5"
+            idr_location = f"idr0013@fasp.ebi.ac.uk:{well_path}"
             idr_location = "idr0013@fasp.ebi.ac.uk:" + well_path + " "
             
-            os.makedirs(download_path + row['Plate'] + "/" + "{:03d}".format(row['Well']))
-            command = "sudo " + aspera_path + " -TQ -l500m -P 33001 -i " + key_path + " " + idr_location + download_path + row['Plate'] + "/" + "{:03d}".format(row['Well'])
+            well_dir = pathlib.Path(f"{download_path}{row['Plate']}/{row['Well']}")
+            well_dir.mkdir(parents=True, exist_ok=False)
+            
+            command = f"sudo {aspera_path} -TQ -l500m -P 33001 -i {key_path} {idr_location} {well_dir}"
             print(command)
             os.system(command)
         except Exception as e: #some plates are not available on IDR
@@ -70,7 +79,6 @@ def download_labeled_data(training_locations_path, screens_path, aspera_path, ke
 
 aspera_path = "/home/roshankern/.aspera/ascli/sdk/ascp"
 key_path = "asperaweb_id_dsa.openssh"
-os.makedirs("labeled_movies_ch5/", exist_ok=True)
 download_path = "labeled_movies_ch5/"
 
 training_locations_path = "training_locations.tsv"
