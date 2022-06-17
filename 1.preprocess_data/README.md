@@ -9,7 +9,7 @@ This procedure was applied before the movies were uploaded to IDR and thus the d
 
 We discard well A1 from each plate, as each of these wells had an irregular illumination function. 
 
-![Illumination Functions](images/illumination_functions.png "Logo Title Text 1")
+![Illumination Functions](images/illumination_functions.png "Illumination Functions")
 **Figure 1**: *Illumination function of an A1 well (left) vs a typical illumination function (right).*
 
 While a typical microscopy illumination function involves vignetting in the image (as demonstrated in every well besides A1), this was not the case for any A1 well that was manually inspected (figure 1).
@@ -29,3 +29,20 @@ We use [PyImageJ](https://github.com/imagej/pyimagej) to read data from the raw 
 
 ## Step 2: Install Fiji
 PyImageJ needs to use be initialized with [FIJI](https://imagej.net/software/fiji/) to be able to read CH5 files. Download FIJI from the [downloads page](https://imagej.net/software/fiji/downloads) and install the Fiji.app folder into the 1.preprocesss_data module.
+
+## Step 3: Install PyBaSiC
+
+Clone the repository with 
+
+```console
+git clone https://github.com/peng-lab/PyBaSiC.git
+```
+
+As of the creation of this module, `pip install` does not work with this package and thus is not used.
+
+## Step 4: Execute Training Data Preprocessing
+
+```bash
+# Run this script to preprocess training movies
+bash 1.preprocess_training_movies.sh
+```
