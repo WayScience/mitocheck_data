@@ -32,7 +32,7 @@ PyImageJ needs to use be initialized with [FIJI](https://imagej.net/software/fij
 
 ## Step 3: Install PyBaSiC
 
-Clone the repository with 
+Clone the repository into 1.preprocess_data/ with 
 
 ```console
 git clone https://github.com/peng-lab/PyBaSiC.git
