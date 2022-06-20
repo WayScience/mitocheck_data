@@ -4,22 +4,22 @@ In this module, we present our pipline for preprocessing mitosis movies.
 
 ### A. Quality Control
 
-We pre-preprocessed the Mitocheck mitosis movies in a two-step quality control procedure based on automatic and manual inspection of data (see [quality control](https://static-content.springer.com/esm/art%3A10.1038%2Fnature08869/MediaObjects/41586_2010_BFnature08869_MOESM58_ESM.pdf) section of original paper's methods for more details).
-This procedure was applied before the movies were uploaded to IDR and thus the downloaded data only includes data that has been pre-preprocessed by MitoCheck.
+MitoCheck consortium pre-preprocessed the mitosis movies in a two-step quality control procedure based on automatic and manual inspection of data (see [quality control](https://static-content.springer.com/esm/art%3A10.1038%2Fnature08869/MediaObjects/41586_2010_BFnature08869_MOESM58_ESM.pdf) section of original paper's methods for more details).
+MitoCheck applied this procedure to the movies before uploading any data to IDR.
+Therefore, we did not use any movies that failed original quality-control (MitoCheck didn't upload these data).
 
 We discard well A1 from each plate, as each of these wells had irregular illumination. 
 
 ![Illumination Functions](images/illumination_functions.png "Illumination Functions")
 **Figure 1**: *Illumination function of an A1 well (left) vs a typical illumination function (right).*
 
-While a typical microscopy illumination function involves vignetting in the image (as demonstrated in every well besides A1), this was not the case for any A1 well that was manually inspected (figure 1).
-This irregular illumination function led to errors in illumination correction later in preprocessing.
+While a typical microscopy illumination involves vignetting in the image (as demonstrated in every well besides A1), this was not the case for any A1 well that was manually inspected (figure 1).
+This irregular illumination led to errors in illumination correction later in preprocessing.
 
 ### B. Illumination Correction 
 
 We use the BaSiC method for illumination correction of each well.
 BaSiC was first introduced in [Peng, T., Thorn, K., Schroeder, T. et al., 2017](https://doi.org/10.1038/ncomms14836) and we use the [BaSiCPy implementation](https://github.com/peng-lab/BaSiCPy).
-
 
 In the future we hope to implement a newer method of illumination correction introduced in [Peng, T et al., 2020](https://doi.org/10.1007/978-3-030-59722-1_17) once this method is [made available in python](https://github.com/peng-lab/BaSiCPy/issues/65).
 
