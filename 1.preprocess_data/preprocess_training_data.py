@@ -21,15 +21,16 @@ import numpy as np
 import skimage
 
 
-# ### Determine what frames are labled from each training movie
+# ### Define Functions for Preprocessing
 
 # In[2]:
 
 
-#Read plates listed in features dataset to figure out which frames from each movie have training data
-#Save these training locations into training_frames file
-
 def save_training_wells(traingset_path, save_path):
+    """
+    Read plates listed in features dataset to figure out which frames from each movie have training data
+    Save these training locations into training_frames file
+    """
     data_list = []
     with open(traingset_path) as labels_file:
         for line in labels_file:
@@ -42,19 +43,11 @@ def save_training_wells(traingset_path, save_path):
                     
     dataframe = pd.DataFrame(data_list, columns=['Plate', 'Well', 'Frame'])
     dataframe.to_csv(save_path, sep="\t")
-
-features_path = "../0.download_data/trainingset.dat"
-save_path = "training_frames.tsv"
-save_training_wells(features_path, save_path)
-
-
-# ### Load image data given plate, well, frame
-
-# In[3]:
-
-
-#return movie data for particular plate/well
+    
 def load_training_movie_data(ij, parent_dir, plate, well):
+    """
+    return movie data for particular plate/well
+    """
     #create absolute path for ImageJ to load CH5 from
     parent_path = pathlib.Path(parent_dir).absolute().resolve()
     movie_file_path = f"{plate}/{well}/00{well}_01.ch5"
@@ -67,15 +60,11 @@ def load_training_movie_data(ij, parent_dir, plate, well):
         movie = ij.py.from_java(jmovie)
         movie_arr = movie.values[-94:, :, :, 0]
         return movie_arr
-
-
-# #### PyBaSiC Illumination correction as described in http://www.nature.com/articles/ncomms14836
-
-# In[4]:
-
-
-def pybasic_illumination_correction(brightfield_images):
     
+def pybasic_illumination_correction(brightfield_images):
+    """
+    PyBaSiC Illumination correction as described in http://www.nature.com/articles/ncomms14836
+    """
     flatfield, darkfield = pybasic.basic(brightfield_images, darkfield=True)
     
     baseflour = pybasic.background_timelapse(
@@ -100,13 +89,10 @@ def pybasic_illumination_correction(brightfield_images):
     
     return corrected_movie
 
-
-# ### Preprocess all training movies and save frames that have labeled data
-
-# In[5]:
-
-
 def preprocess_training_movies(ij, training_frames_path, downloads_dir, save_dir):
+    """
+    save frames that have labeled data from preprocessed movies
+    """
     training_locations = pd.read_csv(training_frames_path, sep="\t", dtype=object)
     
     #download each well from IDR, if it is available on IDR
@@ -116,7 +102,7 @@ def preprocess_training_movies(ij, training_frames_path, downloads_dir, save_dir
         frame = row["Frame"]
         print(f"\nPreprocessing {plate} {well} {frame}")
         try:
-            save_path = pathlib.Path(f"{save_dir}{plate}/{well}/")
+            save_path = pathlib.Path(f"{save_dir}/{plate}/{well}/")
             if not save_path.exists():
                 #determine what frames in the movie are labeled
                 plate_well_frames = training_locations[(training_locations["Plate"]==row["Plate"]) & (training_locations["Well"]==row["Well"])]
@@ -140,15 +126,36 @@ def preprocess_training_movies(ij, training_frames_path, downloads_dir, save_dir
                 print("Movie has already been preprocessed!")
         except Exception as e:
             print(e)
-    
+
+
+# ### Save Training Wells
+
+# In[3]:
+
+
+features_path = pathlib.Path("../0.download_data/trainingset.dat")
+save_path = pathlib.Path("training_frames.tsv")
+save_training_wells(features_path, save_path)
+
+
+# ### Initialize FIJI
+
+# In[4]:
+
 
 ij = imagej.init('Fiji.app')
 #imagej init sets directory to /Fiji.app so have to go back a directory :/
 os.chdir("..")
 
-training_frames_path = "training_frames.tsv"
-downloads_dir = "../0.download_data/labeled_movies_ch5/"
-save_dir = "labeled_frames_preprocessed/"
+
+# ### Preprocess Training Movies
+
+# In[5]:
+
+
+training_frames_path = pathlib.Path("training_frames.tsv")
+downloads_dir = pathlib.Path("../0.download_data/labeled_movies_ch5/")
+save_dir = pathlib.Path("labeled_frames_preprocessed/")
 
 preprocess_training_movies(ij, training_frames_path, downloads_dir, save_dir)
 
