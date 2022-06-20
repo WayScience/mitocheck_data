@@ -25,7 +25,9 @@ In the future we hope to implement a newer method of illumination correction int
 
 ## Step 1: Install PyImageJ
 
-We use [PyImageJ](https://github.com/imagej/pyimagej) to read data from the raw CH5 movies downloaded from IDR. Follow the instructions at [pyimagej/install](https://github.com/imagej/pyimagej/blob/master/doc/Install.md) to install PyImageJ. We use the pip installation method.
+We use [PyImageJ](https://github.com/imagej/pyimagej) to read data from the raw CH5 movies downloaded from IDR.
+Follow the instructions at [pyimagej/install](https://github.com/imagej/pyimagej/blob/master/doc/Install.md) to install PyImageJ.
+We use the pip installation method.
 
 ## Step 2: Install Fiji
 PyImageJ needs to use be initialized with [FIJI](https://imagej.net/software/fiji/) to be able to read CH5 files. Download FIJI from the [downloads page](https://imagej.net/software/fiji/downloads) and install the Fiji.app folder into the 1.preprocesss_data module.
