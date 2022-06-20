@@ -3,6 +3,12 @@
 # Python files
 __pycache__/
 #downloaded CH5 files from IDR
-0.download_data/labeled_movies_ch5/*
+0.download_data/labeled_movies_ch5
 #private ssh key
 0.download_data/asperaweb_id_dsa.openssh
+#Fiji App
+1.preprocess_data/Fiji.app
+#PyBaSic repo
+1.preprocess_data/PyBaSic
+#preprocessed frames
+1.preprocess_data/labeled_frames_preprocessed
