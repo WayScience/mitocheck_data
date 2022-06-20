@@ -150,5 +150,5 @@ training_frames_path = "training_frames.tsv"
 downloads_dir = "../0.download_data/labeled_movies_ch5/"
 save_dir = "labeled_frames_preprocessed/"
 
-test = preprocess_training_movies(ij, training_frames_path, downloads_dir, save_dir)
+preprocess_training_movies(ij, training_frames_path, downloads_dir, save_dir)
 
