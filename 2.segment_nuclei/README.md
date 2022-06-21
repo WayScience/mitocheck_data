@@ -1,6 +1,7 @@
 # 2. Segment Nuclei
 
-In this module, we present our pipline for segmenting nuclei from the mitosis movies.
+In this module, we present our pipeline for segmenting nuclei from the mitosis movies.
+
 
 ### Segmentation
 
