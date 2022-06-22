@@ -5,7 +5,7 @@ In this module, we present our pipeline for extracting features from the mitosis
 
 ### Feature Extraction
 
-We use [DeepProfiler](https://github.com/cytomining/DeepProfiler) to extract features from the mitosis movies. 
+We use [DeepProfiler](https://github.com/cytomining/DeepProfiler), commit [`2fb3ed3`](https://github.com/cytomining/DeepProfiler/commit/2fb3ed3027cded6676b7e409687322ef67491ec7), to extract features from the mitosis movies. 
 
 We use a [pretrained model](https://github.com/broadinstitute/luad-cell-painting/tree/main/outputs/efn_pretrained/checkpoint) from the [LUAD Cell Painting repository](https://github.com/broadinstitute/luad-cell-painting) with DeepProfiler.
 [Caicedo et al., 2022](https://www.molbiolcell.org/doi/10.1091/mbc.E21-11-0538) trained this model to extract features from Cell Painting data.
@@ -26,3 +26,25 @@ conda env create -f 2.feature_extraction_env.yml
 # Run this command to activate the conda environment for Segmentation data
 conda activate 3.feature_extraction_mitocheck
 ```
+
+## Step 2: Install DeepProfiler
+
+### Step 2a: Clone Resository
+Clone the DeepProfiler repository into 3.extract_features/ with 
+
+```console
+git clone https://github.com/cytomining/DeepProfiler.git
+```
+
+### Step 2b: Install Resository
+Install the DeepProfiler repository with
+
+```console
+cd DeepProfiler/
+pip install -e .
+```
+
+### Step 2c (Optional): Complete Tensorflow GPU Setup
+
+If you would like use Tensorflow GPU when using DeepProfiler, follow [these instructions](https://www.tensorflow.org/install/pip#3_gpu_setup) to complete the Tensorflow GPU setup.
+We use Tensorflow GPU while processing mitocheck data.
