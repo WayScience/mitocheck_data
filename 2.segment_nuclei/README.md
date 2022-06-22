@@ -32,7 +32,7 @@ conda env create -f 2.segment_env.yml
 
 ```sh
 # Run this command to activate the conda environment for Segmentation data
-conda activate 2.segment_nuclei
+conda activate 2.segment_nuclei_mitocheck
 ```
 
 ## Step 2: Execute Training Data Segmentation

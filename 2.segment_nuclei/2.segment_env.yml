@@ -1,4 +1,4 @@
-name: 2.segment_nuclei
+name: 2.segment_nuclei_mitocheck
 channels:
   - conda-forge
 dependencies:

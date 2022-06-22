@@ -57,7 +57,7 @@ conda env create -f 1.preprocess_env.yml
 
 ```sh
 # Run this command to activate the conda environment for Preprocessing data
-conda activate 1.preprocess_data
+conda activate 1.preprocess_data_mitocheck
 ```
 
 ## Step 5: Execute Training Data Preprocessing

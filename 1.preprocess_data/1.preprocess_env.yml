@@ -1,4 +1,4 @@
-name: 1.preprocess_data
+name: 1.preprocess_data_mitocheck
 channels:
   - conda-forge
 dependencies:

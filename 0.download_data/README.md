@@ -40,7 +40,7 @@ conda env create -f 0.download_env.yml
 
 ```sh
 # Run this command to activate the conda environment for downloading data
-conda activate 0.download_data
+conda activate download_data_mitocheck
 ```
 
 ## Step 4: Download Labeled Data with Aspera
