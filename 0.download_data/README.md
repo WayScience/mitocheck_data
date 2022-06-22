@@ -43,7 +43,6 @@ conda env create -f 0.download_env.yml
 conda activate 0.download_data
 ```
 
-
 ## Step 4: Download Labeled Data with Aspera
 
 Use [Aspera training downloader](aspera_training_downloader.ipynb) to download the raw data that has been manually annotated by Mitocheck as described in the [original paper](https://www.nature.com/articles/nature08869#Sec2).
