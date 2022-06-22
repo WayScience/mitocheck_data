@@ -1,0 +1,6 @@
+name: 3.feature_extraction_mitocheck
+channels:
+  - conda-forge
+dependencies:
+  - conda-forge::python=3.8.13
+  - conda-forge::jupyter=1.0.0

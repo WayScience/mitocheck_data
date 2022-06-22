@@ -1,0 +1,28 @@
+# 3. Extract Features
+
+In this module, we present our pipeline for extracting features from the mitosis movies.
+
+
+### Feature Extraction
+
+We use [DeepProfiler](https://github.com/cytomining/DeepProfiler) to extract features from the mitosis movies. 
+
+We use a [pretrained model](https://github.com/broadinstitute/luad-cell-painting/tree/main/outputs/efn_pretrained/checkpoint) from the [LUAD Cell Painting repository](https://github.com/broadinstitute/luad-cell-painting) with DeepProfiler.
+[Caicedo et al., 2022](https://www.molbiolcell.org/doi/10.1091/mbc.E21-11-0538) trained this model to extract features from Cell Painting data.
+This model extracts features from the DNA (nuclei) channel and is thus a good selection for our use case.
+
+## Step 1: Setup Feature Extraction Environment
+
+### Step 1a: Create Feature Extraction Environment
+
+```sh
+# Run this command to create the conda environment for Segmentation data
+conda env create -f 2.feature_extraction_env.yml
+```
+
+### Step 1b: Activate Feature Extraction  Environment
+
+```sh
+# Run this command to activate the conda environment for Segmentation data
+conda activate 3.feature_extraction_mitocheck
+```
