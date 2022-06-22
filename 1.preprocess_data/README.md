@@ -44,7 +44,23 @@ git clone https://github.com/peng-lab/PyBaSiC.git
 
 As of the creation of this module, `pip install` does not work with this package and thus is not used.
 
-## Step 4: Execute Training Data Preprocessing
+## Step 4: Setup Preprocessing Environment
+
+### Step 4a: Create Preprocessing Environment
+
+```sh
+# Run this command to create the conda environment for Preprocessing data
+conda env create -f 1.preprocess_env.yml
+```
+
+### Step 4b: Activate Preprocessing Environment
+
+```sh
+# Run this command to activate the conda environment for Preprocessing data
+conda activate 1.preprocess_data
+```
+
+## Step 5: Execute Training Data Preprocessing
 
 ```bash
 # Run this script to preprocess training movies
