@@ -27,14 +27,31 @@ In order to run ascp without a password do the following:
 
 Download and configure [Aspera public key](https://idr.openmicroscopy.org/about/img/aspera/asperaweb_id_dsa.openssh) and save to `0.download_data` folder.
 
-## Step 3: Download Labeled Data with Aspera
+## Step 3: Setup Download Environment
+
+### Step 3a: Create Download Environment
+
+```sh
+# Run this command to create the conda environment for downloading data
+conda env create -f 0.download_env.yml
+```
+
+### Step 3b: Activate Download Environment
+
+```sh
+# Run this command to activate the conda environment for downloading data
+conda activate 0.download_data
+```
+
+
+## Step 4: Download Labeled Data with Aspera
 
 Use [Aspera training downloader](aspera_training_downloader.ipynb) to download the raw data that has been manually annotated by Mitocheck as described in the [original paper](https://www.nature.com/articles/nature08869#Sec2).
 The downloader works in 2 steps:
 1) This downloader first determines which wells from which plates have labels (from training data sent by J-K Heriche) and saves these plates/wells to `training_locations.tsv`.
 2) Next, the downloader uses these locations to run an Aspera download command and save the [CellH5](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3673213/) file corresponding to each training location.
 
-### Step 3a: Execute Training Data Download
+### Step 4a: Execute Training Data Download
 
 ```bash
 # Run this script to download training movies
