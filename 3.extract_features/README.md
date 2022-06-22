@@ -48,3 +48,17 @@ pip install -e .
 
 If you would like use Tensorflow GPU when using DeepProfiler, follow [these instructions](https://www.tensorflow.org/install/pip#3_gpu_setup) to complete the Tensorflow GPU setup.
 We use Tensorflow GPU while processing mitocheck data.
+
+## Step 3: Compile DeepProfiler Project
+
+```bash
+# Run this script to compile the DeepProfiler project
+bash 3.compile_deepprof__training_proj.sh
+```
+
+## Step 4: Extract Features with DeepProfiler
+
+```sh
+# Run this script to extract features with DeepProfiler
+python3 -m deepprofiler --gpu 0 --exp efn_pretrained --root ./ --config mitocheck_profiling_config.json profile
+```
