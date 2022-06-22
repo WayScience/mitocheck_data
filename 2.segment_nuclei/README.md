@@ -19,7 +19,23 @@ More information about CellPose models can be found at https://cellpose.readthed
 - `flow_threshold=0.8` This paramenter increases the maximum allowed error of the flows for each mask (default is `flow_threshold=0.4`).
 More information about CellPose settings can be found at https://cellpose.readthedocs.io/en/latest/settings.html.
 
-## Step 1: Execute Training Data Segmentation
+## Step 1: Setup Segmentation Environment
+
+### Step 1a: Create Segmentation Environment
+
+```sh
+# Run this command to create the conda environment for Segmentation data
+conda env create -f 2.segment_env.yml
+```
+
+### Step 1b: Activate Segmentation Environment
+
+```sh
+# Run this command to activate the conda environment for Segmentation data
+conda activate 2.segment_nuclei_mitocheck
+```
+
+## Step 2: Execute Training Data Segmentation
 
 ```bash
 # Run this script to segment training data
