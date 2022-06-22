@@ -14,6 +14,7 @@ The CellPose python implementation was particularly useful for building reproduc
 After manually experiementing with CellPose on about 10 mitosis-movie frames, we settled on the following parameters for CellPose segmentation:
 - `model_type = "cyto"` This parameter forces CellPose to use the cytoplasm model, which we found segments nuclei in the Mitosis movies significantly better than the nucleus model. 
 More information about CellPose models can be found at https://cellpose.readthedocs.io/en/latest/models.html.
+- `channels = [0,0]` This parameter forces the model to segment cells in grayscale (in the case of Mitocheck mitosis movies single channel images).
 - `diameter = 0` This parameter forces the model to estimate the nuclei diameters.
 - `flow_threshold=0.8` This paramenter increases the maximum allowed error of the flows for each mask (default is `flow_threshold=0.4`).
 More information about CellPose settings can be found at https://cellpose.readthedocs.io/en/latest/settings.html.
