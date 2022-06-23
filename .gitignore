@@ -14,3 +14,13 @@ __pycache__/
 1.preprocess_data/labeled_frames_preprocessed
 #segmentation data
 2.segment_nuclei/segmented
+#DeepProfiler repo
+3.extract_features/DeepProfiler
+#DeepProfiler project images
+3.extract_features/inputs/images
+#DeepProfiler project locations
+3.extract_features/inputs/locations
+#DeepProfiler outputs
+3.extract_features/outputs/efn_pretrained/features
+3.extract_features/outputs/efn_pretrained/logs
+3.extract_features/outputs/efn_pretrained/summaries
