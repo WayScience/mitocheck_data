@@ -2,7 +2,6 @@
 
 In this module, we present our pipeline for extracting features from the mitosis movies.
 
-
 ### Feature Extraction
 
 We use [DeepProfiler](https://github.com/cytomining/DeepProfiler), commit [`2fb3ed3`](https://github.com/cytomining/DeepProfiler/commit/2fb3ed3027cded6676b7e409687322ef67491ec7), to extract features from the mitosis movies. 
