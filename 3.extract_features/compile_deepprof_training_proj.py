@@ -22,15 +22,29 @@ import shutil
 # In[2]:
 
 
-def get_gene(plate, well, annoations):
+def get_gene(plate: str, well:str, annoations: pd.DataFrame) -> str:
+    """get gene for a particular well from a particular plate
+
+    Args:
+        plate (string): plate name
+        well (string): well name
+        annoations (pandas.DataFrame): annoations loaded from screen metadata annotations.csv.gz file
+
+    Returns:
+        string: gene targeted to be changed for this particular plate
+    """
     target_gene = annoations[(annoations["Plate"]==plate) & (annoations["Well Number"]==str(int(well)))]["Original Gene Target"].item()
     if str(target_gene) == "nan":
         target_gene = "failed_QC"
     return target_gene
 
-def compile_index_csv(preproc_training_path, annotations_path, save_path):
-    """
-    compile index.csv from training data used by DeepProfiler
+def compile_index_csv(preproc_training_path: pathlib.Path, annotations_path: pathlib.Path, save_path: pathlib.Path):
+    """compile index.csv from training data used by DeepProfiler, save index.csv to save_path
+
+    Args:
+        preproc_training_path (pathlib.Path): path to preprocessed images folder
+        annotations_path (pathlib.Path): path to screen annotations.csv.gz file
+        save_path (pathlib.Path): path to save folder for index.csv file
     """
     index_csv_data = []
     annoations = pd.read_csv(annotations_path, compression='gzip', dtype=object)
@@ -52,7 +66,14 @@ def compile_index_csv(preproc_training_path, annotations_path, save_path):
     save_path.parents[0].mkdir(parents=True, exist_ok=True)
     index_csv_data.to_csv(save_path, index=False)
     
-def compile_training_locations(index_csv_path, segmentations_path, save_path):
+def compile_training_locations(index_csv_path: pathlib.Path, segmentations_path: pathlib.Path, save_path: pathlib.Path):
+    """compile well_frame-site-Nuclei.csv file with cell locations, save to in save_path/plate/ folder
+
+    Args:
+        index_csv_path (pathlib.Path): path to index.csv file for DeepProfiler project
+        segmentations_path (pathlib.Path): path to segmentations folder with .tsv locations files
+        save_path (pathlib.Path): path to save location files
+    """
     index_csv = pd.read_csv(index_csv_path)
     for index, row in index_csv.iterrows():
         plate = row["Metadata_Plate"]
@@ -75,6 +96,9 @@ def compile_training_locations(index_csv_path, segmentations_path, save_path):
 
 
 # #### Compile index.csv file
+# 
+# DeepProfiler expects to find an index.csv file with metadata for the images that need to be processed.
+# In this step we compile that index.csv file and save it to inputs/metadata/index.csv
 
 # In[3]:
 
@@ -87,6 +111,9 @@ print("Done compiling index.csv!")
 
 
 # #### Copy images to DeepProfiler Project
+# 
+# DeepProfiler expects to find the images that need to be processed in inputs/images/.
+# In this step we copy the preprocessed frames from the 1.preprocess_data module to inputs/images/.
 
 # In[4]:
 
@@ -98,6 +125,9 @@ print("Done copying images!")
 
 
 # #### Compile Training Locations Data
+# 
+# DeepProfiler expects to find nuclei location data in inputs/locations/Plate/WellName-Site-Nuclei.csv
+# In this step we compile the location data files and save them to their respective locations.
 
 # In[5]:
 
