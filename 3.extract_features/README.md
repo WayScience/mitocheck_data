@@ -20,7 +20,6 @@ conda env create -f 3.feature_extraction_env.yml
 
 ### Step 1b: Activate Feature Extraction Environment
 
-
 ```sh
 # Run this command to activate the conda environment for Deep Profiler feature extraction
 
