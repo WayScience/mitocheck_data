@@ -29,7 +29,8 @@ conda activate 3.feature_extraction_mitocheck
 
 ## Step 2: Install DeepProfiler
 
-### Step 2a: Clone Resository
+### Step 2a: Clone Repository
+
 Clone the DeepProfiler repository into 3.extract_features/ with 
 
 ```console
