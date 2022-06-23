@@ -34,6 +34,8 @@ conda activate 3.feature_extraction_mitocheck
 Clone the DeepProfiler repository into 3.extract_features/ with 
 
 ```console
+# Make sure you are located in 3.extract_features/
+cd 3.extract_features/
 git clone https://github.com/cytomining/DeepProfiler.git
 ```
 
