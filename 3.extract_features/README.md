@@ -40,6 +40,7 @@ git clone https://github.com/cytomining/DeepProfiler.git
 ```
 
 ### Step 2b: Install Resository
+
 Install the DeepProfiler repository with
 
 ```console
