@@ -14,8 +14,8 @@ This model extracts features from the DNA (nuclei) channel and is thus a good se
 ### Step 1a: Create Feature Extraction Environment
 
 ```sh
-# Run this command to create the conda environment for Segmentation data
-conda env create -f 2.feature_extraction_env.yml
+# Run this command to create the conda environment for feature extraction
+conda env create -f 3.feature_extraction_env.yml
 ```
 
 ### Step 1b: Activate Feature Extraction Environment
@@ -36,14 +36,10 @@ Clone the DeepProfiler repository into 3.extract_features/ with
 ```console
 # Make sure you are located in 3.extract_features/
 cd 3.extract_features/
-# Make sure you are located in 3.extract_features/
-cd 3.extract_features/
-# Make sure you are located in 3.extract_features/
-cd 3.extract_features/
 git clone https://github.com/cytomining/DeepProfiler.git
 ```
 
-### Step 2b: Install Resository
+### Step 2b: Install Repository
 
 Install the DeepProfiler repository with
 
