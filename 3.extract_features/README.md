@@ -19,7 +19,8 @@ This model extracts features from the DNA (nuclei) channel and is thus a good se
 conda env create -f 2.feature_extraction_env.yml
 ```
 
-### Step 1b: Activate Feature Extraction  Environment
+### Step 1b: Activate Feature Extraction Environment
+
 
 ```sh
 # Run this command to activate the conda environment for Segmentation data
