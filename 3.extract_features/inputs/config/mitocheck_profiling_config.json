@@ -8,14 +8,14 @@
             "channels": [
                 "DNA"
             ],
-            "file_format": "tiff",
+            "file_format": "tif",
             "bits": 8,
             "width": 1344,
             "height": 1024
         },
         "locations": {
             "mode": "single_cells",
-            "box_size": 96,
+            "box_size": 128,
             "area_coverage": 0.75,
             "mask_objects": false
         }
