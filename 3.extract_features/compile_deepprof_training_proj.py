@@ -91,7 +91,7 @@ print("Done compiling index.csv!")
 # In[4]:
 
 
-preproc_training_path = pathlib.Path("/home/roshankern/Desktop/Github/mitocheck_data/1.preprocess_data/labeled_frames_preprocessed/")
+preproc_training_path = pathlib.Path("../1.preprocess_data/labeled_frames_preprocessed/")
 deepprof_images_path = pathlib.Path("inputs/images/")
 shutil.copytree(preproc_training_path, deepprof_images_path)
 print("Done copying images!")
