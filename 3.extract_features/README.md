@@ -22,7 +22,8 @@ conda env create -f 2.feature_extraction_env.yml
 
 
 ```sh
-# Run this command to activate the conda environment for Segmentation data
+# Run this command to activate the conda environment for Deep Profiler feature extraction
+
 conda activate 3.feature_extraction_mitocheck
 ```
 
