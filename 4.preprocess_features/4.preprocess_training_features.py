@@ -18,10 +18,30 @@ import pandas as pd
 # In[2]:
 
 
-index_file = pathlib.Path("/home/roshankern/Desktop/Github/mitocheck_data/3.extract_features/inputs/metadata/index.csv")
-profile_dir = pathlib.Path("/home/roshankern/Desktop/Github/mitocheck_data/3.extract_features/outputs/efn_pretrained/features")
+index_file = pathlib.Path("../3.extract_features/inputs/metadata/index.csv")
+profile_dir = pathlib.Path("../3.extract_features/outputs/efn_pretrained/features")
+output_dir = pathlib.Path("../data/")
 
 deep_data = DeepProfiler_processing.DeepProfilerData(index_file, profile_dir, filename_delimiter="/")
 deep_single_cell = DeepProfiler_processing.SingleCellDeepProfiler(deep_data)
-deep_single_cell.normalize_deep_single_cells(output_file="normalized_training_data.csv")
+output_dir.mkdir(parents=True, exist_ok=True)
+normalized = deep_single_cell.normalize_deep_single_cells(
+    image_features=False, # profiles contain DeepProfiler features, not image features
+    samples="all", # normalize all samples
+    method="standardize", # use sklearn StandardScaler to standardize features
+    output_file=f"{output_dir}/normalized_training_data.csv.gz",
+    compression_options={"method": "gzip", "mtime": 1}
+    )
+
+
+# In[3]:
+
+
+print(normalized.shape)
+
+
+# In[4]:
+
+
+print(normalized.head())
 
