@@ -4,7 +4,7 @@ In this module, we present our pipeline for preprocessing features.
 
 ### Feature Preprocessing
 
-We use [PyCytominer](https://github.com/cytomining/pycytominer) to normalize single-cell embeddings features.
+We use [PyCytominer](https://github.com/cytomining/pycytominer), commit [`eec910a`](https://github.com/cytomining/pycytominer/commit/eec910a636bf023f31a34348bd4c61138991c557), to normalize single-cell embeddings features.
 
 ## Step 1: Setup Feature Preprocessing Environment
 
