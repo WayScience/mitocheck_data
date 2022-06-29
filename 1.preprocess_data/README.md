@@ -50,7 +50,7 @@ As of the creation of this module, `pip install` does not work with this package
 
 ```sh
 # Run this command to create the conda environment for Preprocessing data
-conda env create -f 1.preprocess_env.yml
+conda env create -f 1.preprocess_movies_env.yml
 ```
 
 ### Step 4b: Activate Preprocessing Environment
