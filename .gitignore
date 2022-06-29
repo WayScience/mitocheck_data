@@ -12,8 +12,6 @@ __pycache__/
 1.preprocess_data/PyBaSic
 #preprocessed frames
 1.preprocess_data/labeled_frames_preprocessed
-#segmentation data
-2.segment_nuclei/segmented
 #DeepProfiler repo
 3.extract_features/DeepProfiler
 #DeepProfiler project images
