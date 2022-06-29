@@ -20,7 +20,7 @@ import pandas as pd
 
 index_file = pathlib.Path("../3.extract_features/inputs/metadata/index.csv")
 profile_dir = pathlib.Path("../3.extract_features/outputs/efn_pretrained/features")
-output_dir = pathlib.Path("../data/")
+output_dir = pathlib.Path("data/")
 
 deep_data = DeepProfiler_processing.DeepProfilerData(index_file, profile_dir, filename_delimiter="/")
 deep_single_cell = DeepProfiler_processing.SingleCellDeepProfiler(deep_data)
