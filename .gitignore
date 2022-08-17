@@ -2,23 +2,9 @@
 .ipynb_checkpoints
 # Python files
 __pycache__/
-#downloaded CH5 files from IDR
-0.download_data/labeled_movies_ch5
-#private ssh key
-0.download_data/asperaweb_id_dsa.openssh
-#Fiji App
-1.preprocess_data/Fiji.app
-#PyBaSic repo
-1.preprocess_data/PyBaSic
-#preprocessed frames
-1.preprocess_data/labeled_frames_preprocessed
-#DeepProfiler repo
-3.extract_features/DeepProfiler
-#DeepProfiler project images
-3.extract_features/inputs/images
-#DeepProfiler project locations
-3.extract_features/inputs/locations
-#DeepProfiler outputs
-3.extract_features/outputs/efn_pretrained/features
-3.extract_features/outputs/efn_pretrained/logs
-3.extract_features/outputs/efn_pretrained/summaries
+# tmp files
+1.idr_streams/tmp
+# extracted features
+1.idr_streams/extracted_features
+# aspera key
+1.idr_streams/stream_files/asperaweb_id_dsa.openssh
