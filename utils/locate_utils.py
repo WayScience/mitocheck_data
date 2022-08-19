@@ -3,6 +3,9 @@ import pathlib
 import re
 import numpy as np
 
+import warnings
+from pandas.core.common import SettingWithCopyWarning
+
 def find_training_frames(trainingset_path, training_plate, training_well_num) -> list:
     frames = []
 
@@ -77,7 +80,7 @@ def get_training_locations(trainingset_path, annotations_path):
     training_data_locations["Original Gene Target"] = training_data_locations[
         "Original Gene Target"
     ].replace(np.NaN, "negative control")
-    return training_data_locations
+    return training_data_locations.reset_index(drop=True)
 
 def get_control_locations(
     annotations_path: pathlib.Path, control_type: str = "negative"
@@ -96,6 +99,9 @@ def get_control_locations(
         control_annotations["Control Type"].str.contains(control_type)
     ]
 
+    # filter warning when setting with copy
+    warnings.simplefilter(action="ignore", category=SettingWithCopyWarning)
+
     control_locations = control_annotations[
         ["Plate", "Well", "Well Number", "Original Gene Target"]
     ]
@@ -108,4 +114,4 @@ def get_control_locations(
     frames = np.random.randint(low=31, high=63, size=len(control_locations))
     control_locations["Frames"] = frames
 
-    return control_locations
+    return control_locations.reset_index(drop=True)

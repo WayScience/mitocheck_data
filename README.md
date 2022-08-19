@@ -1,6 +1,5 @@
 # MitoCheck Data
 
-
 ## Data
 
 ### Access
@@ -20,12 +19,8 @@ The movie processing pipeline consists of the following steps:
 
 | Order | Module | Description |
 | :---- | :----- | :---------- |
-| [0.download_data](0.download_data/) | Download mitosis movies | Retrieve mitosis movies hosted by IDR |
-| [1.preprocess_data](1.preprocess_data/) | Preprocess mitosis movies | Perform quality control and illumination correction on mitosis movies |
-| [2.segment_nuclei](2.segment_nuclei/) | Segment nuclei | Retrieve center X,Y for nuclei in mitosis movies |
-| [3.extract_features](3.extract_features/) | Extract features | Extract nuclei features from mitosis movies with Deep Profiler |
-| [4.preprocess_features](4.preprocess_features/) | Preprocess features | Preprocess features extracted during [3.extract_features](3.extract_features/) |
-
-The workflow for processing data is shown below:
-
-![Training Data Flow](images/training_data_flow.png "Training Data Flow")
+| [0.locate_data](0.locate_data/) | Locate mitosis movies | Find locations (plate, well, frame) for training and control movies |
+| [1.idr_streams](1.idr_streams/) | Extract features from mitosis movies | Use `idrstream` to extract features from training and control movies |
+| [2.format_training_data](2.format_training_data/) | Format training data | Compile metadata, phenotypic class, and feature data for Mitocheck-labeled movies |
+| [3.normalize_data](3.normalize_data/) | Normalize data | Use UMAP to suggest batch effects are not dominant signal and normalize with data with negative controls as normalization population |
+| [4.analyze_data](4.analyze_data/) | Analyze data | Analyze normalized data |
