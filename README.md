@@ -12,7 +12,7 @@ All data are publicly available.
 | :---- | :---- | :------ | :---- |
 | Images | 1 | Image Data Resource ([IDR](https://idr.openmicroscopy.org/)) | Accession `idr0013(screenA)` |
 
-## Repo Structure:
+## Repository Structure:
 
 This repository is structured as follows:
 
