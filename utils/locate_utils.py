@@ -6,7 +6,10 @@ import numpy as np
 import warnings
 from pandas.core.common import SettingWithCopyWarning
 
-def find_training_frames(trainingset_path: pathlib.Path, training_plate: str, training_well_num: int) -> list:
+
+def find_training_frames(
+    trainingset_path: pathlib.Path, training_plate: str, training_well_num: int
+) -> list:
     """
     find which frames from the given plate/well are labeled
 
@@ -43,7 +46,9 @@ def find_training_frames(trainingset_path: pathlib.Path, training_plate: str, tr
     return frames
 
 
-def get_training_locations(trainingset_path: pathlib.Path, annotations_path: pathlib.Path) -> pd.DataFrame:
+def get_training_locations(
+    trainingset_path: pathlib.Path, annotations_path: pathlib.Path
+) -> pd.DataFrame:
     """
     Use trainingset file to determine gene, plate, well, and frame locations for labeled data
 
@@ -106,13 +111,16 @@ def get_training_locations(trainingset_path: pathlib.Path, annotations_path: pat
                         plate in training_data_locations["Plate"].unique()
                         and well_num in training_data_locations["Well Number"].unique()
                     ):
-                        training_data_locations = pd.concat([training_data_locations, frame_details])
+                        training_data_locations = pd.concat(
+                            [training_data_locations, frame_details]
+                        )
 
     # nan gene values correspond to negative control
     training_data_locations["Original Gene Target"] = training_data_locations[
         "Original Gene Target"
     ].replace(np.NaN, "negative control")
     return training_data_locations.reset_index(drop=True)
+
 
 def get_control_locations(
     annotations_path: pathlib.Path, control_type: str, numpy_seed: int
@@ -136,8 +144,9 @@ def get_control_locations(
     """
     annotations = pd.read_csv(annotations_path, compression="gzip", dtype=object)
     # remove annotations for plates that are missing
-    annotations = annotations.loc[annotations["Plate Issues"] != "plate missing"]\
-    # remove annotations for plates with irregular illumination
+    annotations = annotations.loc[
+        annotations["Plate Issues"] != "plate missing"
+    ]  # remove annotations for plates with irregular illumination
     annotations = annotations.loc[annotations["Well"] != "A1"]
 
     control_annotations = annotations.loc[annotations["Control Type"].notnull()]
@@ -158,7 +167,7 @@ def get_control_locations(
     control_locations["Original Gene Target"] = control_locations[
         "Original Gene Target"
     ].fillna("negative control")
-    
+
     # get random frame in middle third of mitosis movies (between frames 31 and 62)
     np.random.seed(numpy_seed)
     frames = np.random.randint(low=31, high=63, size=len(control_locations))
