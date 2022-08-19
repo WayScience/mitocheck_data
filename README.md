@@ -12,7 +12,6 @@ All data are publicly available.
 | :---- | :---- | :------ | :---- |
 | Images | 1 | Image Data Resource ([IDR](https://idr.openmicroscopy.org/)) | Accession `idr0013(screenA)` |
 
-
 ## Repo Structure:
 
 This repository is structured as follows:
@@ -24,6 +23,14 @@ This repository is structured as follows:
 | [2.format_training_data](2.format_training_data/) | Format training data | Compile metadata, phenotypic class, and feature data for Mitocheck-labeled movies |
 | [3.normalize_data](3.normalize_data/) | Normalize data | Use UMAP to suggest batch effects are not dominant signal and normalize with data with negative controls as normalization population |
 | [4.analyze_data](4.analyze_data/) | Analyze data | Analyze normalized data |
+
+Other necessary files/folders:
+
+| FolderFile | Description |
+| :--------- | :---------- |
+| [mitocheck_metadata](mitocheck_metadata/) | IDR curated metadata, `trainingset` file and `features` dataset necessary for locating Mitocheck-labeled training data |
+| [utils](utils/) | Python files with functions used throughout repository |
+| [mitocheck_data_env.yml](mitocheck_data_env.yml) | Environment file with packages necessary to process mitocheck data |
 
 ## Setup
 
