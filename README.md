@@ -24,7 +24,7 @@ This repository is structured as follows:
 | [3.normalize_data](3.normalize_data/) | Normalize data | Use UMAP to suggest batch effects are not dominant signal and normalize with data with negative controls as normalization population |
 | [4.analyze_data](4.analyze_data/) | Analyze data | Analyze normalized data |
 
-Other necessary files/folders:
+Other necessary folders/files:
 
 | Folder/File | Description |
 | :--------- | :---------- |
