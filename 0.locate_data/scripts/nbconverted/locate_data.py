@@ -21,8 +21,8 @@ from locate_utils import get_training_locations, get_control_locations
 # In[2]:
 
 
-annotations_path = pathlib.Path("idr0013-screenA-annotation.csv.gz")
-features_path = pathlib.Path("trainingset_2007_06_21.dat")
+annotations_path = pathlib.Path("../mitocheck_metadata/idr0013-screenA-annotation.csv.gz")
+features_path = pathlib.Path("../mitocheck_metadata/trainingset_2007_06_21.dat")
 
 locations_dir = pathlib.Path("locations/")
 locations_dir.mkdir(exist_ok=True, parents=True)

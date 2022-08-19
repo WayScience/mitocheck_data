@@ -6,12 +6,30 @@ import numpy as np
 import warnings
 from pandas.core.common import SettingWithCopyWarning
 
-def find_training_frames(trainingset_path, training_plate, training_well_num) -> list:
+def find_training_frames(trainingset_path: pathlib.Path, training_plate: str, training_well_num: int) -> list:
+    """
+    find which frames from the given plate/well are labeled
+
+    Parameters
+    ----------
+    trainingset_path : pathlib.Path
+        path to trainingset file
+    training_plate : str
+        plate of interest
+    training_well_num : int
+        well number of interest
+
+    Returns
+    -------
+    list
+        frame numbers that have labeled data
+    """
     frames = []
 
     with open(trainingset_path) as labels_file:
         for line in labels_file:
-            if ".tif" in line:  # look at lines with plates/wells
+            # look at lines with image info
+            if ".tif" in line:
                 image_details = line.split("--")
                 plate = image_details[0]
                 well_num = int(image_details[1].replace("W0", ""))
@@ -25,9 +43,22 @@ def find_training_frames(trainingset_path, training_plate, training_well_num) ->
     return frames
 
 
-# Read plates listed in features dataset to figure out which wells from which plates have labeled data
-# Save these training locations into a file
-def get_training_locations(trainingset_path, annotations_path):
+def get_training_locations(trainingset_path: pathlib.Path, annotations_path: pathlib.Path) -> pd.DataFrame:
+    """
+    Use trainingset file to determine gene, plate, well, and frame locations for labeled data
+
+    Parameters
+    ----------
+    trainingset_path : pathlib.Path
+        path to trainingset file
+    annotations_path : pathlib.Path
+        path to IDR curated annotations file
+
+    Returns
+    -------
+    pd.DataFrame
+        location data for labeled data
+    """
     annotations = pd.read_csv(annotations_path, low_memory=False)
     # remove annotations for plates that are missing
     annotations = annotations.loc[annotations["Plate Issues"] != "plate missing"]
@@ -53,6 +84,7 @@ def get_training_locations(trainingset_path, annotations_path):
                     gene = image_annotations.iloc[0]["Original Gene Target"]
                     well = image_annotations.iloc[0]["Well"]
                 except IndexError:
+                    # Some labeled data did not make it to IDR because of quality control issues
                     print(f"Image from {plate}, {well_num} not in IDR")
                     continue
 
@@ -83,8 +115,25 @@ def get_training_locations(trainingset_path, annotations_path):
     return training_data_locations.reset_index(drop=True)
 
 def get_control_locations(
-    annotations_path: pathlib.Path, control_type: str = "negative"
-):
+    annotations_path: pathlib.Path, control_type: str, numpy_seed: int
+) -> pd.DataFrame:
+    """
+    get location data for mitocheck controls
+
+    Parameters
+    ----------
+    annotations_path : pathlib.Path
+        path to IDR curated annotations file
+    control_type : str
+        "negative" or "positive" depending on desired control type
+    numpy_seed : int
+        seed to use for np.random, ensures reproducibility
+
+    Returns
+    -------
+    pd.DataFrame
+        location data for controls
+    """
     annotations = pd.read_csv(annotations_path, compression="gzip", dtype=object)
     # remove annotations for plates that are missing
     annotations = annotations.loc[annotations["Plate Issues"] != "plate missing"]\
@@ -105,12 +154,13 @@ def get_control_locations(
     control_locations = control_annotations[
         ["Plate", "Well", "Well Number", "Original Gene Target"]
     ]
+    # nan gene values correspond to negative control
     control_locations["Original Gene Target"] = control_locations[
         "Original Gene Target"
     ].fillna("negative control")
     
     # get random frame in middle third of mitosis movies (between frames 31 and 62)
-    np.random.seed(0)
+    np.random.seed(numpy_seed)
     frames = np.random.randint(low=31, high=63, size=len(control_locations))
     control_locations["Frames"] = frames
 

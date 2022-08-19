@@ -10,14 +10,9 @@ Use the commands below to locate training and control movies:
 ```sh
 # Make sure you are located in 0.locate_data
 cd 0.locate_data
-
 # Activate mitocheck_data conda environment
 conda activate mitocheck_data
 
-# Convert notebook to python file
-jupyter nbconvert --to python locate_data.ipynb
-
-# Run python file
-python locate_data.py
+# Locate data
+locate_data.sh
 ```
-
