@@ -18,6 +18,6 @@ conda activate mitocheck_data
 jupyter nbconvert --to python locate_data.ipynb
 
 # Run python file
-locate_data.py
+python locate_data.py
 ```
 
