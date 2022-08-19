@@ -26,7 +26,7 @@ This repository is structured as follows:
 
 Other necessary files/folders:
 
-| FolderFile | Description |
+| Folder/File | Description |
 | :--------- | :---------- |
 | [mitocheck_metadata](mitocheck_metadata/) | IDR curated metadata, `trainingset` file and `features` dataset necessary for locating Mitocheck-labeled training data |
 | [utils](utils/) | Python files with functions used throughout repository |
