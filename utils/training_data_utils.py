@@ -94,8 +94,6 @@ def is_labeled(centroid: tuple, frame_features: pd.DataFrame, frame_labels: list
     int, bool
         mitocheck-assigned object ID, whether or not nucleus is labeled
     """
-    objID = -1
-    labeled = False
 
     # determine if centroid is inside any of labeled bounding boxes
     x = centroid[0]
@@ -110,10 +108,10 @@ def is_labeled(centroid: tuple, frame_features: pd.DataFrame, frame_labels: list
         bottomRight_y = upperLeft_y + height
         if upperLeft_x <= x and x <= bottomRight_x:
             if y >= upperLeft_y and y <= bottomRight_y:
-                objID = labeled_feature.iloc[0][0]
-                labeled = True
+                objID = int(labeled_feature.iloc[0][0])
+                return objID, True
 
-    return objID, labeled
+    return None, False
 
 
 def get_cell_class(
@@ -201,7 +199,6 @@ def get_labeled_cells(
             )
             frame_labels = get_frame_labels(training_set_dat_path, plate, well, frame)
             obj_id, cell_is_labeled = is_labeled(centroid, frame_features, frame_labels)
-            obj_id = int(obj_id)
 
             if cell_is_labeled:
                 phenotypic_class = get_cell_class(
