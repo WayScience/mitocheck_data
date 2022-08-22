@@ -1,4 +1,4 @@
-# 1. Format Training Data
+# 2. Format Training Data
 
 In this module, we associate features extracted from labeled frames with their Mitocheck-assigned phenotypic class label.
 After extracting the features from these labeled frames with `idrstream`, we associate the bounding boxes of cells from [features/](../mitocheck_metadata/features) with their `idrstream`-derived coordinates to assign cells their phenotypic class (as assigned by Mitocheck).
