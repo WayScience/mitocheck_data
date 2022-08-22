@@ -8,5 +8,3 @@ __pycache__/
 1.idr_streams/extracted_features
 # aspera key
 1.idr_streams/stream_files/asperaweb_id_dsa.openssh
-# features dataset
-2.format_training_data/features
