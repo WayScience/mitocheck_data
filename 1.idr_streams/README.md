@@ -1,7 +1,13 @@
 # 1. IDR Streams
 
-In this module, we use [idrstream](https://github.com/WayScience/IDR_stream) to extract features from the training and control mitocheck data.
+In this module, we use [idrstream](https://github.com/WayScience/IDR_stream) to extract features from the training and control mitocheck data.\
+
 `idrstream` uses various tools to download, preprocess, segment, and extract features from the frames, wells, plates (metadata) curated in [0.locate_data](../0.locate_data).
+The tool used to extract features, [DeepProfiler](https://github.com/cytomining/DeepProfiler), requires the desired frame along with intermediate files to understand where cells are located and how to extract features.
+These files can reach TB of size for feature extraction on larger datasets.
+`idrstream` processes IDR data in batches to avoid the need for storing many intermediate files at once.
+However, the intermediate files for each batch still need to be stored locally.
+The intermediate files for the training and control datasets will be stored in `tmp/`.
 
 In [streams/](streams/) we initialize and run `idrstream` for the training, negative control, and positive control data.
 The `batch_size` parameter tells `idrstream` how many wells to process in one batch.
