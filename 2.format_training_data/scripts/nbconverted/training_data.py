@@ -37,6 +37,7 @@ labeled_cells = get_labeled_cells(features_path, training_set_dat_path, training
 
 
 # ### Replace `Shape1` and `Shape3` with their respective classes
+# #### See [#16](https://github.com/WayScience/mitocheck_data/issues/16) for more details
 
 # In[4]:
 
