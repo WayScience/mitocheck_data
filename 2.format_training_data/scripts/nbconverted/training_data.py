@@ -34,12 +34,28 @@ features_path = pathlib.Path("../mitocheck_metadata/features/")
 training_set_dat_path = pathlib.Path("../mitocheck_metadata/trainingset_2007_06_21.dat")
 
 labeled_cells = get_labeled_cells(features_path, training_set_dat_path, training_data)
+
+
+# ### Replace `Shape1` and `Shape3` with their respective classes
+
+# In[4]:
+
+
+labeled_cells = labeled_cells.replace("Shape1", "Binuclear")
+labeled_cells = labeled_cells.replace("Shape3", "Polylobed")
+
+
+# ### Preview labeled cells
+
+# In[5]:
+
+
 labeled_cells
 
 
 # ### Save labeled training data
 
-# In[4]:
+# In[6]:
 
 
 results_dir = pathlib.Path("results/")

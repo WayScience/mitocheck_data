@@ -1,22 +1,66 @@
 import pathlib
 import pandas as pd
 
-def get_frame_features_path(features_path, plate, well, frame):
+
+def get_frame_features_path(
+    features_path: pathlib.Path, plate: str, well: int, frame: int
+) -> pathlib.Path:
+    """
+    get path to desired features file
+
+    Parameters
+    ----------
+    features_path : pathlib.Path
+        path to features directory
+    plate : str
+        desired plate
+    well : int
+        desired well number
+    frame : int
+        desired frame
+
+    Returns
+    -------
+    pathlib.Path
+        path to desired features file
+    """
     well_string = str(well).zfill(3)
     movie_path = pathlib.Path(f"{features_path}/{plate}/features/{well_string}/")
-    frame_time = (int(frame)-1)*30
+    frame_time = (int(frame) - 1) * 30
     frame_time_string = f"T{str(frame_time).zfill(5)}"
-    
+
     for frame_file in movie_path.iterdir():
-        if(frame_time_string in frame_file.name):
+        if frame_time_string in frame_file.name:
             return frame_file
 
-def get_frame_labels(training_set_dat_path, plate, well, frame):
+
+def get_frame_labels(
+    training_set_dat_path: pathlib.Path, plate: str, well: int, frame: int
+) -> list:
+    """
+    get Mitocheck-assigned object ID and pheontypic class for objects in desired frame
+
+    Parameters
+    ----------
+    training_set_dat_path : pathlib.Path
+        path to trainingset file
+    plate : str
+        desired plate
+    well : int
+        desired well number
+    frame : int
+        desired frame
+
+    Returns
+    -------
+    list
+        list of format [[obj_id1: phenotypic_class1], [obj_id2: phenotypic_class2]...]
+    """
     well_string = f"W{str(well).zfill(5)}"
-    frame_time = (int(frame)-1)*30
+    frame_time = (int(frame) - 1) * 30
     frame_time_string = f"T{str(frame_time).zfill(5)}"
     frame_file_details = [plate, well_string, frame_time_string]
-    
+
     frame_objects = []
     with open(training_set_dat_path) as trainingset_file:
         append = False
@@ -26,19 +70,34 @@ def get_frame_labels(training_set_dat_path, plate, well, frame):
             if append:
                 object_details = line.strip().split(": ")
                 frame_objects.append(object_details)
-            #match plate, well, frame to file name
+            # match plate, well, frame to file name
             if all(detail in line for detail in frame_file_details):
                 append = True
     return frame_objects
 
-def is_labeled(centroid, frame_features, frame_labels):
+
+def is_labeled(centroid: tuple, frame_features: pd.DataFrame, frame_labels: list):
     """
-    returns true if nucleus is included in labeled training data, false if not
+    determine if nucleus is included in labeled training data
+
+    Parameters
+    ----------
+    centroid : tuple
+        (x, y) coords of desired nuclues
+    frame_features : pd.DataFrame
+        frame features corresponding to frame nucleus is from
+    frame_labels : list
+        frame labels corresponding to frame nucleus is from
+
+    Returns
+    -------
+    int, bool
+        mitocheck-assigned object ID, whether or not nucleus is labeled
     """
     objID = -1
     labeled = False
-    
-    #determine if centroid is inside any of labeled bounding boxes
+
+    # determine if centroid is inside any of labeled bounding boxes
     x = centroid[0]
     y = centroid[1]
     for labels in frame_labels:
@@ -53,8 +112,9 @@ def is_labeled(centroid, frame_features, frame_labels):
             if y >= upperLeft_y and y <= bottomRight_y:
                 objID = labeled_feature.iloc[0][0]
                 labeled = True
-        
+
     return objID, labeled
+
 
 def get_cell_class(
     training_set_dat_path: pathlib.Path,
@@ -63,17 +123,26 @@ def get_cell_class(
     frame: str,
     obj_id: int,
 ) -> str:
-    """get phenotypic class of cell from trainingset.dat file, as labeled by Mitocheck
+    """
+    get phenotypic class of cell from trainingset.dat file, as labeled by Mitocheck
 
-    Args:
-        single_cell_data (pd.DataFrame): dataframe with single cell data
-        trainingset_file_url (str): url location of raw traininset.dat file
-        plate (str): plate cell is from
-        well (str): well cell is from
-        frame (str): frame cell is from
+    Parameters
+    ----------
+    training_set_dat_path : pathlib.Path
+        path to trainingset file
+    plate : str
+        desired plate
+    well : int
+        desired well number
+    frame : int
+        desired frame
+    obj_id : int
+        desired mitocheck-assigned object ID
 
-    Returns:
-        str: phenotypic class of nucleus, as labeled by MitoCheck
+    Returns
+    -------
+    str
+        phenotypic class
     """
     well_string = f"W{str(well).zfill(5)}"
     frame_time = (int(frame) - 1) * 30
@@ -93,7 +162,29 @@ def get_cell_class(
                 return decoded_line.split(": ")[1]
     return None
 
-def get_labeled_cells(features_path: pathlib.Path, training_set_dat_path: pathlib.Path, training_data: pd.DataFrame) -> pd.DataFrame:
+
+def get_labeled_cells(
+    features_path: pathlib.Path,
+    training_set_dat_path: pathlib.Path,
+    training_data: pd.DataFrame,
+) -> pd.DataFrame:
+    """
+    get labeled cells from larger training dataset
+
+    Parameters
+    ----------
+    features_path : pathlib.Path
+        path to features directory
+    training_set_dat_path : pathlib.Path
+        path to trainingset file
+    training_data : pd.DataFrame
+        larger training dataset
+
+    Returns
+    -------
+    pd.DataFrame
+        dataset with all labeled single cells, including mitocheck-assigned cell IDs and phenotypic class
+    """
     labeled_cells = []
 
     for index, row in training_data.iterrows():
@@ -117,10 +208,12 @@ def get_labeled_cells(features_path: pathlib.Path, training_set_dat_path: pathli
                     training_set_dat_path, plate, well, frame, obj_id
                 )
 
-                additional_metadata = pd.Series({
-                    "Mitocheck_Phenotypic_Class": phenotypic_class,
-                    "Mitocheck_Object_ID": obj_id,
-                })
+                additional_metadata = pd.Series(
+                    {
+                        "Mitocheck_Phenotypic_Class": phenotypic_class,
+                        "Mitocheck_Object_ID": obj_id,
+                    }
+                )
                 cell_data = pd.concat([additional_metadata, row])
                 labeled_cells.append(cell_data)
         except IndexError as e:
