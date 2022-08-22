@@ -10,6 +10,7 @@ from idrstream.idr_stream import IdrStream
 
 # set up idr stream
 idr_id = "idr0013"
+# tmp dir contains intermediate files (desired frame, nuclei locations, DeepProfiler files)
 tmp_dir = pathlib.Path("../tmp/")
 try:
     shutil.rmtree(tmp_dir)
@@ -29,14 +30,16 @@ stream = IdrStream(
 )
 
 stream_files_dir = pathlib.Path("../stream_files/")
+# path to /home/user
+home_dir = pathlib.Path.home()
 
-aspera_path = pathlib.Path("/home/roshankern/.aspera/ascli/sdk/ascp")
+aspera_path = pathlib.Path(f"{home_dir}/.aspera/ascli/sdk/ascp")
 aspera_key_path = pathlib.Path(f"{stream_files_dir}/asperaweb_id_dsa.openssh")
 screens_path = pathlib.Path(f"{stream_files_dir}/idr0013-screenA-plates.tsv")
 
 stream.init_downloader(aspera_path, aspera_key_path, screens_path)
 
-fiji_path = pathlib.Path("/home/roshankern/Desktop/Fiji.app")
+fiji_path = pathlib.Path(f"{home_dir}/Desktop/Fiji.app")
 stream.init_preprocessor(fiji_path)
 
 nuclei_model_specs = {
