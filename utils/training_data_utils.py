@@ -38,7 +38,7 @@ def get_frame_labels(
     training_set_dat_path: pathlib.Path, plate: str, well: int, frame: int
 ) -> list:
     """
-    get Mitocheck-assigned object ID and pheontypic class for objects in desired frame
+    get Mitocheck-assigned object ID and phenotypic class for objects in desired frame
 
     Parameters
     ----------
