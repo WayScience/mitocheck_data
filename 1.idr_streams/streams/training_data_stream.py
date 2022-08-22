@@ -25,7 +25,7 @@ stream = IdrStream(
     idr_id,
     tmp_dir,
     training_data_final_dir,
-    log="training_idr_stream.log",
+    log="logs/training_idr_stream.log",
 )
 
 stream_files_dir = pathlib.Path("../stream_files/")
