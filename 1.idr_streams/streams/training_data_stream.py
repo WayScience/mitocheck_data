@@ -67,3 +67,5 @@ training_data = pd.read_csv(
 
 # run idr stream
 stream.run_stream(training_data, batch_size=5, start_batch=0)
+# clear tmp dir
+shutil.rmtree(tmp_dir)

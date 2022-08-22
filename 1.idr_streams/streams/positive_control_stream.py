@@ -67,3 +67,5 @@ positive_control_data = pd.read_csv(
 
 # run idr stream
 stream.run_stream(positive_control_data, batch_size=10, start_batch=0)
+# clear tmp dir
+shutil.rmtree(tmp_dir)

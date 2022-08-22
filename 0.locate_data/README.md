@@ -15,5 +15,5 @@ cd 0.locate_data
 conda activate mitocheck_data
 
 # Locate data
-locate_data.sh
+bash locate_data.sh
 ```

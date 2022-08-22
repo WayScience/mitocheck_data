@@ -38,11 +38,36 @@ cd 1.idr_streams
 conda activate mitocheck_data
 
 # Run IDR streams
+bash idr_streams.sh
 ```
 
+### IDR Stream Notes
 
-IDR stream runs:
+Logs from each `idrstream` run will be saved to [logs/](streams/logs/).
+These logs inlcude info about each `idrstream` run, including any errors that might have occured while profiling a batch.
+The example logs located in [logs/](streams/logs/) only include information from batch 0 of each `idrstream` because these IDR streams were originally run as a prototype and thus had no log file.
 
-training data: 64 min, no errors
-negative controls: 900 min, 16 batches cancelled with errors
-negative controls: 515 min, 14 batches cancelled with errors
+IDR stream run times:
+- training data: 64 min
+- negative controls: 900 min
+- negative controls: 515 min
+
+**Note:** These IDR streams were run with the following specs:
+
+- 24 CPUs
+- 68 GB RAM
+- ~ 650 MB/s download speed (as measured by [speedtest.net](https://www.speedtest.net/)).
+- GeForce RTX 3060 sm_86 with following output from nvidia-smi:
+```
++-----------------------------------------------------------------------------+
+| NVIDIA-SMI 470.129.06   Driver Version: 470.129.06   CUDA Version: 11.4     |
+|-------------------------------+----------------------+----------------------+
+| GPU  Name        Persistence-M| Bus-Id        Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp  Perf  Pwr:Usage/Cap|         Memory-Usage | GPU-Util  Compute M. |
+|                               |                      |               MIG M. |
+|===============================+======================+======================|
+|   0  NVIDIA GeForce ...  Off  | 00000000:2D:00.0  On |                  N/A |
+|  0%   54C    P8    23W / 170W |    532MiB / 12045MiB |     40%      Default |
+|                               |                      |                  N/A |
++-------------------------------+----------------------+----------------------+
+```
