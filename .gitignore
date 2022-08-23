@@ -8,3 +8,5 @@ __pycache__/
 1.idr_streams/extracted_features
 # aspera key
 1.idr_streams/stream_files/asperaweb_id_dsa.openssh
+# normalized features
+3.normalize_data/normalized_data
