@@ -8,7 +8,8 @@ As shown in [controls_Metadata_Gene.png](raw_data_umaps/controls_Metadata_Gene.p
 This demonstrates that the biological changes induced by gene pertubations have manifested in the `DeepProfiler` features extracted with `idrstream`.
 The other UMAPs in [raw_data_umaps/](raw_data_umaps/) suggest that batch effects from plate, well, and frame are not the dominant signal in the feature data.
 
-**Note:** UMAPs were generated with 10% of data from positive and negative controls.
+**Note:** UMAPs were generated with 10% random subsample (without replacement) of data from positive and negative controls.
+There are a total of ____ positive control cells and ____ negative control cells.
 
 Next, we derive a normalization scaler with [sklearn.preprocessing.StandardScaler](https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.StandardScaler.html) from the negative control features.
 [Caicedo et al, 2017](https://www.nature.com/articles/nmeth.4397) explain why the negative control features are a good normalization population for our use case:
