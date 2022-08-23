@@ -11,7 +11,7 @@ See [#16](https://github.com/WayScience/mitocheck_data/issues/16) for more detai
 Use the commands below to format the training data:
 
 ```sh
-# Make sure you are located in 0.locate_data
+# Make sure you are located in 2.format_training_data
 cd 2.format_training_data
 
 # Activate mitocheck_data conda environment
