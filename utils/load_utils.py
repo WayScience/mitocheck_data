@@ -28,6 +28,23 @@ def compile_mitocheck_batch_data(data_path: pathlib.Path) -> pd.DataFrame:
             data = batch
         else:
             data = pd.concat([data, batch])
-
+        
     return data.reset_index(drop=True)
 
+def split_data(pycytominer_output: pd.DataFrame):
+    # split metadata from features
+    metadata_cols = [
+        col_name
+        for col_name in pycytominer_output.columns.tolist()
+        if "efficientnet" not in col_name
+    ]
+    metadata_dataframe = pycytominer_output[metadata_cols]
+
+    feature_cols = [
+        col_name
+        for col_name in pycytominer_output.columns.tolist()
+        if "efficientnet" in col_name
+    ]
+    feature_data = pycytominer_output[feature_cols].values
+
+    return metadata_dataframe, feature_data

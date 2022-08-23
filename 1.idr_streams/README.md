@@ -60,12 +60,12 @@ IDR stream run times:
 - negative controls: 900 min
 - negative controls: 515 min
 
-**Note:** These IDR streams were run with the following specs:
+These IDR streams were run with the following specs:
 
 - 24 CPUs
-- 68 GB RAM
+- 64 GB RAM
 - ~ 650 MB/s download speed (as measured by [speedtest.net](https://www.speedtest.net/)).
-- GeForce RTX 3060 sm_86 with following output from nvidia-smi:
+- GeForce RTX 3090 sm_86 with following output from nvidia-smi:
 ```
 +-----------------------------------------------------------------------------+
 | NVIDIA-SMI 470.129.06   Driver Version: 470.129.06   CUDA Version: 11.4     |
@@ -75,7 +75,7 @@ IDR stream run times:
 |                               |                      |               MIG M. |
 |===============================+======================+======================|
 |   0  NVIDIA GeForce ...  Off  | 00000000:2D:00.0  On |                  N/A |
-|  0%   54C    P8    23W / 170W |    532MiB / 12045MiB |     40%      Default |
+|  0%   49C    P8    44W / 420W |    590MiB / 24259MiB |     10%      Default |
 |                               |                      |                  N/A |
 +-------------------------------+----------------------+----------------------+
 ```
