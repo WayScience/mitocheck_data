@@ -62,6 +62,12 @@ def show_2D_umap(
         metadata for how to color umap points
     save_path : pathlib.Path, optional
         path to save umap image, by default None
+    point_size : int, optional
+        size of umap points, by default 5
+    alpha : float, optional
+        opacity of umap points, by default 1
+    palette : str, optional
+        color palette used to color points, by default "bright"
     """
 
     plt.figure(figsize=(15, 12))
@@ -98,6 +104,24 @@ def show_1D_umap(
     alpha: float = 1,
     palette: str = "bright",
 ):
+    """
+    show (and save) 1D umap, colored by metadata
+
+    Parameters
+    ----------
+    feature_data : np.ndarray
+        data for features to plot
+    metadata_series : pd.Series
+        metadata used to color data
+    save_path : str, optional
+        where to save umap, by default None
+    point_size : int, optional
+        size of umap points, by default 5
+    alpha : float, optional
+        opacity of umap points, by default 1
+    palette : str, optional
+        color palette used to color points, by default "bright"
+    """
     # create umap object for dimension reduction
     reducer = umap.UMAP(random_state=0, n_components=1)
 
@@ -141,6 +165,24 @@ def show_3D_umap(
     alpha: float = 1,
     palette: str = "bright",
 ):
+    """
+    show (and save) 3D umap, colored by metadata
+
+    Parameters
+    ----------
+    feature_data : np.ndarray
+        data for features to plot
+    metadata_series : pd.Series
+        metadata used to color data
+    save_path : str, optional
+        where to save umap, by default None
+    point_size : int, optional
+        size of umap points, by default 5
+    alpha : float, optional
+        opacity of umap points, by default 1
+    palette : str, optional
+        color palette used to color points, by default "bright"
+    """
     # create umap object for dimension reduction
     reducer = umap.UMAP(random_state=0, n_components=3)
 
@@ -189,7 +231,6 @@ def show_3D_umap(
 
     # save umap
     if not save_path == None:
-        embedding.to_csv(f"{save_path}/3D_umap.tsv", sep="\t", index=False)
-        plt.savefig(f"{save_path}/3D_umap.png", bbox_inches="tight")
+        plt.savefig(save_path, bbox_inches="tight")
 
     plt.show()
