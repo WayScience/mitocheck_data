@@ -67,3 +67,10 @@ def split_data(pycytominer_output: pd.DataFrame):
     feature_data = pycytominer_output[feature_cols].values
 
     return metadata_dataframe, feature_data
+
+def load_training_data(training_data_path: pathlib.Path):
+    training_data = pd.read_csv(training_data_path, compression="gzip", index_col=0)
+    training_data = training_data[
+        training_data["Mitocheck_Phenotypic_Class"] != "ADCCM"
+    ]
+    return training_data
