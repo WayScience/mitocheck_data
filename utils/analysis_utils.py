@@ -96,14 +96,39 @@ def show_2D_umap_from_embeddings(
         plt.savefig(save_path, bbox_inches="tight")
 
 
+def get_class_colors(classes_list: list, palette: str) -> dict:
+    """
+    get class colors dictionary from a class list
+
+    Parameters
+    ----------
+    classes_list : list
+        list of classes to get colors from
+    palette : str
+        seaborn palette name to get colors from
+
+    Returns
+    -------
+    dict
+        dictionary with class names as keys and hex color strings as values
+    """
+
+    class_colors = {}
+
+    cmap = sns.color_palette(palette, len(classes_list))
+    for index, class_name in enumerate(classes_list):
+        class_colors[class_name] = rgb2hex(cmap[index])
+
+    return class_colors
+
+
 def show_1D_umap(
     feature_data: np.ndarray,
     metadata_series: pd.Series,
-    colored_classes: list,
+    class_colors: dict,
     save_path=None,
     point_size: int = 5,
     alpha: float = 1,
-    palette: str = "bright",
 ):
     """
     show (and save) 1D umap, colored by metadata
@@ -115,16 +140,14 @@ def show_1D_umap(
         data for features to plot
     metadata_series : pd.Series
         metadata used to color data
-    colored_classes : list
-        classes to color, all other classes will be gray
+    class_colors : dict
+        colors for classes, any classes not specified will be gray
     save_path : _type_, optional
         where to save umap, by default None, by default None
     point_size : int, optional
         size of umap points, by default 5
     alpha : float, optional
         opacity of umap points,, by default 1
-    palette : str, optional
-        color palette used to color points, by default "bright"
     """
     # create umap object for dimension reduction
     reducer = umap.UMAP(random_state=0, n_components=1)
@@ -139,10 +162,12 @@ def show_1D_umap(
 
     fig = plt.figure(figsize=(15, 15))
     ax = fig.gca()
-    cmap = sns.color_palette(palette, len(colored_classes))
     legend_elements = []
 
-    # add each phenotypic class to 2d graph and legend
+    # keep track of if "other" classes exist
+    other_classes_exist = False
+
+    # add each phenotypic class to 1d graph and legend
     for index, metadata_class in enumerate(
         embedding[metadata_series.name].unique().tolist()
     ):
@@ -153,19 +178,34 @@ def show_1D_umap(
         y = class_embedding["y_distribution"]
 
         # color by class or gray if it should not be colored
-        if metadata_class in colored_classes:
-            color = rgb2hex(cmap[colored_classes.index(metadata_class)])
+        if metadata_class in class_colors.keys():
+            color = class_colors[metadata_class]
+            legend_elements.append(
+                Line2D(
+                    [0],
+                    [0],
+                    marker="o",
+                    color="w",
+                    label=metadata_class,
+                    markerfacecolor=color,
+                    markersize=10,
+                )
+            )
         else:
+            other_classes_exist = True
             color = "#808080"
 
         ax.scatter(x, y, c=color, marker="o", alpha=alpha, s=point_size)
+
+    # add "other" to legend if there are "other" classes
+    if other_classes_exist:
         legend_elements.append(
             Line2D(
                 [0],
                 [0],
                 marker="o",
                 color="w",
-                label=metadata_class,
+                label="Other",
                 markerfacecolor=color,
                 markersize=10,
             )
@@ -187,11 +227,10 @@ def show_1D_umap(
 def show_2D_umap(
     feature_data: np.ndarray,
     metadata_series: pd.Series,
-    colored_classes: list,
+    class_colors: dict,
     save_path=None,
     point_size: int = 5,
     alpha: float = 1,
-    palette: str = "bright",
 ):
     """
     show (and save) 2D umap, colored by metadata
@@ -203,16 +242,14 @@ def show_2D_umap(
         data for features to plot
     metadata_series : pd.Series
         metadata used to color data
-    colored_classes : list
-        classes to color, all other classes will be gray
+    class_colors : dict
+        colors for classes, any classes not specified will be gray
     save_path : _type_, optional
         where to save umap, by default None, by default None
     point_size : int, optional
         size of umap points, by default 5
     alpha : float, optional
         opacity of umap points,, by default 1
-    palette : str, optional
-        color palette used to color points, by default "bright"
     """
     # create umap object for dimension reduction
     reducer = umap.UMAP(random_state=0, n_components=2)
@@ -225,10 +262,12 @@ def show_2D_umap(
 
     fig = plt.figure(figsize=(15, 15))
     ax = fig.gca()
-    cmap = sns.color_palette(palette, len(colored_classes))
     legend_elements = []
 
-    # add each phenotypic class to 2d graph and legend
+    # keep track of if "other" classes exist
+    other_classes_exist = False
+
+    # add each phenotypic class to 1d graph and legend
     for index, metadata_class in enumerate(
         embedding[metadata_series.name].unique().tolist()
     ):
@@ -237,19 +276,36 @@ def show_2D_umap(
         ]
         x = class_embedding["UMAP1"]
         y = class_embedding["UMAP2"]
-        if metadata_class in colored_classes:
-            color = rgb2hex(cmap[colored_classes.index(metadata_class)])
+
+        # color by class or gray if it should not be colored
+        if metadata_class in class_colors.keys():
+            color = class_colors[metadata_class]
+            legend_elements.append(
+                Line2D(
+                    [0],
+                    [0],
+                    marker="o",
+                    color="w",
+                    label=metadata_class,
+                    markerfacecolor=color,
+                    markersize=10,
+                )
+            )
         else:
+            other_classes_exist = True
             color = "#808080"
 
         ax.scatter(x, y, c=color, marker="o", alpha=alpha, s=point_size)
+
+    # add "other" to legend if there are "other" classes
+    if other_classes_exist:
         legend_elements.append(
             Line2D(
                 [0],
                 [0],
                 marker="o",
                 color="w",
-                label=metadata_class,
+                label="Other",
                 markerfacecolor=color,
                 markersize=10,
             )
@@ -271,11 +327,10 @@ def show_2D_umap(
 def show_3D_umap(
     feature_data: np.ndarray,
     metadata_series: pd.Series,
-    colored_classes: list,
+    class_colors: dict,
     save_path=None,
     point_size: int = 5,
     alpha: float = 1,
-    palette: str = "bright",
 ):
     """
     show (and save) 3D umap, colored by metadata
@@ -287,16 +342,14 @@ def show_3D_umap(
         data for features to plot
     metadata_series : pd.Series
         metadata used to color data
-    colored_classes : list
-        classes to color, all other classes will be gray
+    class_colors : dict
+        colors for classes, any classes not specified will be gray
     save_path : _type_, optional
         where to save umap, by default None, by default None
     point_size : int, optional
         size of umap points, by default 5
     alpha : float, optional
         opacity of umap points,, by default 1
-    palette : str, optional
-        color palette used to color points, by default "bright"
     """
     # create umap object for dimension reduction
     reducer = umap.UMAP(random_state=0, n_components=3)
@@ -309,8 +362,10 @@ def show_3D_umap(
 
     fig = plt.figure(figsize=(15, 15))
     ax = fig.gca(projection="3d")
-    cmap = sns.color_palette(palette, len(colored_classes))
     legend_elements = []
+
+    # keep track of if "other" classes exist
+    other_classes_exist = False
 
     # add each phenotypic class to 3d graph and legend
     for index, metadata_class in enumerate(
@@ -322,19 +377,36 @@ def show_3D_umap(
         x = class_embedding["UMAP1"]
         y = class_embedding["UMAP2"]
         z = class_embedding["UMAP3"]
-        if metadata_class in colored_classes:
-            color = rgb2hex(cmap[colored_classes.index(metadata_class)])
+
+        # color by class or gray if it should not be colored
+        if metadata_class in class_colors.keys():
+            color = class_colors[metadata_class]
+            legend_elements.append(
+                Line2D(
+                    [0],
+                    [0],
+                    marker="o",
+                    color="w",
+                    label=metadata_class,
+                    markerfacecolor=color,
+                    markersize=10,
+                )
+            )
         else:
+            other_classes_exist = True
             color = "#808080"
 
         ax.scatter(x, y, z, c=color, marker="o", alpha=alpha, s=point_size)
+
+    # add "other" to legend if there are "other" classes
+    if other_classes_exist:
         legend_elements.append(
             Line2D(
                 [0],
                 [0],
                 marker="o",
                 color="w",
-                label=metadata_class,
+                label="Other",
                 markerfacecolor=color,
                 markersize=10,
             )
