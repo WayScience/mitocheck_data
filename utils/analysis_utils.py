@@ -40,68 +40,7 @@ def get_2D_umap_embeddings(feature_data: np.ndarray, random_state: int = 0):
     return x_data, y_data
 
 
-def show_2D_umap_grays(
-    feature_data: np.ndarray,
-    metadata_series: pd.Series,
-    colored_classes: list,
-    save_path=None,
-    point_size: int = 5,
-    alpha: float = 1,
-    palette: str = "bright",
-):        
-    # create umap object for dimension reduction
-    reducer = umap.UMAP(random_state=0, n_components=2)
-    # Fit UMAP and extract latent vars
-    embedding = pd.DataFrame(reducer.fit_transform(feature_data), columns=["UMAP1", "UMAP2"])
-    # add phenotypic class to embeddings
-    embedding[metadata_series.name] = metadata_series.tolist()
-    
-    fig = plt.figure(figsize=(15, 15))
-    ax = fig.gca()
-    cmap = sns.color_palette(palette, len(colored_classes))
-    legend_elements = []
-
-    # add each phenotypic class to 3d graph and legend
-    for index, metadata_class in enumerate(
-        embedding[metadata_series.name].unique().tolist()
-    ):
-        class_embedding = embedding.loc[
-            embedding[metadata_series.name] == metadata_class
-        ]
-        x = class_embedding["UMAP1"]
-        y = class_embedding["UMAP2"]
-        if metadata_class in colored_classes:
-            color = rgb2hex(cmap[colored_classes.index(metadata_class)])
-        else:
-            color = "#808080"
-        
-        ax.scatter(x, y, c=color, marker="o", alpha=alpha, s=point_size)
-        legend_elements.append(
-            Line2D(
-                [0],
-                [0],
-                marker="o",
-                color="w",
-                label=metadata_class,
-                markerfacecolor=color,
-                markersize=10,
-            )
-        )
-
-    plt.legend(handles=legend_elements, loc="center left", bbox_to_anchor=(1, 0.5))
-    # Label axes, title
-    ax.set_xlabel("UMAP 1")
-    ax.set_ylabel("UMAP 2")
-    ax.set_title("2 Dimensional UMAP")
-
-    # save umap
-    if not save_path == None:
-        plt.savefig(save_path, bbox_inches="tight")
-
-    plt.show()
-
-
-def show_2D_umap(
+def show_2D_umap_from_embeddings(
     x_data: np.ndarray,
     y_data: np.ndarray,
     metadata_series: pd.Series,
@@ -111,7 +50,7 @@ def show_2D_umap(
     palette: str = "bright",
 ):
     """
-    show 2D umap, save if desired
+    show 2D umap from 2D UMAP embeddings, save if desired
 
     Parameters
     ----------
@@ -160,13 +99,15 @@ def show_2D_umap(
 def show_1D_umap(
     feature_data: np.ndarray,
     metadata_series: pd.Series,
-    save_path: str = None,
+    colored_classes: list,
+    save_path=None,
     point_size: int = 5,
     alpha: float = 1,
     palette: str = "bright",
 ):
     """
     show (and save) 1D umap, colored by metadata
+    classes not included in colored_classes will be colored gray
 
     Parameters
     ----------
@@ -174,50 +115,76 @@ def show_1D_umap(
         data for features to plot
     metadata_series : pd.Series
         metadata used to color data
-    save_path : str, optional
-        where to save umap, by default None
+    colored_classes : list
+        classes to color, all other classes will be gray
+    save_path : _type_, optional
+        where to save umap, by default None, by default None
     point_size : int, optional
         size of umap points, by default 5
     alpha : float, optional
-        opacity of umap points, by default 1
+        opacity of umap points,, by default 1
     palette : str, optional
         color palette used to color points, by default "bright"
     """
     # create umap object for dimension reduction
     reducer = umap.UMAP(random_state=0, n_components=1)
-
-    # Fit UMAP and extract latent var 1
+    # Fit UMAP and extract latent vars
     embedding = pd.DataFrame(reducer.fit_transform(feature_data), columns=["UMAP1"])
+    # add phenotypic class to embeddings
+    embedding[metadata_series.name] = metadata_series.tolist()
 
     # create random y distribution to space out points
     y_distribution = np.random.rand(feature_data.shape[0])
     embedding["y_distribution"] = y_distribution.tolist()
 
-    plt.figure(figsize=(15, 12))
+    fig = plt.figure(figsize=(15, 15))
+    ax = fig.gca()
+    cmap = sns.color_palette(palette, len(colored_classes))
+    legend_elements = []
 
-    # Produce scatterplot with umap data, using phenotypic classses to color
-    sns_plot = sns.scatterplot(
-        palette=palette,
-        x="UMAP1",
-        y="y_distribution",
-        data=embedding,
-        hue=metadata_series.tolist(),
-        alpha=alpha,
-        linewidth=0,
-        s=point_size,
-    )
-    # Adjust legend
-    sns_plot.legend(loc="center left", bbox_to_anchor=(1, 0.5))
+    # add each phenotypic class to 2d graph and legend
+    for index, metadata_class in enumerate(
+        embedding[metadata_series.name].unique().tolist()
+    ):
+        class_embedding = embedding.loc[
+            embedding[metadata_series.name] == metadata_class
+        ]
+        x = class_embedding["UMAP1"]
+        y = class_embedding["y_distribution"]
+
+        # color by class or gray if it should not be colored
+        if metadata_class in colored_classes:
+            color = rgb2hex(cmap[colored_classes.index(metadata_class)])
+        else:
+            color = "#808080"
+
+        ax.scatter(x, y, c=color, marker="o", alpha=alpha, s=point_size)
+        legend_elements.append(
+            Line2D(
+                [0],
+                [0],
+                marker="o",
+                color="w",
+                label=metadata_class,
+                markerfacecolor=color,
+                markersize=10,
+            )
+        )
+
+    plt.legend(handles=legend_elements, loc="center left", bbox_to_anchor=(1, 0.5))
     # Label axes, title
-    sns_plot.set_xlabel("UMAP 1")
-    sns_plot.set_ylabel("Random Distribution")
-    sns_plot.set_title("1 Dimensional UMAP")
+    ax.set_xlabel("UMAP 1")
+    ax.set_ylabel("Random Distribution")
+    ax.set_title("1 Dimensional UMAP")
 
     # save umap
     if not save_path == None:
         plt.savefig(save_path, bbox_inches="tight")
 
-def show_2D_umap_grays(
+    plt.show()
+
+
+def show_2D_umap(
     feature_data: np.ndarray,
     metadata_series: pd.Series,
     colored_classes: list,
@@ -225,20 +192,43 @@ def show_2D_umap_grays(
     point_size: int = 5,
     alpha: float = 1,
     palette: str = "bright",
-):        
+):
+    """
+    show (and save) 2D umap, colored by metadata
+    classes not included in colored_classes will be colored gray
+
+    Parameters
+    ----------
+    feature_data : np.ndarray
+        data for features to plot
+    metadata_series : pd.Series
+        metadata used to color data
+    colored_classes : list
+        classes to color, all other classes will be gray
+    save_path : _type_, optional
+        where to save umap, by default None, by default None
+    point_size : int, optional
+        size of umap points, by default 5
+    alpha : float, optional
+        opacity of umap points,, by default 1
+    palette : str, optional
+        color palette used to color points, by default "bright"
+    """
     # create umap object for dimension reduction
     reducer = umap.UMAP(random_state=0, n_components=2)
     # Fit UMAP and extract latent vars
-    embedding = pd.DataFrame(reducer.fit_transform(feature_data), columns=["UMAP1", "UMAP2"])
+    embedding = pd.DataFrame(
+        reducer.fit_transform(feature_data), columns=["UMAP1", "UMAP2"]
+    )
     # add phenotypic class to embeddings
     embedding[metadata_series.name] = metadata_series.tolist()
-    
+
     fig = plt.figure(figsize=(15, 15))
     ax = fig.gca()
     cmap = sns.color_palette(palette, len(colored_classes))
     legend_elements = []
 
-    # add each phenotypic class to 3d graph and legend
+    # add each phenotypic class to 2d graph and legend
     for index, metadata_class in enumerate(
         embedding[metadata_series.name].unique().tolist()
     ):
@@ -251,7 +241,7 @@ def show_2D_umap_grays(
             color = rgb2hex(cmap[colored_classes.index(metadata_class)])
         else:
             color = "#808080"
-        
+
         ax.scatter(x, y, c=color, marker="o", alpha=alpha, s=point_size)
         legend_elements.append(
             Line2D(
@@ -277,9 +267,11 @@ def show_2D_umap_grays(
 
     plt.show()
 
+
 def show_3D_umap(
     feature_data: np.ndarray,
     metadata_series: pd.Series,
+    colored_classes: list,
     save_path=None,
     point_size: int = 5,
     alpha: float = 1,
@@ -287,6 +279,7 @@ def show_3D_umap(
 ):
     """
     show (and save) 3D umap, colored by metadata
+    classes not included in colored_classes will be colored gray
 
     Parameters
     ----------
@@ -294,29 +287,29 @@ def show_3D_umap(
         data for features to plot
     metadata_series : pd.Series
         metadata used to color data
-    save_path : str, optional
-        where to save umap, by default None
+    colored_classes : list
+        classes to color, all other classes will be gray
+    save_path : _type_, optional
+        where to save umap, by default None, by default None
     point_size : int, optional
         size of umap points, by default 5
     alpha : float, optional
-        opacity of umap points, by default 1
+        opacity of umap points,, by default 1
     palette : str, optional
         color palette used to color points, by default "bright"
     """
     # create umap object for dimension reduction
     reducer = umap.UMAP(random_state=0, n_components=3)
-
-    # Fit UMAP and extract latent vars 1-3
+    # Fit UMAP and extract latent vars
     embedding = pd.DataFrame(
         reducer.fit_transform(feature_data), columns=["UMAP1", "UMAP2", "UMAP3"]
     )
-
     # add phenotypic class to embeddings
     embedding[metadata_series.name] = metadata_series.tolist()
 
-    fig = plt.figure(figsize=(17, 17))
+    fig = plt.figure(figsize=(15, 15))
     ax = fig.gca(projection="3d")
-    cmap = sns.color_palette(palette, embedding[metadata_series.name].nunique())
+    cmap = sns.color_palette(palette, len(colored_classes))
     legend_elements = []
 
     # add each phenotypic class to 3d graph and legend
@@ -329,7 +322,12 @@ def show_3D_umap(
         x = class_embedding["UMAP1"]
         y = class_embedding["UMAP2"]
         z = class_embedding["UMAP3"]
-        ax.scatter(x, y, z, c=rgb2hex(cmap[index]), marker="o", alpha=alpha, s=point_size)
+        if metadata_class in colored_classes:
+            color = rgb2hex(cmap[colored_classes.index(metadata_class)])
+        else:
+            color = "#808080"
+
+        ax.scatter(x, y, z, c=color, marker="o", alpha=alpha, s=point_size)
         legend_elements.append(
             Line2D(
                 [0],
@@ -337,7 +335,7 @@ def show_3D_umap(
                 marker="o",
                 color="w",
                 label=metadata_class,
-                markerfacecolor=rgb2hex(cmap[index]),
+                markerfacecolor=color,
                 markersize=10,
             )
         )
