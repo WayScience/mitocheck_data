@@ -13,7 +13,7 @@ import numpy as np
 
 import sys
 sys.path.append("../utils/")
-from locate_utils import get_training_locations, get_control_locations
+from locate_utils import get_uncompiled_training_locations, get_final_training_locations, get_control_locations
 
 
 # ### Specify paths
@@ -22,6 +22,7 @@ from locate_utils import get_training_locations, get_control_locations
 
 
 annotations_path = pathlib.Path("../mitocheck_metadata/idr0013-screenA-annotation.csv.gz")
+feature_samples_path = pathlib.Path("../mitocheck_metadata/features.samples.txt")
 features_path = pathlib.Path("../mitocheck_metadata/trainingset_2007_06_21.dat")
 
 locations_dir = pathlib.Path("locations/")
@@ -35,11 +36,11 @@ locations_dir.mkdir(exist_ok=True, parents=True)
 
 training_save_path = pathlib.Path(f"{locations_dir}/training_locations.tsv")
 
-training_data_locations = get_training_locations(features_path, annotations_path)
+uncompile_training_locations = get_uncompiled_training_locations(feature_samples_path, annotations_path)
+training_data_locations = get_final_training_locations(uncompile_training_locations)
 training_data_locations.to_csv(training_save_path, sep="\t")
 
-print(training_data_locations.shape)
-training_data_locations.head()
+training_data_locations
 
 
 # ### Find/save negative control locations
@@ -52,8 +53,7 @@ negative_control_save_path = pathlib.Path(f"{locations_dir}/negative_control_loc
 negative_control_locations = get_control_locations(annotations_path, "negative", 0)
 negative_control_locations.to_csv(negative_control_save_path, sep="\t")
 
-print(negative_control_locations.shape)
-negative_control_locations.head()
+negative_control_locations
 
 
 # ### Find/save positive control locations
@@ -66,6 +66,5 @@ positive_control_save_path = pathlib.Path(f"{locations_dir}/positive_control_loc
 positive_control_locations = get_control_locations(annotations_path, "positive", 1)
 positive_control_locations.to_csv(positive_control_save_path, sep="\t")
 
-print(positive_control_locations.shape)
-positive_control_locations.head()
+positive_control_locations
 
