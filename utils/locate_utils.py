@@ -119,6 +119,8 @@ def get_final_training_locations(
         well_num = original_training_locations.iloc[0]["Well Number"]
         well = original_training_locations.iloc[0]["Well"]
         gene = original_training_locations.iloc[0]["Original Gene Target"]
+        # na gene corresponds to failed QC test (no gene is provided in annotations)
+        # still useful for manually labeled individual cells, just means the whole well failed QC
         if pd.isna(gene):
             gene = "failed QC"
 

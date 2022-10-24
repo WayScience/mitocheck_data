@@ -28,7 +28,7 @@ conda activate mitocheck_data
 # Use specific version of idrstream
 git clone https://github.com/WayScience/IDR_stream.git
 cd IDR_stream
-git checkout 1c235ef12776a0be73b3f90fcd20dc71e011b0c2
+git checkout d5b049b308a468f6a80f7657c4cb625770130129
 ```
 
 Follow the instructions at [idrstream setup](https://github.com/WayScience/IDR_stream#setup) to complete the `idrstream` setup.
