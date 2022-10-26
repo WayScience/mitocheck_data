@@ -27,7 +27,7 @@ def compile_mitocheck_batch_data(data_path: pathlib.Path) -> pd.DataFrame:
         batch[["Metadata_Well", "Metadata_Frame"]] = batch["Metadata_Well"].str.split(
             "_", expand=True
         )
-        batch.insert(4, "Metadata_Frame", batch.pop("Metadata_Frame"))
+        batch.insert(5, "Metadata_Frame", batch.pop("Metadata_Frame"))
 
         if data.empty:
             data = batch
