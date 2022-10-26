@@ -56,7 +56,7 @@ These logs inlcude info about each `idrstream` run, including any errors that mi
 The example logs located in [logs/](streams/logs/) only include information from batch 0 of each `idrstream` because these IDR streams were originally run as a prototype and thus had no log file.
 
 IDR stream run times:
-- training data: 64 min
+- training data: 90 min
 - negative controls: 900 min
 - negative controls: 515 min
 
