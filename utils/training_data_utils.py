@@ -1,221 +1,148 @@
 import pathlib
 import pandas as pd
+import numpy as np
+from shapely.geometry import Point
+from shapely.geometry.polygon import Polygon
 
 
-def get_frame_features_path(
-    features_path: pathlib.Path, plate: str, well: int, frame: int
-) -> pathlib.Path:
+def get_frame_metadata(frame_details: str):
     """
-    get path to desired features file
+    get frame metadata from features samples movie details string
 
     Parameters
     ----------
-    features_path : pathlib.Path
-        path to features directory
-    plate : str
-        desired plate
-    well : int
-        desired well number
-    frame : int
-        desired frame
+    frame_details : str
+        string from one line of features samples file
+        ex: PLLT0010_27--ex2005_05_13--sp2005_03_23--tt17--c5___P00173_01___T00082___X0397___Y0618
 
     Returns
     -------
-    pathlib.Path
-        path to desired features file
+    plate: str
+        plate of sample
+    well_num: int
+        well number of sample
+    frame: int
+        frame of sample
+    center_x: int
+        center x coord of cell
+    center_y: int
+        center y coord of cell
     """
-    well_string = str(well).zfill(3)
-    movie_path = pathlib.Path(f"{features_path}/{plate}/features/{well_string}/")
-    frame_time = (int(frame) - 1) * 30
-    frame_time_string = f"T{str(frame_time).zfill(5)}"
 
-    for frame_file in movie_path.iterdir():
-        if frame_time_string in frame_file.name:
-            return frame_file
+    plate = frame_details.split("--")[0].replace("PL", "")
+    well_num = int(frame_details.split("___")[1][1:6])
+    frame = int(frame_details.split("___")[2][1:6]) + 1
+    center_x = int(frame_details.split("___")[3][1:])
+    center_y = int(frame_details.split("___")[4][1:])
+
+    return plate, well_num, frame, center_x, center_y
 
 
-def get_frame_labels(
-    training_set_dat_path: pathlib.Path, plate: str, well: int, frame: int
-) -> list:
+def parse_outline_data(raw_outline_data: str) -> np.array:
     """
-    get Mitocheck-assigned object ID and phenotypic class for objects in desired frame
+    parse outline data extracted with IDR stream into numpy array format
 
     Parameters
     ----------
-    training_set_dat_path : pathlib.Path
-        path to trainingset file
-    plate : str
-        desired plate
-    well : int
-        desired well number
-    frame : int
-        desired frame
+    raw_outline_data : str
+        string of outline data
 
     Returns
     -------
-    list
-        list of format [[obj_id1: phenotypic_class1], [obj_id2: phenotypic_class2]...]
+    np.array
+        parsed outline data
     """
-    well_string = f"W{str(well).zfill(5)}"
-    frame_time = (int(frame) - 1) * 30
-    frame_time_string = f"T{str(frame_time).zfill(5)}"
-    frame_file_details = [plate, well_string, frame_time_string]
+    outline_data = []
 
-    frame_objects = []
-    with open(training_set_dat_path) as trainingset_file:
-        append = False
-        for line in trainingset_file:
-            if append and ".tif" in line:
-                append = False
-            if append:
-                object_details = line.strip().split(": ")
-                frame_objects.append(object_details)
-            # match plate, well, frame to file name
-            if all(detail in line for detail in frame_file_details):
-                append = True
-    return frame_objects
+    raw_outline_data = raw_outline_data[1:-1]
+    raw_outline_data = raw_outline_data.split("\n ")
+    for coord_string in raw_outline_data:
+        x = int(coord_string[1:-1].split()[0])
+        y = int(coord_string[1:-1].split()[1])
+        outline_data.append([x, y])
+
+    return np.array(outline_data)
 
 
-def is_labeled(centroid: tuple, frame_features: pd.DataFrame, frame_labels: list):
+def center_in_outline(center_x: int, center_y: int, raw_outline_data: str) -> bool:
     """
-    determine if nucleus is included in labeled training data
+    use shapely library to see if a point is in the raw outline data
 
     Parameters
     ----------
-    centroid : tuple
-        (x, y) coords of desired nuclues
-    frame_features : pd.DataFrame
-        frame features corresponding to frame nucleus is from
-    frame_labels : list
-        frame labels corresponding to frame nucleus is from
+    center_x : int
+        x coord of cell center
+    center_y : int
+        y coord of cell center
+    raw_outline_data : str
+        raw outline data of cell
 
     Returns
     -------
-    int, bool
-        mitocheck-assigned object ID, whether or not nucleus is labeled
+    bool
+        whether or not coords are in outline
     """
-
-    # determine if centroid is inside any of labeled bounding boxes
-    x = centroid[0]
-    y = centroid[1]
-    for labels in frame_labels:
-        labeled_feature = frame_features[frame_features[0] == int(labels[0])]
-        upperLeft_x = labeled_feature.iloc[0][1]
-        upperLeft_y = labeled_feature.iloc[0][2]
-        width = labeled_feature.iloc[0][3]
-        height = labeled_feature.iloc[0][4]
-        bottomRight_x = upperLeft_x + width
-        bottomRight_y = upperLeft_y + height
-        if upperLeft_x <= x and x <= bottomRight_x:
-            if y >= upperLeft_y and y <= bottomRight_y:
-                objID = int(labeled_feature.iloc[0][0])
-                return objID, True
-
-    return None, False
-
-
-def get_cell_class(
-    training_set_dat_path: pathlib.Path,
-    plate: str,
-    well: int,
-    frame: str,
-    obj_id: int,
-) -> str:
-    """
-    get phenotypic class of cell from trainingset.dat file, as labeled by Mitocheck
-
-    Parameters
-    ----------
-    training_set_dat_path : pathlib.Path
-        path to trainingset file
-    plate : str
-        desired plate
-    well : int
-        desired well number
-    frame : int
-        desired frame
-    obj_id : int
-        desired mitocheck-assigned object ID
-
-    Returns
-    -------
-    str
-        phenotypic class
-    """
-    well_string = f"W{str(well).zfill(5)}"
-    frame_time = (int(frame) - 1) * 30
-    frame_time_string = f"T{str(frame_time).zfill(5)}"
-    frame_file_details = [plate, well_string, frame_time_string]
-    obj_id_prefix = f"{obj_id}: "
-
-    append = False
-    # need to open trainingset file each time
-    with open(training_set_dat_path) as trainingset_file:
-        for line in trainingset_file:
-            decoded_line = line.strip()
-            # match plate, well, frame to starting line for movie labels
-            if all(detail in decoded_line for detail in frame_file_details):
-                append = True
-            if append and decoded_line.startswith(obj_id_prefix):
-                return decoded_line.split(": ")[1]
-    return None
+    outline_data = parse_outline_data(raw_outline_data)
+    point = Point(center_x, center_y)
+    cell_polygon = Polygon(outline_data)
+    return cell_polygon.contains(point)
 
 
 def get_labeled_cells(
-    features_path: pathlib.Path,
-    training_set_dat_path: pathlib.Path,
-    training_data: pd.DataFrame,
+    training_data: pd.DataFrame, features_samples_path: pathlib.Path
 ) -> pd.DataFrame:
     """
-    get labeled cells from larger training dataset
+    get labeled cells as dataframe from all training data and features samples
 
     Parameters
     ----------
-    features_path : pathlib.Path
-        path to features directory
-    training_set_dat_path : pathlib.Path
-        path to trainingset file
     training_data : pd.DataFrame
-        larger training dataset
+        all single cell features from all frames with any labeled cells
+    features_samples_path : pathlib.Path
+        path to features samples file
 
     Returns
     -------
     pd.DataFrame
-        dataset with all labeled single cells, including mitocheck-assigned cell IDs and phenotypic class
+        dataframe with all labeled cells
     """
-    labeled_cells = []
+    with open(features_samples_path) as labels_file:
+        labeled_cells = []
 
-    for index, row in training_data.iterrows():
-        centroid = (row["Location_Center_X"], row["Location_Center_Y"])
-        plate = row["Metadata_Plate"]
-        well = row["Metadata_Well"]
-        frame = row["Metadata_Frame"]
-        try:
-            frame_features_path = get_frame_features_path(
-                features_path, plate, well, frame
+        # iterate through each sample and see if it has features in the total training data dataframe
+        for line in labels_file:
+            # get phenotpic label of cell from feature samples file line
+            phenotypic_class = line.strip().split("\t")[0]
+            # getframe info from feature samples file line
+            frame_details = line.strip().split("\t")[1]
+            plate, well_num, frame, center_x, center_y = get_frame_metadata(
+                frame_details
             )
-            frame_features = pd.read_csv(
-                frame_features_path, compression="gzip", header=None
-            )
-            frame_labels = get_frame_labels(training_set_dat_path, plate, well, frame)
-            obj_id, cell_is_labeled = is_labeled(centroid, frame_features, frame_labels)
+            # get all single cell features for this particular frame
+            frame_cells = training_data.loc[
+                (training_data["Metadata_Plate"] == plate)
+                & (training_data["Metadata_Well"] == str(well_num))
+                & (training_data["Metadata_Frame"] == str(frame))
+            ]
 
-            if cell_is_labeled:
-                phenotypic_class = get_cell_class(
-                    training_set_dat_path, plate, well, frame, obj_id
+            included = False
+            # see if the center coords correspond to any feature data from the frame cells
+            for index, row in frame_cells.iterrows():
+                raw_outline_data = row["Object_Outline"]
+                if center_in_outline(center_x, center_y, raw_outline_data):
+                    full_row = pd.concat([pd.Series([phenotypic_class]), row])
+                    labeled_cells.append(full_row)
+                    included = True
+                    break
+
+            # some cells not found in DP-extracted feature collection because the wells are not hosted by IDR or differences in segmentation
+            if not included:
+                print(
+                    f"No feature data derived for cell at: {plate}, {well_num}, {frame}, {center_x}, {center_y}"
                 )
 
-                additional_metadata = pd.Series(
-                    {
-                        "Mitocheck_Phenotypic_Class": phenotypic_class,
-                        "Mitocheck_Object_ID": obj_id,
-                    }
-                )
-                cell_data = pd.concat([additional_metadata, row])
-                labeled_cells.append(cell_data)
-        except IndexError as e:
-            print(
-                f"Cell at: {plate}, {well}, {frame}, location: {centroid} not found in features dataset"
-            )
-
-    return pd.DataFrame(labeled_cells)
+    labeled_cells = pd.DataFrame(labeled_cells)
+    labeled_cells = labeled_cells.rename(
+        columns={labeled_cells.columns[0]: "Mitocheck_Phenotypic_Class"}
+    )
+    return labeled_cells
