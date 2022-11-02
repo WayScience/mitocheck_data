@@ -113,7 +113,7 @@ def get_labeled_cells(
         for line in labels_file:
             # get phenotpic label of cell from feature samples file line
             phenotypic_class = line.strip().split("\t")[0]
-            # getframe info from feature samples file line
+            # get frame info from feature samples file line
             frame_details = line.strip().split("\t")[1]
             plate, well_num, frame, center_x, center_y = get_frame_metadata(
                 frame_details
@@ -127,7 +127,7 @@ def get_labeled_cells(
 
             included = False
             # see if the center coords correspond to any feature data from the frame cells
-            for index, row in frame_cells.iterrows():
+            for _, row in frame_cells.iterrows():
                 raw_outline_data = row["Object_Outline"]
                 if center_in_outline(center_x, center_y, raw_outline_data):
                     full_row = pd.concat([pd.Series([phenotypic_class]), row])
