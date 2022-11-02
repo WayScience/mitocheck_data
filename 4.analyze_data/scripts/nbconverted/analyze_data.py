@@ -49,44 +49,48 @@ save_dir.mkdir(exist_ok=True, parents=True)
 # In[4]:
 
 
+training_data["Mitocheck_Phenotypic_Class"].unique().tolist()
+
+
+# In[5]:
+
+
 classes_1 = [
-    "Polylobed",
-    "Binuclear",
+    "Large",
+    "Prometaphase",
     "Grape",
     "Interphase",
-    "Prometaphase",
-    "Artefact",
     "Apoptosis",
     "ADCCM",
-    "MetaphaseAlignment",
-    "SmallIrregular",
-    "Hole",
-    "Large",
-    "Anaphase",
-    "Metaphase",
-    "UndefinedCondensed",
-    "Elongated",
     "Folded",
+    "SmallIrregular",
+    "Polylobed",
+    "Metaphase",
+    "Binuclear",
+    "Hole",
+    "Anaphase",
+    "MetaphaseAlignment",
+    "Elongated",
+    "OutOfFocus",
 ]
 
 classes_2 = [
-    # "Polylobed",
-    # "Binuclear",
+    # "Large",
+    "Prometaphase",
     "Grape",
     "Interphase",
-    "Prometaphase",
-    "Artefact",
     "Apoptosis",
-    # "ADCCM",
-    # "MetaphaseAlignment",
-    # "SmallIrregular",
-    # "Hole",
-    # "Large",
-    # "Anaphase",
-    # "Metaphase",
-    # "UndefinedCondensed",
-    # "Elongated",
+    "ADCCM",
     # "Folded",
+    # "SmallIrregular",
+    # "Polylobed",
+    # "Metaphase",
+    # "Binuclear",
+    # "Hole",
+    # "Anaphase",
+    # "MetaphaseAlignment",
+    # "Elongated",
+    # "OutOfFocus",
 ]
 
 class_colors_1 = get_class_colors(classes_1, "rainbow")
@@ -97,14 +101,14 @@ class_colors_2
 
 # ### 1D UMAP
 
-# In[5]:
+# In[6]:
 
 
 umap_1D_save_path = pathlib.Path(f"{save_dir}/norm_train_1D_umap.png")
 show_1D_umap(feature_data, phenotypic_classes, class_colors_1, save_path=umap_1D_save_path, point_size=point_size, alpha=alpha)
 
 
-# In[6]:
+# In[7]:
 
 
 umap_1D_save_path = pathlib.Path(f"{save_dir}/norm_train_1D_umap_other.png")
@@ -113,14 +117,14 @@ show_1D_umap(feature_data, phenotypic_classes, class_colors_2, save_path=umap_1D
 
 # ### 2D UMAP
 
-# In[7]:
+# In[8]:
 
 
 umap_2D_save_path = pathlib.Path(f"{save_dir}/norm_train_2D_umap.png")
 show_2D_umap(feature_data, phenotypic_classes, class_colors_1, save_path=umap_2D_save_path, point_size=point_size, alpha=alpha)
 
 
-# In[8]:
+# In[9]:
 
 
 umap_2D_save_path = pathlib.Path(f"{save_dir}/norm_train_2D_umap_other.png")
@@ -129,14 +133,14 @@ show_2D_umap(feature_data, phenotypic_classes, class_colors_2, save_path=umap_2D
 
 # ### 3D UMAP
 
-# In[9]:
+# In[10]:
 
 
 umap_3D_save_path = pathlib.Path(f"{save_dir}/norm_train_3D_umap.png")
 show_3D_umap(feature_data, phenotypic_classes, class_colors_1, save_path=umap_3D_save_path, point_size=point_size, alpha=alpha)
 
 
-# In[10]:
+# In[11]:
 
 
 umap_3D_save_path = pathlib.Path(f"{save_dir}/norm_train_3D_umap_other.png")

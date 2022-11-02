@@ -13,6 +13,7 @@ dependencies:
   - conda-forge::matplotlib=3.5.2
   - conda-forge::seaborn=0.11.2
   - conda-forge::umap-learn=0.5.3
+  - conda-forge::shapely=1.8.5
   - conda-forge::pip=22.1.2
   - pip:
     - git+https://github.com/cytomining/pycytominer

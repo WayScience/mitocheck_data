@@ -69,6 +69,6 @@ training_data = pd.read_csv(
 )
 
 # run idr stream
-stream.run_stream(training_data, batch_size=5, start_batch=0)
+stream.run_stream(training_data, batch_size=5, start_batch=0, extra_metadata=["object_outlines"])
 # clear tmp dir
 shutil.rmtree(tmp_dir)

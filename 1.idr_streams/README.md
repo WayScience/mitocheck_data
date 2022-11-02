@@ -28,7 +28,7 @@ conda activate mitocheck_data
 # Use specific version of idrstream
 git clone https://github.com/WayScience/IDR_stream.git
 cd IDR_stream
-git checkout 1c235ef12776a0be73b3f90fcd20dc71e011b0c2
+git checkout d5b049b308a468f6a80f7657c4cb625770130129
 ```
 
 Follow the instructions at [idrstream setup](https://github.com/WayScience/IDR_stream#setup) to complete the `idrstream` setup.
@@ -53,10 +53,10 @@ bash idr_streams.sh
 
 Logs from each `idrstream` run will be saved to [logs/](streams/logs/).
 These logs inlcude info about each `idrstream` run, including any errors that might have occured while profiling a batch.
-The example logs located in [logs/](streams/logs/) only include information from batch 0 of each `idrstream` because these IDR streams were originally run as a prototype and thus had no log file.
+The log for training data is included at [training_idr_stream.log](streams/logs/training_idr_stream.log) for reference of what a log file should look like (with no errors).
 
 IDR stream run times:
-- training data: 64 min
+- training data: 90 min
 - negative controls: 900 min
 - negative controls: 515 min
 

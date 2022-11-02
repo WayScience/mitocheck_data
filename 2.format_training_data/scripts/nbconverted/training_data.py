@@ -8,6 +8,7 @@
 
 import pathlib
 import pandas as pd
+import numpy as np
 
 import sys
 sys.path.append("../utils")
@@ -22,18 +23,20 @@ from training_data_utils import get_labeled_cells
 
 training_data_features_path = pathlib.Path("../1.idr_streams/extracted_features/training_data")
 training_data = compile_mitocheck_batch_data(training_data_features_path)
-training_data
+#training_data
 
 
 # ### Find cells with Mitocheck-assigned labels
+# 
+# #### Cells may not have feature data found because the specific well is not hosted on IDr (failure to pass QC) or because of differences in Mitocheck/DeepProfiler segmentation
 
 # In[3]:
 
 
-features_path = pathlib.Path("../mitocheck_metadata/features/")
-training_set_dat_path = pathlib.Path("../mitocheck_metadata/trainingset_2007_06_21.dat")
+features_samples_path = pathlib.Path("../mitocheck_metadata/features.samples.txt")
 
-labeled_cells = get_labeled_cells(features_path, training_set_dat_path, training_data)
+labeled_cells = get_labeled_cells(training_data, features_samples_path)  
+print(f"Shape of labeled_cells: {labeled_cells.shape}")
 
 
 # ### Replace `Shape1` and `Shape3` with their respective classes

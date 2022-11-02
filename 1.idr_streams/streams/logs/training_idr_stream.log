@@ -1,35 +1,432 @@
-2022-08-22 10:56:29,062 - INFO - IDR stream initialized
-2022-08-22 10:56:29,064 - INFO - Aspera downloader initialized
-2022-08-22 10:56:31,550 - INFO - Basicpy preprocessor initialized
-2022-08-22 10:56:32,234 - INFO - CellPose segmentor initialized
-2022-08-22 10:56:32,244 - INFO - Copied Deep Profiler config and checkpoint files
-2022-08-22 10:56:32,246 - INFO - Running IDR stream with: 
+2022-10-24 15:55:02,654 - INFO - IDR stream initialized
+2022-10-24 15:55:02,658 - INFO - Aspera downloader initialized
+2022-10-24 15:55:05,132 - INFO - Basicpy preprocessor initialized
+2022-10-24 15:55:05,786 - INFO - CellPose segmentor initialized
+2022-10-24 15:55:05,795 - INFO - Copied Deep Profiler config and checkpoint files
+2022-10-24 15:55:05,797 - INFO - Running IDR stream with: 
 batch_size 5 
 start_batch 0 
-batches 10 
-batch nums all
-2022-08-22 10:56:32,247 - INFO - Profiling batch 0
-2022-08-22 10:56:32,247 - INFO - Processing well A21 from LT0098_13, frames [77, 21, 27, 33]
-2022-08-22 10:56:40,252 - INFO - well_movie_path: ../tmp/downloads/LT0098_13/00021_01.ch5
-2022-08-22 10:57:33,117 - INFO - Saved corrected frames
-2022-08-22 10:57:46,983 - INFO - Saved nuclei locations
-2022-08-22 10:57:46,983 - INFO - Processing well C5 from LT0132_31, frames [33, 75, 37, 42, 51, 63]
-2022-08-22 10:57:54,707 - INFO - well_movie_path: ../tmp/downloads/LT0132_31/00053_01.ch5
-2022-08-22 10:58:26,121 - INFO - Saved corrected frames
-2022-08-22 10:58:43,598 - INFO - Saved nuclei locations
-2022-08-22 10:58:43,598 - INFO - Processing well E18 from LT0093_17, frames [45, 72, 46, 88, 83, 79, 87]
-2022-08-22 10:58:51,680 - INFO - well_movie_path: ../tmp/downloads/LT0093_17/00114_01.ch5
-2022-08-22 11:00:09,406 - INFO - Saved corrected frames
-2022-08-22 11:00:29,728 - INFO - Saved nuclei locations
-2022-08-22 11:00:29,728 - INFO - Processing well N7 from LT0094_04, frames [7, 66, 61, 89, 73, 5, 93, 30]
-2022-08-22 11:00:37,906 - INFO - well_movie_path: ../tmp/downloads/LT0094_04/00319_01.ch5
-2022-08-22 11:01:31,300 - INFO - Saved corrected frames
-2022-08-22 11:01:55,186 - INFO - Saved nuclei locations
-2022-08-22 11:01:55,186 - INFO - Processing well K18 from LT0026_22, frames [85, 37, 25, 95, 67]
-2022-08-22 11:02:03,310 - INFO - well_movie_path: ../tmp/downloads/LT0026_22/00258_01.ch5
-2022-08-22 11:03:02,061 - INFO - Saved corrected frames
-2022-08-22 11:03:15,457 - INFO - Saved nuclei locations
-2022-08-22 11:03:15,458 - INFO - Compiled index.csv file to ../tmp/DP_project/inputs/metadata/index.csv
-2022-08-22 11:03:39,675 - INFO - Deep Profiler run done
-2022-08-22 11:03:44,227 - INFO - Batch features compiled with PyCytominer
-2022-08-22 11:03:44,235 - INFO - Temporary batch files cleared
+batches 16 
+batch nums all 
+extra metadata ['object_outlines']
+2022-10-24 15:55:05,797 - INFO - Profiling batch 0
+2022-10-24 15:55:05,797 - INFO - Processing well H5 from LT0010_27, frames [83]
+2022-10-24 15:55:13,535 - INFO - Movie downloaded to ../tmp/downloads/LT0010_27/00173_01.ch5
+2022-10-24 15:55:16,543 - INFO - Saved corrected frames
+2022-10-24 15:55:20,756 - INFO - Saved nuclei locations
+2022-10-24 15:55:20,756 - INFO - Processing well B18 from LT0013_38, frames [75, 95, 47]
+2022-10-24 15:55:28,584 - INFO - Movie downloaded to ../tmp/downloads/LT0013_38/00042_01.ch5
+2022-10-24 15:56:24,757 - INFO - Saved corrected frames
+2022-10-24 15:56:33,973 - INFO - Saved nuclei locations
+2022-10-24 15:56:33,973 - INFO - Processing well P5 from LT0017_19, frames [65, 83, 93]
+2022-10-24 15:56:41,130 - INFO - Movie downloaded to ../tmp/downloads/LT0017_19/00365_01.ch5
+2022-10-24 15:57:22,529 - INFO - Saved corrected frames
+2022-10-24 15:57:30,255 - INFO - Saved nuclei locations
+2022-10-24 15:57:30,255 - INFO - Processing well F20 from LT0019_06, frames [70, 83]
+2022-10-24 15:57:37,885 - INFO - Movie downloaded to ../tmp/downloads/LT0019_06/00140_01.ch5
+2022-10-24 15:58:20,580 - INFO - Saved corrected frames
+2022-10-24 15:58:25,851 - INFO - Saved nuclei locations
+2022-10-24 15:58:25,851 - INFO - Processing well M4 from LT0027_44, frames [88, 95, 92, 47, 65, 80]
+2022-10-24 15:58:34,728 - INFO - Movie downloaded to ../tmp/downloads/LT0027_44/00292_01.ch5
+2022-10-24 15:59:28,488 - INFO - Saved corrected frames
+2022-10-24 15:59:45,053 - INFO - Saved nuclei locations
+2022-10-24 15:59:45,055 - INFO - Compiled index.csv file to ../tmp/DP_project/inputs/metadata/index.csv
+2022-10-24 16:00:00,925 - INFO - Deep Profiler run done
+2022-10-24 16:00:01,074 - INFO - Batch features compiled with PyCytominer
+2022-10-24 16:00:01,130 - INFO - Object outlines added for batch
+2022-10-24 16:00:03,504 - INFO - Saved compiled batch features to ../extracted_features/training_data/batch_0.csv.gz
+2022-10-24 16:00:03,509 - INFO - Temporary batch files cleared
+2022-10-24 16:00:03,509 - INFO - Profiling batch 1
+2022-10-24 16:00:03,509 - INFO - Processing well K10 from LT0038_27, frames [8, 38]
+2022-10-24 16:00:12,372 - INFO - Movie downloaded to ../tmp/downloads/LT0038_27/00250_01.ch5
+2022-10-24 16:01:03,730 - INFO - Saved corrected frames
+2022-10-24 16:01:10,011 - INFO - Saved nuclei locations
+2022-10-24 16:01:10,011 - INFO - Processing well F24 from LT0042_10, frames [36, 50, 88]
+2022-10-24 16:01:17,911 - INFO - Movie downloaded to ../tmp/downloads/LT0042_10/00144_01.ch5
+2022-10-24 16:02:09,961 - INFO - Saved corrected frames
+2022-10-24 16:02:17,575 - INFO - Saved nuclei locations
+2022-10-24 16:02:17,575 - INFO - Processing well B20 from LT0042_10, frames [28]
+2022-10-24 16:02:25,494 - INFO - Movie downloaded to ../tmp/downloads/LT0042_10/00044_01.ch5
+2022-10-24 16:02:29,075 - INFO - Saved corrected frames
+2022-10-24 16:02:32,015 - INFO - Saved nuclei locations
+2022-10-24 16:02:32,015 - INFO - Processing well G22 from LT0043_48, frames [44, 47, 52, 71, 79, 84, 55, 36, 64, 74, 45, 48, 56, 57, 65, 37]
+2022-10-24 16:02:42,366 - INFO - Movie downloaded to ../tmp/downloads/LT0043_48/00166_01.ch5
+2022-10-24 16:03:42,131 - INFO - Saved corrected frames
+2022-10-24 16:04:34,275 - INFO - Saved nuclei locations
+2022-10-24 16:04:34,275 - INFO - Processing well C21 from LT0048_13, frames [72, 7, 14, 15, 73, 74]
+2022-10-24 16:04:45,006 - INFO - Movie downloaded to ../tmp/downloads/LT0048_13/00069_01.ch5
+2022-10-24 16:05:34,006 - INFO - Saved corrected frames
+2022-10-24 16:05:52,030 - INFO - Saved nuclei locations
+2022-10-24 16:05:52,031 - INFO - Compiled index.csv file to ../tmp/DP_project/inputs/metadata/index.csv
+2022-10-24 16:06:18,754 - INFO - Deep Profiler run done
+2022-10-24 16:06:19,082 - INFO - Batch features compiled with PyCytominer
+2022-10-24 16:06:19,192 - INFO - Object outlines added for batch
+2022-10-24 16:06:24,589 - INFO - Saved compiled batch features to ../extracted_features/training_data/batch_1.csv.gz
+2022-10-24 16:06:24,599 - INFO - Temporary batch files cleared
+2022-10-24 16:06:24,599 - INFO - Profiling batch 2
+2022-10-24 16:06:24,600 - INFO - Processing well A20 from LT0065_04, frames [49, 72, 57, 92]
+2022-10-24 16:06:33,889 - INFO - Movie downloaded to ../tmp/downloads/LT0065_04/00020_01.ch5
+2022-10-24 16:07:11,993 - INFO - Saved corrected frames
+2022-10-24 16:07:22,050 - INFO - Saved nuclei locations
+2022-10-24 16:07:22,050 - INFO - Processing well G3 from LT0093_13, frames [77, 69, 75]
+2022-10-24 16:07:33,851 - INFO - Movie downloaded to ../tmp/downloads/LT0093_13/00147_01.ch5
+2022-10-24 16:08:24,467 - INFO - Saved corrected frames
+2022-10-24 16:08:33,263 - INFO - Saved nuclei locations
+2022-10-24 16:08:33,263 - INFO - Processing well D21 from LT0100_03, frames [37, 84, 56]
+2022-10-24 16:08:42,035 - INFO - Movie downloaded to ../tmp/downloads/LT0100_03/00093_01.ch5
+2022-10-24 16:09:59,147 - INFO - Saved corrected frames
+2022-10-24 16:10:08,701 - INFO - Saved nuclei locations
+2022-10-24 16:10:08,701 - INFO - Processing well F24 from LT0105_04, frames [93]
+2022-10-24 16:10:15,664 - INFO - Movie downloaded to ../tmp/downloads/LT0105_04/00144_01.ch5
+2022-10-24 16:10:17,487 - INFO - Saved corrected frames
+2022-10-24 16:10:19,944 - INFO - Saved nuclei locations
+2022-10-24 16:10:19,944 - INFO - Processing well O13 from LT0109_38, frames [69, 25, 88]
+2022-10-24 16:10:27,494 - INFO - Movie downloaded to ../tmp/downloads/LT0109_38/00349_01.ch5
+2022-10-24 16:11:10,418 - INFO - Saved corrected frames
+2022-10-24 16:11:18,614 - INFO - Saved nuclei locations
+2022-10-24 16:11:18,615 - INFO - Compiled index.csv file to ../tmp/DP_project/inputs/metadata/index.csv
+2022-10-24 16:11:33,869 - INFO - Deep Profiler run done
+2022-10-24 16:11:34,011 - INFO - Batch features compiled with PyCytominer
+2022-10-24 16:11:34,059 - INFO - Object outlines added for batch
+2022-10-24 16:11:36,193 - INFO - Saved compiled batch features to ../extracted_features/training_data/batch_2.csv.gz
+2022-10-24 16:11:36,198 - INFO - Temporary batch files cleared
+2022-10-24 16:11:36,198 - INFO - Profiling batch 3
+2022-10-24 16:11:36,198 - INFO - Processing well G10 from LT0149_01, frames [81]
+2022-10-24 16:11:44,188 - INFO - Movie downloaded to ../tmp/downloads/LT0149_01/00154_01.ch5
+2022-10-24 16:11:46,304 - INFO - Saved corrected frames
+2022-10-24 16:11:48,568 - INFO - Saved nuclei locations
+2022-10-24 16:11:48,569 - INFO - Processing well G10 from LT0149_05, frames [81]
+2022-10-24 16:11:56,527 - INFO - Movie downloaded to ../tmp/downloads/LT0149_05/00154_01.ch5
+2022-10-24 16:11:59,068 - INFO - Saved corrected frames
+2022-10-24 16:12:01,377 - INFO - Saved nuclei locations
+2022-10-24 16:12:01,378 - INFO - Processing well A5 from LT0157_04, frames [2, 17, 61, 78, 47]
+2022-10-24 16:12:09,784 - INFO - Movie downloaded to ../tmp/downloads/LT0157_04/00005_01.ch5
+2022-10-24 16:13:18,373 - INFO - Saved corrected frames
+2022-10-24 16:13:32,573 - INFO - Saved nuclei locations
+2022-10-24 16:13:32,574 - INFO - Processing well E11 from LT0013_42, frames [23, 28, 39, 52, 63, 76, 83]
+2022-10-24 16:13:40,810 - INFO - Movie downloaded to ../tmp/downloads/LT0013_42/00107_01.ch5
+2022-10-24 16:14:20,806 - INFO - Saved corrected frames
+2022-10-24 16:14:38,531 - INFO - Saved nuclei locations
+2022-10-24 16:14:38,532 - INFO - Processing well A5 from LT0023_04, frames [8, 30, 87, 72, 50, 51, 64, 7]
+2022-10-24 16:14:46,968 - INFO - Movie downloaded to ../tmp/downloads/LT0023_04/00005_01.ch5
+2022-10-24 16:15:40,050 - INFO - Saved corrected frames
+2022-10-24 16:16:04,197 - INFO - Saved nuclei locations
+2022-10-24 16:16:04,199 - INFO - Compiled index.csv file to ../tmp/DP_project/inputs/metadata/index.csv
+2022-10-24 16:16:23,397 - INFO - Deep Profiler run done
+2022-10-24 16:16:23,605 - INFO - Batch features compiled with PyCytominer
+2022-10-24 16:16:23,677 - INFO - Object outlines added for batch
+2022-10-24 16:16:26,938 - INFO - Saved compiled batch features to ../extracted_features/training_data/batch_3.csv.gz
+2022-10-24 16:16:26,946 - INFO - Temporary batch files cleared
+2022-10-24 16:16:26,946 - INFO - Profiling batch 4
+2022-10-24 16:16:26,946 - INFO - Processing well C10 from LT0030_17, frames [46, 37, 50, 52, 33, 36, 56, 78]
+2022-10-24 16:16:36,237 - INFO - Movie downloaded to ../tmp/downloads/LT0030_17/00058_01.ch5
+2022-10-24 16:17:54,997 - INFO - Saved corrected frames
+2022-10-24 16:18:22,202 - INFO - Saved nuclei locations
+2022-10-24 16:18:22,202 - INFO - Processing well L10 from LT0035_06, frames [4, 21, 40]
+2022-10-24 16:18:31,093 - INFO - Movie downloaded to ../tmp/downloads/LT0035_06/00274_01.ch5
+2022-10-24 16:19:23,285 - INFO - Saved corrected frames
+2022-10-24 16:19:30,716 - INFO - Saved nuclei locations
+2022-10-24 16:19:30,716 - INFO - Processing well F20 from LT0047_27, frames [68, 75, 84, 89, 94]
+2022-10-24 16:19:39,588 - INFO - Movie downloaded to ../tmp/downloads/LT0047_27/00140_01.ch5
+2022-10-24 16:20:41,919 - INFO - Saved corrected frames
+2022-10-24 16:20:55,164 - INFO - Saved nuclei locations
+2022-10-24 16:20:55,164 - INFO - Processing well N23 from LT0048_14, frames [1, 13, 29, 56, 75]
+2022-10-24 16:21:05,136 - INFO - Movie downloaded to ../tmp/downloads/LT0048_14/00335_01.ch5
+2022-10-24 16:22:06,589 - INFO - Saved corrected frames
+2022-10-24 16:22:19,689 - INFO - Saved nuclei locations
+2022-10-24 16:22:19,689 - INFO - Processing well A3 from LT0064_14, frames [22, 27, 54]
+2022-10-24 16:22:28,783 - INFO - Movie downloaded to ../tmp/downloads/LT0064_14/00003_01.ch5
+2022-10-24 16:23:21,609 - INFO - Saved corrected frames
+2022-10-24 16:23:28,800 - INFO - Saved nuclei locations
+2022-10-24 16:23:28,801 - INFO - Compiled index.csv file to ../tmp/DP_project/inputs/metadata/index.csv
+2022-10-24 16:23:51,856 - INFO - Deep Profiler run done
+2022-10-24 16:23:52,124 - INFO - Batch features compiled with PyCytominer
+2022-10-24 16:23:52,215 - INFO - Object outlines added for batch
+2022-10-24 16:23:56,674 - INFO - Saved compiled batch features to ../extracted_features/training_data/batch_4.csv.gz
+2022-10-24 16:23:56,683 - INFO - Temporary batch files cleared
+2022-10-24 16:23:56,683 - INFO - Profiling batch 5
+2022-10-24 16:23:56,683 - INFO - Processing well L23 from LT0066_19, frames [1, 9, 14, 22, 48, 75, 87, 93]
+2022-10-24 16:24:05,731 - INFO - Movie downloaded to ../tmp/downloads/LT0066_19/00287_01.ch5
+2022-10-24 16:25:25,505 - INFO - Saved corrected frames
+2022-10-24 16:25:49,022 - INFO - Saved nuclei locations
+2022-10-24 16:25:49,022 - INFO - Processing well N7 from LT0094_01, frames [66, 85, 34, 36, 38, 46, 60]
+2022-10-24 16:25:57,149 - INFO - Movie downloaded to ../tmp/downloads/LT0094_01/00319_01.ch5
+2022-10-24 16:26:50,069 - INFO - Saved corrected frames
+2022-10-24 16:27:08,432 - INFO - Saved nuclei locations
+2022-10-24 16:27:08,432 - INFO - Processing well N7 from LT0094_04, frames [61, 73, 93, 5, 7, 66, 89, 30]
+2022-10-24 16:27:17,357 - INFO - Movie downloaded to ../tmp/downloads/LT0094_04/00319_01.ch5
+2022-10-24 16:28:02,560 - INFO - Saved corrected frames
+2022-10-24 16:28:26,967 - INFO - Saved nuclei locations
+2022-10-24 16:28:26,967 - INFO - Processing well L13 from LT0101_01, frames [66, 74, 79]
+2022-10-24 16:28:36,407 - INFO - Movie downloaded to ../tmp/downloads/LT0101_01/00277_01.ch5
+2022-10-24 16:29:37,437 - INFO - Saved corrected frames
+2022-10-24 16:29:46,139 - INFO - Saved nuclei locations
+2022-10-24 16:29:46,140 - INFO - Processing well O2 from LT0109_38, frames [7, 27, 31, 80]
+2022-10-24 16:29:55,970 - INFO - Movie downloaded to ../tmp/downloads/LT0109_38/00338_01.ch5
+2022-10-24 16:30:40,032 - INFO - Saved corrected frames
+2022-10-24 16:30:51,971 - INFO - Saved nuclei locations
+2022-10-24 16:30:51,972 - INFO - Compiled index.csv file to ../tmp/DP_project/inputs/metadata/index.csv
+2022-10-24 16:31:16,853 - INFO - Deep Profiler run done
+2022-10-24 16:31:17,143 - INFO - Batch features compiled with PyCytominer
+2022-10-24 16:31:17,242 - INFO - Object outlines added for batch
+2022-10-24 16:31:21,918 - INFO - Saved compiled batch features to ../extracted_features/training_data/batch_5.csv.gz
+2022-10-24 16:31:21,927 - INFO - Temporary batch files cleared
+2022-10-24 16:31:21,927 - INFO - Profiling batch 6
+2022-10-24 16:31:21,928 - INFO - Processing well C5 from LT0132_31, frames [33, 37, 42, 51, 63, 75]
+2022-10-24 16:31:33,798 - INFO - Movie downloaded to ../tmp/downloads/LT0132_31/00053_01.ch5
+2022-10-24 16:32:19,248 - INFO - Saved corrected frames
+2022-10-24 16:32:36,207 - INFO - Saved nuclei locations
+2022-10-24 16:32:36,207 - INFO - Processing well G15 from LT0014_12, frames [70, 77, 93, 59]
+2022-10-24 16:32:44,894 - INFO - Movie downloaded to ../tmp/downloads/LT0014_12/00159_01.ch5
+2022-10-24 16:33:37,881 - INFO - Saved corrected frames
+2022-10-24 16:33:49,488 - INFO - Saved nuclei locations
+2022-10-24 16:33:49,488 - INFO - Processing well C6 from LT0065_06, frames [93]
+2022-10-24 16:33:58,326 - INFO - Movie downloaded to ../tmp/downloads/LT0065_06/00054_01.ch5
+2022-10-24 16:34:01,221 - INFO - Saved corrected frames
+2022-10-24 16:34:03,933 - INFO - Saved nuclei locations
+2022-10-24 16:34:03,933 - INFO - Processing well A3 from LT0084_46, frames [56, 80, 46, 91]
+2022-10-24 16:34:11,991 - INFO - Movie downloaded to ../tmp/downloads/LT0084_46/00003_01.ch5
+2022-10-24 16:35:01,433 - INFO - Saved corrected frames
+2022-10-24 16:35:13,223 - INFO - Saved nuclei locations
+2022-10-24 16:35:13,223 - INFO - Processing well H1 from LT0091_30, frames [43, 5, 21]
+2022-10-24 16:35:21,904 - INFO - Movie downloaded to ../tmp/downloads/LT0091_30/00169_01.ch5
+2022-10-24 16:36:05,406 - INFO - Saved corrected frames
+2022-10-24 16:36:13,464 - INFO - Saved nuclei locations
+2022-10-24 16:36:13,466 - INFO - Compiled index.csv file to ../tmp/DP_project/inputs/metadata/index.csv
+2022-10-24 16:36:30,338 - INFO - Deep Profiler run done
+2022-10-24 16:36:30,497 - INFO - Batch features compiled with PyCytominer
+2022-10-24 16:36:30,551 - INFO - Object outlines added for batch
+2022-10-24 16:36:32,967 - INFO - Saved compiled batch features to ../extracted_features/training_data/batch_6.csv.gz
+2022-10-24 16:36:32,972 - INFO - Temporary batch files cleared
+2022-10-24 16:36:32,972 - INFO - Profiling batch 7
+2022-10-24 16:36:32,973 - INFO - Processing well K18 from LT0026_22, frames [25, 67, 85, 95, 37]
+2022-10-24 16:36:40,902 - INFO - Movie downloaded to ../tmp/downloads/LT0026_22/00258_01.ch5
+2022-10-24 16:37:35,697 - INFO - Saved corrected frames
+2022-10-24 16:37:49,260 - INFO - Saved nuclei locations
+2022-10-24 16:37:49,260 - INFO - Processing well F9 from LT0028_14, frames [17, 55, 27, 31, 66, 91, 13, 14, 15]
+2022-10-24 16:37:57,247 - INFO - Movie downloaded to ../tmp/downloads/LT0028_14/00129_01.ch5
+2022-10-24 16:38:49,711 - INFO - Saved corrected frames
+2022-10-24 16:39:13,907 - INFO - Saved nuclei locations
+2022-10-24 16:39:13,907 - INFO - Processing well K10 from LT0038_08, frames [54, 37, 80]
+2022-10-24 16:39:21,986 - INFO - Movie downloaded to ../tmp/downloads/LT0038_08/00250_01.ch5
+2022-10-24 16:40:16,704 - INFO - Saved corrected frames
+2022-10-24 16:40:24,919 - INFO - Saved nuclei locations
+2022-10-24 16:40:24,919 - INFO - Processing well L17 from LT0039_45, frames [26, 27, 32, 29]
+2022-10-24 16:40:32,255 - INFO - Movie downloaded to ../tmp/downloads/LT0039_45/00281_01.ch5
+2022-10-24 16:41:16,678 - INFO - Saved corrected frames
+2022-10-24 16:41:28,003 - INFO - Saved nuclei locations
+2022-10-24 16:41:28,003 - INFO - Processing well K9 from LT0044_36, frames [46, 61]
+2022-10-24 16:41:35,881 - INFO - Movie downloaded to ../tmp/downloads/LT0044_36/00249_01.ch5
+2022-10-24 16:42:29,872 - INFO - Saved corrected frames
+2022-10-24 16:42:35,788 - INFO - Saved nuclei locations
+2022-10-24 16:42:35,789 - INFO - Compiled index.csv file to ../tmp/DP_project/inputs/metadata/index.csv
+2022-10-24 16:42:53,928 - INFO - Deep Profiler run done
+2022-10-24 16:42:54,125 - INFO - Batch features compiled with PyCytominer
+2022-10-24 16:42:54,201 - INFO - Object outlines added for batch
+2022-10-24 16:42:57,103 - INFO - Saved compiled batch features to ../extracted_features/training_data/batch_7.csv.gz
+2022-10-24 16:42:57,110 - INFO - Temporary batch files cleared
+2022-10-24 16:42:57,110 - INFO - Profiling batch 8
+2022-10-24 16:42:57,110 - INFO - Processing well O20 from LT0046_19, frames [57, 92, 67]
+2022-10-24 16:43:06,406 - INFO - Movie downloaded to ../tmp/downloads/LT0046_19/00356_01.ch5
+2022-10-24 16:44:50,235 - INFO - Saved corrected frames
+2022-10-24 16:45:00,575 - INFO - Saved nuclei locations
+2022-10-24 16:45:00,576 - INFO - Processing well H7 from LT0089_01, frames [44, 60, 71, 93, 39]
+2022-10-24 16:45:09,514 - INFO - Movie downloaded to ../tmp/downloads/LT0089_01/00175_01.ch5
+2022-10-24 16:45:55,296 - INFO - Saved corrected frames
+2022-10-24 16:46:09,142 - INFO - Saved nuclei locations
+2022-10-24 16:46:09,142 - INFO - Processing well A21 from LT0098_13, frames [21, 77, 27, 33]
+2022-10-24 16:46:17,674 - INFO - Movie downloaded to ../tmp/downloads/LT0098_13/00021_01.ch5
+2022-10-24 16:47:03,080 - INFO - Saved corrected frames
+2022-10-24 16:47:14,820 - INFO - Saved nuclei locations
+2022-10-24 16:47:14,820 - INFO - Processing well L23 from LT0106_02, frames [1, 19, 6, 33]
+2022-10-24 16:47:22,672 - INFO - Movie downloaded to ../tmp/downloads/LT0106_02/00287_01.ch5
+2022-10-24 16:48:08,647 - INFO - Saved corrected frames
+2022-10-24 16:48:20,608 - INFO - Saved nuclei locations
+2022-10-24 16:48:20,608 - INFO - Processing well P21 from LT0109_38, frames [66, 87]
+2022-10-24 16:48:27,923 - INFO - Movie downloaded to ../tmp/downloads/LT0109_38/00381_01.ch5
+2022-10-24 16:49:13,078 - INFO - Saved corrected frames
+2022-10-24 16:49:18,660 - INFO - Saved nuclei locations
+2022-10-24 16:49:18,662 - INFO - Compiled index.csv file to ../tmp/DP_project/inputs/metadata/index.csv
+2022-10-24 16:49:35,148 - INFO - Deep Profiler run done
+2022-10-24 16:49:35,313 - INFO - Batch features compiled with PyCytominer
+2022-10-24 16:49:35,370 - INFO - Object outlines added for batch
+2022-10-24 16:49:37,923 - INFO - Saved compiled batch features to ../extracted_features/training_data/batch_8.csv.gz
+2022-10-24 16:49:37,928 - INFO - Temporary batch files cleared
+2022-10-24 16:49:37,929 - INFO - Profiling batch 9
+2022-10-24 16:49:37,929 - INFO - Processing well G22 from LT0144_01, frames [27, 34, 50, 68]
+2022-10-24 16:49:46,060 - INFO - Movie downloaded to ../tmp/downloads/LT0144_01/00166_01.ch5
+2022-10-24 16:50:39,651 - INFO - Saved corrected frames
+2022-10-24 16:50:51,243 - INFO - Saved nuclei locations
+2022-10-24 16:50:51,243 - INFO - Processing well G5 from LT0003_40, frames [83]
+2022-10-24 16:50:58,492 - INFO - Movie downloaded to ../tmp/downloads/LT0003_40/00149_01.ch5
+2022-10-24 16:51:00,817 - INFO - Saved corrected frames
+2022-10-24 16:51:03,683 - INFO - Saved nuclei locations
+2022-10-24 16:51:03,683 - INFO - Processing well K12 from LT0012_29, frames [83]
+2022-10-24 16:51:12,376 - INFO - Movie downloaded to ../tmp/downloads/LT0012_29/00252_01.ch5
+2022-10-24 16:51:15,043 - INFO - Saved corrected frames
+2022-10-24 16:51:18,347 - INFO - Saved nuclei locations
+2022-10-24 16:51:18,347 - INFO - Processing well C21 from LT0015_22, frames [61, 62, 89]
+2022-10-24 16:51:25,613 - INFO - Movie downloaded to ../tmp/downloads/LT0015_22/00069_01.ch5
+2022-10-24 16:52:09,771 - INFO - Saved corrected frames
+2022-10-24 16:52:18,127 - INFO - Saved nuclei locations
+2022-10-24 16:52:18,128 - INFO - Processing well H16 from LT0030_17, frames [41, 36, 39, 46, 50, 59, 87]
+2022-10-24 16:52:26,835 - INFO - Movie downloaded to ../tmp/downloads/LT0030_17/00184_01.ch5
+2022-10-24 16:53:28,112 - INFO - Saved corrected frames
+2022-10-24 16:53:50,182 - INFO - Saved nuclei locations
+2022-10-24 16:53:50,183 - INFO - Compiled index.csv file to ../tmp/DP_project/inputs/metadata/index.csv
+2022-10-24 16:54:07,283 - INFO - Deep Profiler run done
+2022-10-24 16:54:07,446 - INFO - Batch features compiled with PyCytominer
+2022-10-24 16:54:07,509 - INFO - Object outlines added for batch
+2022-10-24 16:54:10,177 - INFO - Saved compiled batch features to ../extracted_features/training_data/batch_9.csv.gz
+2022-10-24 16:54:10,183 - INFO - Temporary batch files cleared
+2022-10-24 16:54:10,183 - INFO - Profiling batch 10
+2022-10-24 16:54:10,184 - INFO - Processing well K5 from LT0038_01, frames [72, 81, 22, 40, 46, 49]
+2022-10-24 16:54:18,138 - INFO - Movie downloaded to ../tmp/downloads/LT0038_01/00245_01.ch5
+2022-10-24 16:55:01,621 - INFO - Saved corrected frames
+2022-10-24 16:55:17,898 - INFO - Saved nuclei locations
+2022-10-24 16:55:17,898 - INFO - Processing well F12 from LT0041_32, frames [65, 68, 74]
+2022-10-24 16:55:26,645 - INFO - Movie downloaded to ../tmp/downloads/LT0041_32/00132_01.ch5
+2022-10-24 16:56:26,357 - INFO - Saved corrected frames
+2022-10-24 16:56:34,817 - INFO - Saved nuclei locations
+2022-10-24 16:56:34,817 - INFO - Processing well P23 from LT0090_33, frames [84, 60, 72, 92]
+2022-10-24 16:56:44,933 - INFO - Movie downloaded to ../tmp/downloads/LT0090_33/00383_01.ch5
+2022-10-24 16:57:52,578 - INFO - Saved corrected frames
+2022-10-24 16:58:05,511 - INFO - Saved nuclei locations
+2022-10-24 16:58:05,512 - INFO - Processing well F7 from LT0138_03, frames [31, 51, 62, 75, 30, 35, 44, 49]
+2022-10-24 16:58:13,070 - INFO - Movie downloaded to ../tmp/downloads/LT0138_03/00127_01.ch5
+2022-10-24 16:58:55,576 - INFO - Saved corrected frames
+2022-10-24 16:59:16,090 - INFO - Saved nuclei locations
+2022-10-24 16:59:16,090 - INFO - Processing well F17 from LT0032_01, frames [30, 44, 49]
+2022-10-24 16:59:24,318 - INFO - Movie downloaded to ../tmp/downloads/LT0032_01/00137_01.ch5
+2022-10-24 17:00:15,491 - INFO - Saved corrected frames
+2022-10-24 17:00:23,486 - INFO - Saved nuclei locations
+2022-10-24 17:00:23,487 - INFO - Compiled index.csv file to ../tmp/DP_project/inputs/metadata/index.csv
+2022-10-24 17:00:43,686 - INFO - Deep Profiler run done
+2022-10-24 17:00:43,916 - INFO - Batch features compiled with PyCytominer
+2022-10-24 17:00:43,996 - INFO - Object outlines added for batch
+2022-10-24 17:00:47,460 - INFO - Saved compiled batch features to ../extracted_features/training_data/batch_10.csv.gz
+2022-10-24 17:00:47,469 - INFO - Temporary batch files cleared
+2022-10-24 17:00:47,469 - INFO - Profiling batch 11
+2022-10-24 17:00:47,469 - INFO - Processing well N7 from LT0094_44, frames [57, 74]
+2022-10-24 17:00:55,278 - INFO - Movie downloaded to ../tmp/downloads/LT0094_44/00319_01.ch5
+2022-10-24 17:01:33,955 - INFO - Saved corrected frames
+2022-10-24 17:01:39,050 - INFO - Saved nuclei locations
+2022-10-24 17:01:39,050 - INFO - Processing well F16 from LT0039_45, frames [53, 62]
+2022-10-24 17:01:47,197 - INFO - Movie downloaded to ../tmp/downloads/LT0039_45/00136_01.ch5
+2022-10-24 17:02:29,848 - INFO - Saved corrected frames
+2022-10-24 17:02:35,657 - INFO - Saved nuclei locations
+2022-10-24 17:02:35,657 - INFO - Processing well F19 from LT0044_02, frames [73]
+2022-10-24 17:02:43,658 - INFO - Movie downloaded to ../tmp/downloads/LT0044_02/00139_01.ch5
+2022-10-24 17:02:46,423 - INFO - Saved corrected frames
+2022-10-24 17:02:49,014 - INFO - Saved nuclei locations
+2022-10-24 17:02:49,015 - INFO - Processing well O13 from LT0012_25, frames [83]
+2022-10-24 17:02:59,263 - INFO - Movie downloaded to ../tmp/downloads/LT0012_25/00349_01.ch5
+2022-10-24 17:03:09,775 - INFO - Saved corrected frames
+2022-10-24 17:03:13,788 - INFO - Saved nuclei locations
+2022-10-24 17:03:13,788 - INFO - Processing well B6 from LT0027_44, frames [58, 74, 86, 95]
+2022-10-24 17:03:21,231 - INFO - Movie downloaded to ../tmp/downloads/LT0027_44/00030_01.ch5
+2022-10-24 17:04:06,848 - INFO - Saved corrected frames
+2022-10-24 17:04:17,456 - INFO - Saved nuclei locations
+2022-10-24 17:04:17,459 - INFO - Compiled index.csv file to ../tmp/DP_project/inputs/metadata/index.csv
+2022-10-24 17:04:31,075 - INFO - Deep Profiler run done
+2022-10-24 17:04:31,178 - INFO - Batch features compiled with PyCytominer
+2022-10-24 17:04:31,210 - INFO - Object outlines added for batch
+2022-10-24 17:04:32,830 - INFO - Saved compiled batch features to ../extracted_features/training_data/batch_11.csv.gz
+2022-10-24 17:04:32,834 - INFO - Temporary batch files cleared
+2022-10-24 17:04:32,834 - INFO - Profiling batch 12
+2022-10-24 17:04:32,834 - INFO - Processing well E3 from LT0067_02, frames [37, 77, 92, 19]
+2022-10-24 17:04:40,439 - INFO - Movie downloaded to ../tmp/downloads/LT0067_02/00099_01.ch5
+2022-10-24 17:05:25,597 - INFO - Saved corrected frames
+2022-10-24 17:05:37,112 - INFO - Saved nuclei locations
+2022-10-24 17:05:37,112 - INFO - Processing well E18 from LT0093_17, frames [88, 45, 46, 72, 79, 83, 87]
+2022-10-24 17:05:45,592 - INFO - Movie downloaded to ../tmp/downloads/LT0093_17/00114_01.ch5
+2022-10-24 17:07:05,184 - INFO - Saved corrected frames
+2022-10-24 17:07:25,993 - INFO - Saved nuclei locations
+2022-10-24 17:07:25,993 - INFO - Processing well C11 from LT0602_04, frames [49]
+2022-10-24 17:07:35,343 - INFO - Movie downloaded to ../tmp/downloads/LT0602_04/00059_01.ch5
+2022-10-24 17:07:39,061 - INFO - Saved corrected frames
+2022-10-24 17:07:42,461 - INFO - Saved nuclei locations
+2022-10-24 17:07:42,461 - INFO - Processing well B10 from LT0030_18, frames [62]
+2022-10-24 17:07:50,740 - INFO - Movie downloaded to ../tmp/downloads/LT0030_18/00034_01.ch5
+2022-10-24 17:07:52,741 - INFO - Saved corrected frames
+2022-10-24 17:07:55,496 - INFO - Saved nuclei locations
+2022-10-24 17:07:55,496 - INFO - Processing well N24 from LT0153_01, frames [49, 50, 51]
+2022-10-24 17:08:05,308 - INFO - Movie downloaded to ../tmp/downloads/LT0153_01/00336_01.ch5
+2022-10-24 17:09:43,787 - INFO - Saved corrected frames
+2022-10-24 17:09:54,792 - INFO - Saved nuclei locations
+2022-10-24 17:09:54,793 - INFO - Compiled index.csv file to ../tmp/DP_project/inputs/metadata/index.csv
+2022-10-24 17:10:14,330 - INFO - Deep Profiler run done
+2022-10-24 17:10:14,541 - INFO - Batch features compiled with PyCytominer
+2022-10-24 17:10:14,614 - INFO - Object outlines added for batch
+2022-10-24 17:10:18,209 - INFO - Saved compiled batch features to ../extracted_features/training_data/batch_12.csv.gz
+2022-10-24 17:10:18,216 - INFO - Temporary batch files cleared
+2022-10-24 17:10:18,216 - INFO - Profiling batch 13
+2022-10-24 17:10:18,216 - INFO - Processing well G16 from LT0603_05, frames [49, 50]
+2022-10-24 17:10:29,061 - INFO - Movie downloaded to ../tmp/downloads/LT0603_05/00160_01.ch5
+2022-10-24 17:12:11,907 - INFO - Saved corrected frames
+2022-10-24 17:12:18,315 - INFO - Saved nuclei locations
+2022-10-24 17:12:18,315 - INFO - Processing well I7 from LT0026_22, frames [13]
+2022-10-24 17:12:37,479 - INFO - Movie downloaded to ../tmp/downloads/LT0026_22/00199_01.ch5
+2022-10-24 17:12:41,993 - INFO - Saved corrected frames
+2022-10-24 17:12:44,926 - INFO - Saved nuclei locations
+2022-10-24 17:12:44,926 - INFO - Processing well K15 from LT0096_33, frames [38, 49, 52]
+2022-10-24 17:12:54,174 - INFO - Movie downloaded to ../tmp/downloads/LT0096_33/00255_01.ch5
+2022-10-24 17:13:37,281 - INFO - Saved corrected frames
+2022-10-24 17:13:45,521 - INFO - Saved nuclei locations
+2022-10-24 17:13:45,521 - INFO - Processing well K14 from LT0048_03, frames [73]
+2022-10-24 17:13:53,907 - INFO - Movie downloaded to ../tmp/downloads/LT0048_03/00254_01.ch5
+2022-10-24 17:13:56,938 - INFO - Saved corrected frames
+2022-10-24 17:14:00,137 - INFO - Saved nuclei locations
+2022-10-24 17:14:00,137 - INFO - Processing well K14 from LT0048_14, frames [74]
+2022-10-24 17:14:11,503 - INFO - Movie downloaded to ../tmp/downloads/LT0048_14/00254_01.ch5
+2022-10-24 17:14:15,420 - INFO - Saved corrected frames
+2022-10-24 17:14:18,842 - INFO - Saved nuclei locations
+2022-10-24 17:14:18,843 - INFO - Compiled index.csv file to ../tmp/DP_project/inputs/metadata/index.csv
+2022-10-24 17:14:31,941 - INFO - Deep Profiler run done
+2022-10-24 17:14:32,039 - INFO - Batch features compiled with PyCytominer
+2022-10-24 17:14:32,073 - INFO - Object outlines added for batch
+2022-10-24 17:14:33,814 - INFO - Saved compiled batch features to ../extracted_features/training_data/batch_13.csv.gz
+2022-10-24 17:14:33,818 - INFO - Temporary batch files cleared
+2022-10-24 17:14:33,818 - INFO - Profiling batch 14
+2022-10-24 17:14:33,818 - INFO - Processing well B24 from LT0027_45, frames [13]
+2022-10-24 17:14:41,921 - INFO - Movie downloaded to ../tmp/downloads/LT0027_45/00048_01.ch5
+2022-10-24 17:14:44,056 - INFO - Saved corrected frames
+2022-10-24 17:14:46,428 - INFO - Saved nuclei locations
+2022-10-24 17:14:46,428 - INFO - Processing well D12 from LT0027_45, frames [13]
+2022-10-24 17:14:57,275 - INFO - Movie downloaded to ../tmp/downloads/LT0027_45/00084_01.ch5
+2022-10-24 17:15:00,584 - INFO - Saved corrected frames
+2022-10-24 17:15:03,088 - INFO - Saved nuclei locations
+2022-10-24 17:15:03,088 - INFO - Processing well C12 from LT0029_05, frames [33]
+2022-10-24 17:15:13,540 - INFO - Movie downloaded to ../tmp/downloads/LT0029_05/00060_01.ch5
+2022-10-24 17:15:17,682 - INFO - Saved corrected frames
+2022-10-24 17:15:21,045 - INFO - Saved nuclei locations
+2022-10-24 17:15:21,045 - INFO - Processing well A4 from LT0078_05, frames [33]
+2022-10-24 17:15:30,355 - INFO - Movie downloaded to ../tmp/downloads/LT0078_05/00004_01.ch5
+2022-10-24 17:15:33,110 - INFO - Saved corrected frames
+2022-10-24 17:15:35,307 - INFO - Saved nuclei locations
+2022-10-24 17:15:35,308 - INFO - Processing well A13 from LT0153_01, frames [81]
+2022-10-24 17:15:48,763 - INFO - Movie downloaded to ../tmp/downloads/LT0153_01/00013_01.ch5
+2022-10-24 17:15:52,974 - INFO - Saved corrected frames
+2022-10-24 17:15:56,770 - INFO - Saved nuclei locations
+2022-10-24 17:15:56,771 - INFO - Compiled index.csv file to ../tmp/DP_project/inputs/metadata/index.csv
+2022-10-24 17:16:07,536 - INFO - Deep Profiler run done
+2022-10-24 17:16:07,601 - INFO - Batch features compiled with PyCytominer
+2022-10-24 17:16:07,624 - INFO - Object outlines added for batch
+2022-10-24 17:16:08,698 - INFO - Saved compiled batch features to ../extracted_features/training_data/batch_14.csv.gz
+2022-10-24 17:16:08,700 - INFO - Temporary batch files cleared
+2022-10-24 17:16:08,700 - INFO - Profiling batch 15
+2022-10-24 17:16:08,700 - INFO - Processing well J1 from LT0601_01, frames [49]
+2022-10-24 17:16:23,377 - INFO - Movie downloaded to ../tmp/downloads/LT0601_01/00217_01.ch5
+2022-10-24 17:16:50,298 - INFO - Saved corrected frames
+2022-10-24 17:16:53,650 - INFO - Saved nuclei locations
+2022-10-24 17:16:53,650 - INFO - Processing well A2 from LT0603_03, frames [49]
+2022-10-24 17:17:04,892 - INFO - Movie downloaded to ../tmp/downloads/LT0603_03/00002_01.ch5
+2022-10-24 17:17:08,030 - INFO - Saved corrected frames
+2022-10-24 17:17:10,803 - INFO - Saved nuclei locations
+2022-10-24 17:17:10,804 - INFO - Compiled index.csv file to ../tmp/DP_project/inputs/metadata/index.csv
+2022-10-24 17:17:19,644 - INFO - Deep Profiler run done
+2022-10-24 17:17:19,675 - INFO - Batch features compiled with PyCytominer
+2022-10-24 17:17:19,685 - INFO - Object outlines added for batch
+2022-10-24 17:17:20,196 - INFO - Saved compiled batch features to ../extracted_features/training_data/batch_15.csv.gz
+2022-10-24 17:17:20,197 - INFO - Temporary batch files cleared
+2022-10-24 17:17:20,197 - INFO - Stream run done!
