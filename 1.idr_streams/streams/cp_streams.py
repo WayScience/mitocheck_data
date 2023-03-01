@@ -3,6 +3,7 @@ import pandas as pd
 import shutil
 
 import sys
+
 sys.path.append("../IDR_stream/")
 from idrstream.CP_idr import CellProfilerRun
 
@@ -13,7 +14,7 @@ for data_locations_path in sorted(locations_dir.iterdir()):
     # name of data being processed (training_data, negative_control_data, or positive_control_data)
     data_name = data_locations_path.name.replace("_locations.tsv", "_data")
     print(f"Running IDR_stream CP for {data_name}")
-    
+
     # path to directory with runcellpose.py file
     plugins_directory = pathlib.Path("../IDR_stream/idrstream/CP_Plugins")
     # path to CellProfiler pipeline file
@@ -34,7 +35,14 @@ for data_locations_path in sorted(locations_dir.iterdir()):
     log_file_path.parent.mkdir(exist_ok=True, parents=True)
 
     # initialize IDR_stream cp run
-    stream = CellProfilerRun(pipeline_path, plugins_directory, idr_id, tmp_dir, final_data_dir, log=log_file_path)
+    stream = CellProfilerRun(
+        pipeline_path,
+        plugins_directory,
+        idr_id,
+        tmp_dir,
+        final_data_dir,
+        log=log_file_path,
+    )
 
     # pandas dataframe with plate/well/frame image location data for IDR_stream
     data_to_process = pd.read_csv(data_locations_path, sep="\t", index_col=0)

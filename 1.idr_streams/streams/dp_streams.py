@@ -3,6 +3,7 @@ import pandas as pd
 import shutil
 
 import sys
+
 sys.path.append("../IDR_stream/")
 from idrstream.DP_idr import DeepProfilerRun
 
@@ -13,7 +14,7 @@ for data_locations_path in sorted(locations_dir.iterdir()):
     # name of data being processed (training_data, negative_control_data, or positive_control_data)
     data_name = data_locations_path.name.replace("_locations.tsv", "_data")
     print(f"Running IDR_stream DP for {data_name}")
-    
+
     # idr ID for MitoCheck data
     idr_id = "idr0013"
     # path to temporary data directory that holds intermediate idrstream files
@@ -47,26 +48,38 @@ for data_locations_path in sorted(locations_dir.iterdir()):
     # initialize fiji preprocessor
     fiji_path = pathlib.Path(f"{home_dir_path}/Desktop/Fiji.app")
     stream.init_preprocessor(fiji_path)
-    
+
     # initialize CellPose segmentor for MitoCheck data
     nuclei_model_specs = {
-            "model_type": "cyto",
-            "channels": [0, 0],
-            "diameter": 0,
-            "flow_threshold": 0.8,
-            "cellprob_threshold": 0,
-            "remove_edge_masks": True,
-        }
+        "model_type": "cyto",
+        "channels": [0, 0],
+        "diameter": 0,
+        "flow_threshold": 0.8,
+        "cellprob_threshold": 0,
+        "remove_edge_masks": True,
+    }
     stream.init_segmentor(nuclei_model_specs)
-    
+
     # copy necessary DP files to tmp dir
-    config_path = pathlib.Path("../stream_files/DP_files/mitocheck_profiling_config.json")
-    checkpoint_path = pathlib.Path("../stream_files/DP_files/efficientnet-b0_weights_tf_dim_ordering_tf_kernels_autoaugment.h5")
+    config_path = pathlib.Path(
+        "../stream_files/DP_files/mitocheck_profiling_config.json"
+    )
+    checkpoint_path = pathlib.Path(
+        "../stream_files/DP_files/efficientnet-b0_weights_tf_dim_ordering_tf_kernels_autoaugment.h5"
+    )
     stream.copy_DP_files(config_path, checkpoint_path)
 
     # run dp IDR_stream!
     # if data is for training, also extract outlines (later MitoCheck labels can be associated with the outlines)
     if data_name == "training_data":
-        stream.run_dp_stream(data_to_process, batch_size=3, start_batch=0, batch_nums=[0], extra_metadata=["object_outlines"])
+        stream.run_dp_stream(
+            data_to_process,
+            batch_size=3,
+            start_batch=0,
+            batch_nums=[0],
+            extra_metadata=["object_outlines"],
+        )
     else:
-        stream.run_dp_stream(data_to_process, batch_size=3, start_batch=0, batch_nums=[0])
+        stream.run_dp_stream(
+            data_to_process, batch_size=3, start_batch=0, batch_nums=[0]
+        )
