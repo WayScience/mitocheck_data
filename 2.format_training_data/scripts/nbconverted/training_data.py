@@ -21,9 +21,10 @@ from training_data_utils import get_labeled_cells
 # In[2]:
 
 
-training_data_features_path = pathlib.Path("../1.idr_streams/extracted_features/training_data")
+training_data_features_path = pathlib.Path("../1.idr_streams/extracted_features/training_data/merged_features/")
 training_data = compile_mitocheck_batch_data(training_data_features_path)
-#training_data
+print(training_data.shape)
+training_data.head()
 
 
 # ### Find cells with Mitocheck-assigned labels
