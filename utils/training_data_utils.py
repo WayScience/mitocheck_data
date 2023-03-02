@@ -128,7 +128,7 @@ def get_labeled_cells(
             included = False
             # see if the center coords correspond to any feature data from the frame cells
             for _, row in frame_cells.iterrows():
-                raw_outline_data = row["Object_Outline"]
+                raw_outline_data = row["DP__Object_Outline"]
                 if center_in_outline(center_x, center_y, raw_outline_data):
                     full_row = pd.concat([pd.Series([phenotypic_class]), row])
                     labeled_cells.append(full_row)
