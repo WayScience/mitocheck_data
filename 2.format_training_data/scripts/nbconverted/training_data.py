@@ -36,7 +36,7 @@ training_data.head()
 
 features_samples_path = pathlib.Path("../mitocheck_metadata/features.samples.txt")
 
-labeled_cells = get_labeled_cells(training_data, features_samples_path)  
+labeled_cells = get_labeled_cells(training_data, features_samples_path, "DP__Object_Outline")  
 print(f"Shape of labeled_cells: {labeled_cells.shape}")
 
 
