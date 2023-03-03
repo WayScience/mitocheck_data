@@ -147,4 +147,7 @@ def get_labeled_cells(
     labeled_cells = labeled_cells.rename(
         columns={labeled_cells.columns[0]: "Mitocheck_Phenotypic_Class"}
     )
+    # remove unecessary DP column that isnt part of features
+    labeled_cells.pop("DP__Object_Outline")
+    
     return labeled_cells
