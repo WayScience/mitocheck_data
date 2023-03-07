@@ -21,7 +21,7 @@ In other words, we create one normalization scaler from all negative control fea
 
 Use the commands below to normalize all data.
 All normalized data will be saved to [normalized_data/](normalized_data/).
-Only the normalized training data has been uploaded to github as the positive and negative control datasets are too large.
+Only the normalized training data has been uploaded to github as the positive and negative control datasets are very large.
 
 ```sh
 # Make sure you are located in 3.normalize_data
@@ -31,5 +31,5 @@ cd 3.normalize_data
 conda activate mitocheck_data
 
 # Normalize all data
-bash normalize_data.sh
+python normalize_data.py
 ```
