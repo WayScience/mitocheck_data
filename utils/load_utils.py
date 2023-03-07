@@ -2,7 +2,7 @@ import pathlib
 import pandas as pd
 
 
-def compile_mitocheck_batch_data(data_path: pathlib.Path, dataset: str="both") -> pd.DataFrame:
+def compile_mitocheck_batch_data(data_path: pathlib.Path, dataset: str="CP_and_DP") -> pd.DataFrame:
     """
     compile batch data from a mitocheck idrstream run
 
@@ -12,7 +12,7 @@ def compile_mitocheck_batch_data(data_path: pathlib.Path, dataset: str="both") -
         path to folder with saved batches
     dataset : str, optional
         which dataset columns to load in (in addition to metadata),
-        can be "CP" or "DP" or by default "both"
+        can be "CP" or "DP" or by default "CP_and_DP"
 
     Returns
     -------
@@ -56,7 +56,7 @@ def compile_mitocheck_batch_data(data_path: pathlib.Path, dataset: str="both") -
     return data.reset_index(drop=True)
 
 
-def split_data(pycytominer_output: pd.DataFrame, dataset: str="both"):
+def split_data(pycytominer_output: pd.DataFrame, dataset: str="CP_and_DP"):
     """
     split pycytominer output to metadata dataframe and np array of feature values
 
@@ -66,7 +66,7 @@ def split_data(pycytominer_output: pd.DataFrame, dataset: str="both"):
         dataframe with pycytominer output
     dataset : str, optional
         which dataset features to split,
-        can be "CP" or "DP" or by default "both"
+        can be "CP" or "DP" or by default "CP_and_DP"
 
     Returns
     -------
@@ -80,7 +80,7 @@ def split_data(pycytominer_output: pd.DataFrame, dataset: str="both"):
         feature_cols = [col for col in all_cols if "CP__" in col]
     elif dataset == "DP":
         feature_cols = [col for col in all_cols if "DP__" in col]
-    elif dataset == "both":
+    elif dataset == "CP_and_DP":
         feature_cols = [col for col in all_cols if "P__" in col]
         
     # metadata columns is all columns except feature columns
