@@ -13,7 +13,7 @@ import numpy as np
 import sys
 sys.path.append("../utils")
 from load_utils import compile_mitocheck_batch_data, split_data
-from analysis_utils import get_2D_umap_embeddings, show_2D_umap
+from analysis_utils import get_2D_umap_embeddings, show_2D_umap_from_embeddings
 
 
 # ### Compile control data
@@ -22,12 +22,12 @@ from analysis_utils import get_2D_umap_embeddings, show_2D_umap
 
 
 # get 10% of negative control features
-negative_control_data_path = pathlib.Path("../1.idr_streams/extracted_features/negative_control_data")
+negative_control_data_path = pathlib.Path("../1.idr_streams/extracted_features/negative_control_data/merged_features")
 negative_control_data = compile_mitocheck_batch_data(negative_control_data_path)
 negative_control_data = negative_control_data.sample(frac=0.1, random_state=0)
 
 # get 10% of positive control features
-positive_control_data_path = pathlib.Path("../1.idr_streams/extracted_features/positive_control_data")
+positive_control_data_path = pathlib.Path("../1.idr_streams/extracted_features/positive_control_data/merged_features")
 positive_control_data = compile_mitocheck_batch_data(positive_control_data_path)
 positive_control_data = positive_control_data.sample(frac=0.1, random_state=0)
 
@@ -38,13 +38,40 @@ control_data = control_data.sample(frac=1, random_state=0)
 control_data
 
 
-# ### Create 2D umaps colored by metadata
+# ### Create 2D umaps colored by metadata (CP)
 
 # In[3]:
 
 
-results_dir = pathlib.Path("raw_data_umaps/")
-results_dir.mkdir(parents=True, exist_ok=True)
+metadata_dataframe, feature_data = split_data(control_data, "CP")
+x_data, y_data = get_2D_umap_embeddings(feature_data)
+
+metadata_fields = ["Metadata_Plate", "Metadata_Well", "Metadata_Frame", "Metadata_Gene"]
+
+for metadata_field in metadata_fields:
+    metadata = metadata_dataframe[metadata_field]
+    show_2D_umap_from_embeddings(x_data, y_data, metadata)
+
+
+# ### Create 2D umaps colored by metadata (DP)
+
+# In[4]:
+
+
+metadata_dataframe, feature_data = split_data(control_data, "DP")
+x_data, y_data = get_2D_umap_embeddings(feature_data)
+
+metadata_fields = ["Metadata_Plate", "Metadata_Well", "Metadata_Frame", "Metadata_Gene"]
+
+for metadata_field in metadata_fields:
+    metadata = metadata_dataframe[metadata_field]
+    show_2D_umap_from_embeddings(x_data, y_data, metadata)
+
+
+# ### Create 2D umaps colored by metadata (CP and DP)
+
+# In[5]:
+
 
 metadata_dataframe, feature_data = split_data(control_data)
 x_data, y_data = get_2D_umap_embeddings(feature_data)
@@ -53,5 +80,5 @@ metadata_fields = ["Metadata_Plate", "Metadata_Well", "Metadata_Frame", "Metadat
 
 for metadata_field in metadata_fields:
     metadata = metadata_dataframe[metadata_field]
-    show_2D_umap(x_data, y_data, metadata, f"{results_dir}/controls_{metadata_field}.png")
+    show_2D_umap_from_embeddings(x_data, y_data, metadata)
 
