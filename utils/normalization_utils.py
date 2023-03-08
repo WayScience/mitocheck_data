@@ -6,7 +6,7 @@ from sklearn.preprocessing import StandardScaler
 from load_utils import compile_mitocheck_batch_data, split_data
 
 
-def get_normalization_scaler(norm_pop_path: pathlib.Path) -> StandardScaler():
+def get_normalization_scaler(norm_pop_path: pathlib.Path, dataset: str="CP_and_DP") -> StandardScaler():
     """
     get normalization scaler from a normalization population
 
@@ -14,6 +14,9 @@ def get_normalization_scaler(norm_pop_path: pathlib.Path) -> StandardScaler():
     ----------
     norm_pop_path : pathlib.Path
         path to normalization output in form of mitocheck IDR stream output
+    dataset : str, optional
+        which dataset columns to load in (in addition to metadata),
+        can be "CP" or "DP" or by default "CP_and_DP"
 
     Returns
     -------
@@ -21,10 +24,10 @@ def get_normalization_scaler(norm_pop_path: pathlib.Path) -> StandardScaler():
         scaler to be used for data normalization
     """
     # get normalization population
-    norm_pop_data = compile_mitocheck_batch_data(norm_pop_path)
+    norm_pop_data = compile_mitocheck_batch_data(norm_pop_path, dataset)
 
     # derive normalization scaler
-    _, norm_pop_feature_data = split_data(norm_pop_data)
+    _, norm_pop_feature_data = split_data(norm_pop_data, dataset)
     scaler = StandardScaler()
     scaler.fit(norm_pop_feature_data)
 
@@ -52,14 +55,14 @@ def get_normalized_mitocheck_data(
 
     # normalize features from data
     col_list = data.columns.tolist()
-    derived_features = [col_name for col_name in col_list if "efficientnet" in col_name]
+    derived_features = [col_name for col_name in col_list if "P__" in col_name]
     features = data[derived_features].to_numpy()
     features = scaler.transform(features)
     # make features a dataframe so it can be combined with metadata
     features = pd.DataFrame(features, columns=derived_features)
 
     # replace original features of data with normalized features
-    metadata = [col_name for col_name in col_list if "efficientnet" not in col_name]
+    metadata = [col_name for col_name in col_list if "P__" not in col_name]
     metadata = data[metadata]
 
     return pd.concat([metadata, features], axis=1)
