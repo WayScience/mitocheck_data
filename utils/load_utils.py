@@ -4,12 +4,13 @@ import pandas as pd
 
 def compile_mitocheck_batch_data(data_path: pathlib.Path, dataset: str="CP_and_DP") -> pd.DataFrame:
     """
-    compile batch data from a mitocheck idrstream run
+    compile batch data from a mitocheck idrstream merged features run
 
     Parameters
     ----------
     data_path : pathlib.Path
         path to folder with saved batches
+        these batches must be merged (have CP and DP features)
     dataset : str, optional
         which dataset columns to load in (in addition to metadata),
         can be "CP" or "DP" or by default "CP_and_DP"

@@ -38,7 +38,7 @@ control_data = control_data.sample(frac=1, random_state=0)
 control_data
 
 
-# ### Create 2D umaps colored by metadata (CP)
+# ### Create 2D umaps colored by metadata (with CP features)
 
 # In[3]:
 
@@ -53,7 +53,7 @@ for metadata_field in metadata_fields:
     show_2D_umap_from_embeddings(x_data, y_data, metadata)
 
 
-# ### Create 2D umaps colored by metadata (DP)
+# ### Create 2D umaps colored by metadata (with DP features)
 
 # In[4]:
 
@@ -68,7 +68,7 @@ for metadata_field in metadata_fields:
     show_2D_umap_from_embeddings(x_data, y_data, metadata)
 
 
-# ### Create 2D umaps colored by metadata (CP and DP)
+# ### Create 2D umaps colored by metadata (with CP and DP features)
 
 # In[5]:
 
