@@ -90,6 +90,9 @@ feature_types = ["CP", "DP", "CP_and_DP"]
 for feature_type in feature_types:
     print(f"Showing UMAPs created with {feature_type} features")
     
+    # the trainind data dataframe is split into two components:
+    # metadata: info about the cell including its labeled phenotypic class, location, perturbation, etc
+    # feature data: the CP, DP, or merged features for each cell
     metadata_dataframe, feature_data = split_data(training_data, feature_type)
     phenotypic_classes = metadata_dataframe["Mitocheck_Phenotypic_Class"]
     
