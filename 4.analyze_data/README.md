@@ -6,7 +6,7 @@ In this module, we analyze the normalized training data features from [3.normali
 
 We use [UMAP](https://github.com/lmcinnes/umap) for analyis of features.
 UMAP was introduced in [McInnes, L, Healy, J, 2018](https://arxiv.org/abs/1802.03426) as a manifold learning technique for dimension reduction.
-We use UMAP to reduce the feature data to 1 and 2 dimensions.
+We use UMAP to reduce the feature data into 1 and 2 dimensions.
 We use [Matplotlib](https://matplotlib.org/) to visualize the 1D and 2D UMAPS.
 
 For each reduction with UMAP, we create two types of visualizations.
