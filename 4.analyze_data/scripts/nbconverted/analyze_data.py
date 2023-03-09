@@ -56,6 +56,9 @@ classes_1 = [
     "OutOfFocus",
 ]
 
+# classes that aren't commented out will get a color for their particular class
+# those that are commented out will be colored gray and labeled "other"
+# in the second set of umaps
 classes_2 = [
     # "Large",
     "Prometaphase",
