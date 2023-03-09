@@ -10,17 +10,29 @@ from idrstream.CP_idr import CellProfilerRun
 # directory with all locations data csvs (with plate/well/frame image location data for IDR_stream)
 locations_dir = pathlib.Path("../../0.locate_data/locations/")
 
+# path to directory with runcellpose.py file
+plugins_directory = pathlib.Path("../IDR_stream/idrstream/CP_Plugins")
+# path to CellProfiler pipeline file
+pipeline_path = pathlib.Path("../stream_files/CP_files/mitocheck_idr_cp.cppipe")
+# idr ID for MitoCheck data
+idr_id = "idr0013"
+
+# path to users home dir
+home_dir_path = pathlib.Path.home()
+
+# set downloader paths
+aspera_path = pathlib.Path(f"{home_dir_path}/.aspera/ascli/sdk/ascp")
+aspera_key_path = pathlib.Path("../stream_files/asperaweb_id_dsa.openssh")
+screens_path = pathlib.Path("../stream_files/idr0013-screenA-plates.tsv")
+
+# set fiji path
+fiji_path = pathlib.Path(f"{home_dir_path}/Desktop/Fiji.app")
+
 for data_locations_path in sorted(locations_dir.iterdir()):
     # name of data being processed (training_data, negative_control_data, or positive_control_data)
     data_name = data_locations_path.name.replace("_locations.tsv", "_data")
     print(f"Running IDR_stream CP for {data_name}")
-
-    # path to directory with runcellpose.py file
-    plugins_directory = pathlib.Path("../IDR_stream/idrstream/CP_Plugins")
-    # path to CellProfiler pipeline file
-    pipeline_path = pathlib.Path("../stream_files/CP_files/mitocheck_idr_cp.cppipe")
-    # idr ID for MitoCheck data
-    idr_id = "idr0013"
+    
     # path to temporary data directory that holds intermediate idrstream files
     tmp_dir = pathlib.Path("tmp/")
     # remove tmp directory if it already exists (ex: from a previous IDR_stream run)
@@ -47,17 +59,10 @@ for data_locations_path in sorted(locations_dir.iterdir()):
     # pandas dataframe with plate/well/frame image location data for IDR_stream
     data_to_process = pd.read_csv(data_locations_path, sep="\t", index_col=0)
 
-    # path to users home dir
-    home_dir_path = pathlib.Path.home()
-
-    # initialize aspera downloader
-    aspera_path = pathlib.Path(f"{home_dir_path}/.aspera/ascli/sdk/ascp")
-    aspera_key_path = pathlib.Path("../stream_files/asperaweb_id_dsa.openssh")
-    screens_path = pathlib.Path("../stream_files/idr0013-screenA-plates.tsv")
+    # init downloader
     stream.init_downloader(aspera_path, aspera_key_path, screens_path)
 
-    # initialize fiji preprocessor
-    fiji_path = pathlib.Path(f"{home_dir_path}/Desktop/Fiji.app")
+    # init preprocessor
     stream.init_preprocessor(fiji_path)
 
     # run cp IDR_stream!
