@@ -89,7 +89,9 @@ def center_in_outline(center_x: int, center_y: int, raw_outline_data: str) -> bo
 
 
 def get_labeled_cells(
-    training_data: pd.DataFrame, features_samples_path: pathlib.Path, outlines_column: str
+    training_data: pd.DataFrame,
+    features_samples_path: pathlib.Path,
+    outlines_column: str,
 ) -> pd.DataFrame:
     """
     get labeled cells as dataframe from all training data and features samples
@@ -149,5 +151,5 @@ def get_labeled_cells(
     )
     # remove unecessary DP column that isnt part of features
     labeled_cells.pop("DP__Object_Outline")
-    
+
     return labeled_cells

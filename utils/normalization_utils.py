@@ -6,7 +6,9 @@ from sklearn.preprocessing import StandardScaler
 from load_utils import compile_mitocheck_batch_data, split_data
 
 
-def get_normalization_scaler(norm_pop_path: pathlib.Path, dataset: str="CP_and_DP") -> StandardScaler():
+def get_normalization_scaler(
+    norm_pop_path: pathlib.Path, dataset: str = "CP_and_DP"
+) -> StandardScaler():
     """
     get normalization scaler from a normalization population
 

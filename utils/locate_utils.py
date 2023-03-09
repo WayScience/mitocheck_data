@@ -75,7 +75,7 @@ def get_uncompiled_training_locations(
                 # still useful for manually labeled individual cells, just means the whole well failed QC
                 if pd.isna(gene):
                     gene = "failed QC"
-                
+
                 well = image_annotations.iloc[0]["Well"]
             except IndexError:
                 # Some labeled data did not make it to IDR because of quality control issues
@@ -115,15 +115,28 @@ def get_final_training_locations(
     # remove duplicate plate/well/frame combinations from cells in the same image
     final_training_locations = uncompiled_training_locations.drop_duplicates()
     final_training_locations = final_training_locations.reset_index(drop=True)
-    
+
     # add columns necessary for idrstream_cp
     # plate map name is plate_wellNum
-    final_training_locations["Plate_Map_Name"] = final_training_locations['Plate'] +"_"+ final_training_locations["Well Number"].astype(str)
+    final_training_locations["Plate_Map_Name"] = (
+        final_training_locations["Plate"]
+        + "_"
+        + final_training_locations["Well Number"].astype(str)
+    )
     # gene replicate and site always 1 for this data
     final_training_locations["Gene_Replicate"] = 1
     final_training_locations["Site"] = 1
     # DNA is path to DNA image after image is downloaded and saved with IDR_stream
-    final_training_locations["DNA"] = final_training_locations['Plate'] +"/"+ final_training_locations['Plate'] +"_"+ final_training_locations["Well Number"].astype(str) +"_"+ final_training_locations["Frames"].astype(str) + ".tif"
+    final_training_locations["DNA"] = (
+        final_training_locations["Plate"]
+        + "/"
+        + final_training_locations["Plate"]
+        + "_"
+        + final_training_locations["Well Number"].astype(str)
+        + "_"
+        + final_training_locations["Frames"].astype(str)
+        + ".tif"
+    )
 
     return final_training_locations
 
@@ -179,11 +192,22 @@ def get_control_locations(
 
     # add columns necessary for idrstream_cp
     # plate map name is plate_wellNum
-    control_locations["Plate_Map_Name"] = control_locations['Plate'] +"_"+ control_locations["Well Number"]
+    control_locations["Plate_Map_Name"] = (
+        control_locations["Plate"] + "_" + control_locations["Well Number"]
+    )
     # gene replicate and site always 1 for this data
     control_locations["Gene_Replicate"] = 1
     control_locations["Site"] = 1
     # DNA is path to DNA image after image is downloaded and saved with IDR_stream
-    control_locations["DNA"] = control_locations['Plate'] +"/"+ control_locations['Plate'] +"_"+ control_locations["Well Number"] +"_"+ control_locations["Frames"].astype(str) + ".tif"
+    control_locations["DNA"] = (
+        control_locations["Plate"]
+        + "/"
+        + control_locations["Plate"]
+        + "_"
+        + control_locations["Well Number"]
+        + "_"
+        + control_locations["Frames"].astype(str)
+        + ".tif"
+    )
 
     return control_locations.reset_index(drop=True)

@@ -2,7 +2,9 @@ import pathlib
 import pandas as pd
 
 
-def compile_mitocheck_batch_data(data_path: pathlib.Path, dataset: str="CP_and_DP") -> pd.DataFrame:
+def compile_mitocheck_batch_data(
+    data_path: pathlib.Path, dataset: str = "CP_and_DP"
+) -> pd.DataFrame:
     """
     compile batch data from a mitocheck idrstream merged features run
 
@@ -20,18 +22,22 @@ def compile_mitocheck_batch_data(data_path: pathlib.Path, dataset: str="CP_and_D
     pd.DataFrame
         compiled batch dataframe
     """
-    
+
     data = pd.DataFrame()
-    
+
     # determine which cols to use for loading (depending on dataset)
     # load in first row to get all column names
     batch_0_row_0 = pd.read_csv(
-            f"{data_path}/batch_0.csv.gz", compression="gzip", index_col=0, low_memory=False, nrows=1
-        )
+        f"{data_path}/batch_0.csv.gz",
+        compression="gzip",
+        index_col=0,
+        low_memory=False,
+        nrows=1,
+    )
     cols_to_load = batch_0_row_0.columns.to_list()
     # remove unecessary DP column that isnt part of features
     cols_to_load.remove("DP__Metadata_Model")
-    
+
     # remove DP or CP features from columns to load depending on desired dataset
     if dataset == "CP":
         cols_to_load = [col for col in cols_to_load if "DP__" not in col]
@@ -40,7 +46,11 @@ def compile_mitocheck_batch_data(data_path: pathlib.Path, dataset: str="CP_and_D
 
     for batch_path in data_path.iterdir():
         batch = pd.read_csv(
-            batch_path, compression="gzip", index_col=0, low_memory=True, usecols=cols_to_load
+            batch_path,
+            compression="gzip",
+            index_col=0,
+            low_memory=True,
+            usecols=cols_to_load,
         )
 
         # split well_frame into well and frame columns
@@ -57,7 +67,7 @@ def compile_mitocheck_batch_data(data_path: pathlib.Path, dataset: str="CP_and_D
     return data.reset_index(drop=True)
 
 
-def split_data(pycytominer_output: pd.DataFrame, dataset: str="CP_and_DP"):
+def split_data(pycytominer_output: pd.DataFrame, dataset: str = "CP_and_DP"):
     """
     split pycytominer output to metadata dataframe and np array of feature values
 
@@ -75,7 +85,7 @@ def split_data(pycytominer_output: pd.DataFrame, dataset: str="CP_and_DP"):
         metadata dataframe, feature values
     """
     all_cols = pycytominer_output.columns.tolist()
-    
+
     # get DP,CP, or both features from all columns depending on desired dataset
     if dataset == "CP":
         feature_cols = [col for col in all_cols if "CP__" in col]
@@ -83,10 +93,10 @@ def split_data(pycytominer_output: pd.DataFrame, dataset: str="CP_and_DP"):
         feature_cols = [col for col in all_cols if "DP__" in col]
     elif dataset == "CP_and_DP":
         feature_cols = [col for col in all_cols if "P__" in col]
-        
+
     # metadata columns is all columns except feature columns
     metadata_cols = [col for col in all_cols if "P__" not in col]
-    
+
     metadata_dataframe = pycytominer_output[metadata_cols]
     feature_data = pycytominer_output[feature_cols].values
 

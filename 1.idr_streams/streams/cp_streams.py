@@ -32,7 +32,7 @@ for data_locations_path in sorted(locations_dir.iterdir()):
     # name of data being processed (training_data, negative_control_data, or positive_control_data)
     data_name = data_locations_path.name.replace("_locations.tsv", "_data")
     print(f"Running IDR_stream CP for {data_name}")
-    
+
     # path to temporary data directory that holds intermediate idrstream files
     tmp_dir = pathlib.Path("tmp/")
     # remove tmp directory if it already exists (ex: from a previous IDR_stream run)
