@@ -89,7 +89,9 @@ def center_in_outline(center_x: int, center_y: int, raw_outline_data: str) -> bo
 
 
 def get_labeled_cells(
-    training_data: pd.DataFrame, features_samples_path: pathlib.Path
+    training_data: pd.DataFrame,
+    features_samples_path: pathlib.Path,
+    outlines_column: str,
 ) -> pd.DataFrame:
     """
     get labeled cells as dataframe from all training data and features samples
@@ -100,6 +102,8 @@ def get_labeled_cells(
         all single cell features from all frames with any labeled cells
     features_samples_path : pathlib.Path
         path to features samples file
+    outlines_column : str
+        name of column in training_data that has outline data
 
     Returns
     -------
@@ -128,7 +132,7 @@ def get_labeled_cells(
             included = False
             # see if the center coords correspond to any feature data from the frame cells
             for _, row in frame_cells.iterrows():
-                raw_outline_data = row["Object_Outline"]
+                raw_outline_data = row[outlines_column]
                 if center_in_outline(center_x, center_y, raw_outline_data):
                     full_row = pd.concat([pd.Series([phenotypic_class]), row])
                     labeled_cells.append(full_row)
@@ -145,4 +149,7 @@ def get_labeled_cells(
     labeled_cells = labeled_cells.rename(
         columns={labeled_cells.columns[0]: "Mitocheck_Phenotypic_Class"}
     )
+    # remove unecessary DP column that isnt part of features
+    labeled_cells.pop("DP__Object_Outline")
+
     return labeled_cells

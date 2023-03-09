@@ -23,7 +23,6 @@ from locate_utils import get_uncompiled_training_locations, get_final_training_l
 
 annotations_path = pathlib.Path("../mitocheck_metadata/idr0013-screenA-annotation.csv.gz")
 feature_samples_path = pathlib.Path("../mitocheck_metadata/features.samples.txt")
-features_path = pathlib.Path("../mitocheck_metadata/trainingset_2007_06_21.dat")
 
 locations_dir = pathlib.Path("locations/")
 locations_dir.mkdir(exist_ok=True, parents=True)
@@ -36,8 +35,8 @@ locations_dir.mkdir(exist_ok=True, parents=True)
 
 training_save_path = pathlib.Path(f"{locations_dir}/training_locations.tsv")
 
-uncompile_training_locations = get_uncompiled_training_locations(feature_samples_path, annotations_path)
-training_data_locations = get_final_training_locations(uncompile_training_locations)
+uncompiled_training_locations = get_uncompiled_training_locations(feature_samples_path, annotations_path)
+training_data_locations = get_final_training_locations(uncompiled_training_locations)
 training_data_locations.to_csv(training_save_path, sep="\t")
 
 training_data_locations

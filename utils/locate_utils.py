@@ -71,6 +71,11 @@ def get_uncompiled_training_locations(
             ]
             try:
                 gene = image_annotations.iloc[0]["Original Gene Target"]
+                # na gene corresponds to failed QC test (no gene is provided in annotations)
+                # still useful for manually labeled individual cells, just means the whole well failed QC
+                if pd.isna(gene):
+                    gene = "failed QC"
+
                 well = image_annotations.iloc[0]["Well"]
             except IndexError:
                 # Some labeled data did not make it to IDR because of quality control issues
@@ -82,7 +87,7 @@ def get_uncompiled_training_locations(
                 "Plate": plate,
                 "Well": well,
                 "Well Number": well_num,
-                "Frame": frame,
+                "Frames": frame,
                 "Original Gene Target": gene,
             }
 
@@ -95,8 +100,7 @@ def get_final_training_locations(
     uncompiled_training_locations: pd.DataFrame,
 ) -> pd.DataFrame:
     """
-    compile individual training location entries into a final training locations dataframe with one entry per unique plate & well
-    removes repeated combinations of plate and well
+    removes repeated combinations of plate/well/frame
 
     Parameters
     ----------
@@ -106,53 +110,34 @@ def get_final_training_locations(
     Returns
     -------
     pd.DataFrame
-        dataframe with one entry per plate and well combo (does not have repeats)
+        dataframe with one entry per plate/well/frames combo (does not have repeats)
     """
-    original_training_locations = uncompiled_training_locations
-    final_training_locations = []
+    # remove duplicate plate/well/frame combinations from cells in the same image
+    final_training_locations = uncompiled_training_locations.drop_duplicates()
+    final_training_locations = final_training_locations.reset_index(drop=True)
 
-    # iterate through original training locations and compile all frames from same plate/well into one locations entry (with list of frames)
-    # remove the particular plate/well locations from original training locations
-    # contiue until original training locations is empty
-    while not original_training_locations.empty:
-        plate = original_training_locations.iloc[0]["Plate"]
-        well_num = original_training_locations.iloc[0]["Well Number"]
-        well = original_training_locations.iloc[0]["Well"]
-        gene = original_training_locations.iloc[0]["Original Gene Target"]
-        # na gene corresponds to failed QC test (no gene is provided in annotations)
-        # still useful for manually labeled individual cells, just means the whole well failed QC
-        if pd.isna(gene):
-            gene = "failed QC"
+    # add columns necessary for idrstream_cp
+    # plate map name is plate_wellNum
+    final_training_locations["Plate_Map_Name"] = (
+        final_training_locations["Plate"]
+        + "_"
+        + final_training_locations["Well Number"].astype(str)
+    )
+    # gene replicate and site always 1 for this data
+    final_training_locations["Gene_Replicate"] = 1
+    final_training_locations["Site"] = 1
+    # DNA is path to DNA image after image is downloaded and saved with IDR_stream
+    final_training_locations["DNA"] = (
+        final_training_locations["Plate"]
+        + "/"
+        + final_training_locations["Plate"]
+        + "_"
+        + final_training_locations["Well Number"].astype(str)
+        + "_"
+        + final_training_locations["Frames"].astype(str)
+        + ".tif"
+    )
 
-        plate_well_locations = original_training_locations.loc[
-            (original_training_locations["Plate"] == plate)
-            & (original_training_locations["Well Number"] == well_num)
-        ]
-
-        # compile all frames from the particular well and plate
-        frames = []
-        for frame in plate_well_locations["Frame"]:
-            if frame not in frames:
-                frames.append(frame)
-        # convert frames to string for pandas dataframe
-        frames_string = ",".join(map(str, frames))
-
-        # add location details with entire frame string to final locations
-        location_details = {
-            "Plate": plate,
-            "Well": well,
-            "Well Number": well_num,
-            "Frames": frames_string,
-            "Original Gene Target": gene,
-        }
-        final_training_locations.append(location_details)
-
-        # remove all locations corresponding to same plate, well
-        original_training_locations = original_training_locations[
-            ~original_training_locations.index.isin(plate_well_locations.index)
-        ]
-
-    final_training_locations = pd.DataFrame(final_training_locations)
     return final_training_locations
 
 
@@ -204,5 +189,25 @@ def get_control_locations(
     np.random.seed(numpy_seed)
     frames = np.random.randint(low=31, high=63, size=len(control_locations))
     control_locations["Frames"] = frames
+
+    # add columns necessary for idrstream_cp
+    # plate map name is plate_wellNum
+    control_locations["Plate_Map_Name"] = (
+        control_locations["Plate"] + "_" + control_locations["Well Number"]
+    )
+    # gene replicate and site always 1 for this data
+    control_locations["Gene_Replicate"] = 1
+    control_locations["Site"] = 1
+    # DNA is path to DNA image after image is downloaded and saved with IDR_stream
+    control_locations["DNA"] = (
+        control_locations["Plate"]
+        + "/"
+        + control_locations["Plate"]
+        + "_"
+        + control_locations["Well Number"]
+        + "_"
+        + control_locations["Frames"].astype(str)
+        + ".tif"
+    )
 
     return control_locations.reset_index(drop=True)

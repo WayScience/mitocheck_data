@@ -2,15 +2,14 @@
 .ipynb_checkpoints
 # Python files
 __pycache__/
-# tmp files
-1.idr_streams/tmp
-# extracted features
-1.idr_streams/extracted_features
 # aspera key
 1.idr_streams/stream_files/asperaweb_id_dsa.openssh
+# tmp files
+1.idr_streams/streams/tmp
+# IDR stream logs
+1.idr_streams/streams/logs
+# extracted features
+1.idr_streams/extracted_features
 # normalized control features
 3.normalize_data/normalized_data/negative_control_data.csv.gz
 3.normalize_data/normalized_data/positive_control_data.csv.gz
-# IDR stream logs
-1.idr_streams/streams/logs/negative_control_idr_stream.log
-1.idr_streams/streams/logs/positive_control_idr_stream.log

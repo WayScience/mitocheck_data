@@ -10,8 +10,8 @@ However, the intermediate files for each batch still need to be stored locally.
 The intermediate files for the training and control datasets will be stored in `tmp/`.
 
 In [streams/](streams/) we initialize and run `idrstream` for the training, negative control, and positive control data.
-The `batch_size` parameter tells `idrstream` how many wells to process in one batch.
-We set this parameter to `5` for training data and `10` for control data because training data tends to have multiple frames to process per well whereas control data only has 1 frame to process per well.
+The `batch_size` parameter tells `idrstream` how many frames to process in one batch.
+We set this to `10` for MitoCheck data, meaning that the features for cells in 10 images (unique plate/well/frame combination) are extracted in each batch.
 
 ## Step 1: Set up `idrstream`
 
@@ -25,25 +25,22 @@ cd 1.idr_streams
 # Activate mitocheck_data conda environment
 conda activate mitocheck_data
 
-# Use specific version of idrstream
+# clone IDR_stream
 git clone https://github.com/WayScience/IDR_stream.git
+# Use specific version of IDR_stream
 cd IDR_stream
-git checkout d5b049b308a468f6a80f7657c4cb625770130129
+git checkout b10a7a8bf75ca2375dcf629a0c26d268fa3273d1
 ```
 
-Follow the instructions at [idrstream setup](https://github.com/WayScience/IDR_stream#setup) to complete the `idrstream` setup.
-The first step (necessary packages) does not need to be completed as the `mitocheck_data` environment includes all of these packages.
+Follow the instructions at [idrstream setup](https://github.com/WayScience/IDR_stream#setup) to complete the idrstream setup.
 
 ## Step 2: Run IDR streams
 
-Use the commands below to locate training and control movies:
+Use the commands below to use `idrstream` to extract features from training and control frames:
 
 ```sh
 # Make sure you are located in 1.idr_streams
 cd 1.idr_streams
-
-# Activate mitocheck_data conda environment
-conda activate mitocheck_data
 
 # Run IDR streams
 bash idr_streams.sh
@@ -53,12 +50,11 @@ bash idr_streams.sh
 
 Logs from each `idrstream` run will be saved to [logs/](streams/logs/).
 These logs inlcude info about each `idrstream` run, including any errors that might have occured while profiling a batch.
-The log for training data is included at [training_idr_stream.log](streams/logs/training_idr_stream.log) for reference of what a log file should look like (with no errors).
 
-IDR stream run times:
-- training data: 90 min
+IDR stream DP run times (CP and DP streams have nearly equivalent runtimes):
+- training data: 65 min
 - negative controls: 900 min
-- negative controls: 515 min
+- positive controls: 650 min
 
 These IDR streams were run with the following specs:
 
