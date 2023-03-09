@@ -54,7 +54,7 @@ These logs inlcude info about each `idrstream` run, including any errors that mi
 IDR stream DP run times (CP and DP streams have nearly equivalent runtimes):
 - training data: 65 min
 - negative controls: 900 min
-- negative controls: 650 min
+- positive controls: 650 min
 
 These IDR streams were run with the following specs:
 
