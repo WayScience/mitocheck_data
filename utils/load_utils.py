@@ -48,7 +48,6 @@ def compile_mitocheck_batch_data(
         batch = pd.read_csv(
             batch_path,
             compression="gzip",
-            index_col=0,
             low_memory=True,
             usecols=cols_to_load,
         )

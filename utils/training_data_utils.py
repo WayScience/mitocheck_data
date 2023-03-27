@@ -149,7 +149,12 @@ def get_labeled_cells(
     labeled_cells = labeled_cells.rename(
         columns={labeled_cells.columns[0]: "Mitocheck_Phenotypic_Class"}
     )
-    # remove unecessary DP column that isnt part of features
-    labeled_cells.pop("DP__Object_Outline")
+    # rename DP column that isnt part of features
+    # idr_stream's merge function prefixes all data from idrstream_dp with DP__
+    # but for Mitocheck labeled data, we only want DP features to have DP__ prefix
+    # thus, we need to rename object outline column to have Metadata_ prefix instead of DP__ prefix
+    labeled_cells = labeled_cells.rename(
+        columns={"DP__Object_Outline": "Metadata_Object_Outline"}
+    )
 
     return labeled_cells
