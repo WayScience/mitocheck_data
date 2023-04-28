@@ -11,6 +11,7 @@ from load_utils import compile_mitocheck_batch_data, split_data
 from normalization_utils import get_normalization_scaler, get_normalized_mitocheck_data
 
 # get normalization scaler from negative control features (normalization population)
+print("Getting normalization scaler...")
 negative_control_data_path = pathlib.Path(
     "../1.idr_streams/extracted_features/negative_control_data/merged_features/"
 )
@@ -26,6 +27,7 @@ results_dir = pathlib.Path("normalized_data/")
 results_dir.mkdir(parents=True, exist_ok=True)
 
 # normalize training data
+print("Normalizing training data...")
 data_path = pathlib.Path("../2.format_training_data/results/training_data.csv.gz")
 data = pd.read_csv(data_path, compression="gzip", index_col=0)
 normalized_data = get_normalized_mitocheck_data(data, normalization_scaler)
@@ -37,21 +39,24 @@ normalized_data.to_csv(save_path, compression="gzip")
 data_path = pathlib.Path(
     "../1.idr_streams/extracted_features/negative_control_data/merged_features/"
 )
+print("Loading negative control data...")
 data = compile_mitocheck_batch_data(data_path)
+print("Normalizing negative control data...")
 normalized_data = get_normalized_mitocheck_data(data, normalization_scaler)
 # save normalized negative control data
 save_path = pathlib.Path(f"{results_dir}/negative_control_data.csv.gz")
+print("Saving normalized negative control data...")
 normalized_data.to_csv(save_path, compression="gzip", index=False)
 
 # normalize positive control data
-print("Loading")
 data_path = pathlib.Path(
     "../1.idr_streams/extracted_features/positive_control_data/merged_features/"
 )
+print("Loading positive control data...")
 data = compile_mitocheck_batch_data(data_path)
-print("Normalizing")
+print("Normalizing positive control data...")
 normalized_data = get_normalized_mitocheck_data(data, normalization_scaler)
 # save normalized positive control data
-print("Saving")
 save_path = pathlib.Path(f"{results_dir}/positive_control_data.csv.gz")
+print("Saving normalized positive control data...")
 normalized_data.to_csv(save_path, compression="gzip", index=False)
