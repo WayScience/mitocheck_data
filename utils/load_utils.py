@@ -35,13 +35,28 @@ def compile_mitocheck_batch_data(
         nrows=1,
     )
     cols_to_load = batch_0_row_0.columns.to_list()
+
     # remove unecessary DP column that isnt part of features
-    cols_to_load.remove("DP__Metadata_Model")
+    cols_to_remove = ["DP__Metadata_Model"]
+
+    # Some CP columns are related to things besides the features we want (ex. location measurements)
+    # We only want to get CP data from the feature modules below (__ ensures it is found as module name)
+    cp_feature_modules = ["__AreaShape_", "__Granularity_", "__Intensity", "__Neighbors", "__RadialDistribution", "__Texture"]
+    # remove CP columns that dont have a feature module as a substring
+    for col in cols_to_load:
+        if "CP__" not in col:
+            continue
+        has_feature_module = any(feature_module in col for feature_module in cp_feature_modules)
+        if not has_feature_module:
+            cols_to_remove.append(col)
+    
+    # remove columns we don't want from the list to load
+    cols_to_load = list(set(cols_to_load) - set(cols_to_remove))
 
     # remove DP or CP features from columns to load depending on desired dataset
     if dataset == "CP":
         cols_to_load = [col for col in cols_to_load if "DP__" not in col]
-    elif dataset == "DP":
+    if dataset == "DP":
         cols_to_load = [col for col in cols_to_load if "CP__" not in col]
 
     for batch_path in data_path.iterdir():
