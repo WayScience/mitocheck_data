@@ -33,10 +33,35 @@ training_data = pd.read_csv(training_data_path, compression="gzip", index_col=0)
 training_data
 
 
-# ### Set UMAP display settings, save directory, class colors
+# ### Preview and save single-cell counts per phenotypes
 # 
 
 # In[3]:
+
+
+# define results directory
+results_dir = pathlib.Path("results/")
+results_dir.mkdir(parents=True, exist_ok=True)
+
+# get single-cell class counts
+single_cell_class_counts = (
+    training_data["Mitocheck_Phenotypic_Class"]
+    .value_counts()
+    .rename_axis("Mitocheck_Phenotypic_Class")
+    .reset_index(name="Single_Cell_Counts")
+)
+
+# save single-cell class counts
+single_cell_class_counts_save_path = pathlib.Path(
+    f"{results_dir}/single_cell_class_counts.csv"
+)
+single_cell_class_counts.to_csv(single_cell_class_counts_save_path)
+
+
+# ### Set UMAP display settings, save directory, class colors
+# 
+
+# In[4]:
 
 
 point_size = 25
@@ -88,8 +113,9 @@ class_colors_2 = get_class_colors(classes_2, "bright")
 
 
 # ### Create UMAPs
+# 
 
-# In[4]:
+# In[5]:
 
 
 # list to compile embeddings tidy data
@@ -140,22 +166,24 @@ for feature_type in feature_types:
         var_name="UMAP_Embedding",
         value_name="Embedding_Value",
     )
-    
+
     # add these tidy embeddings to compilation
     compiled_tidy_embeddings.append(embeddings_2D)
 
 
 # ### Save and preview tidy embedding data
+# 
 
-# In[5]:
+# In[6]:
 
 
-# define and create save path
-compiled_tidy_embeddings_save_path = pathlib.Path("results/compiled_2D_umap_embeddings.csv")
-compiled_tidy_embeddings_save_path.parent.mkdir(parents=True, exist_ok=True)
-
-# compile tidy embeddings into one dataframe and save
+# compile tidy embeddings into one dataframe
 compiled_tidy_embeddings = pd.concat(compiled_tidy_embeddings).reset_index(drop=True)
+
+# save tidy embeddings
+compiled_tidy_embeddings_save_path = pathlib.Path(
+    f"{results_dir}/compiled_2D_umap_embeddings.csv"
+)
 compiled_tidy_embeddings.to_csv(compiled_tidy_embeddings_save_path)
 
 # preview tidy embeddings data
