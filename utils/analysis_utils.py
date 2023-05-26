@@ -322,6 +322,8 @@ def show_2D_umap(
         plt.savefig(save_path, bbox_inches="tight")
 
     plt.show()
+    
+    return embedding
 
 
 def show_3D_umap(
