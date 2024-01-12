@@ -16,5 +16,5 @@ __pycache__/
 1.idr_streams/extracted_features__no_ic
 
 # normalized control features
-3.normalize_data/normalized_data/negative_control_data.csv.gz
-3.normalize_data/normalized_data/positive_control_data.csv.gz
+3.normalize_data/normalized_data
+3.normalize_data/normalized_data__no_ic
