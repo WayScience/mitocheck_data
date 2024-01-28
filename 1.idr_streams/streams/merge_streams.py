@@ -21,7 +21,7 @@ for data_type, dataset_type in itertools.product(data_types, dataset_types):
 
     # specify paths to CP, DP and merged data
     cp_data_dir_path = pathlib.Path(f"{base_dir_path}/CP_features")
-    dp_data_dir_path = pathlib.Path(f"{base_dir_path}/CP_features")
+    dp_data_dir_path = pathlib.Path(f"{base_dir_path}/DP_features")
     merged_data_dir_path = pathlib.Path(f"{base_dir_path}/merged_features")
 
     # merge CP and DP runs!
