@@ -13,6 +13,8 @@ In [streams/](streams/) we initialize and run `idrstream` for the training, nega
 The `batch_size` parameter tells `idrstream` how many frames to process in one batch.
 We set this to `10` for MitoCheck data, meaning that the features for cells in 10 images (unique plate/well/frame combination) are extracted in each batch.
 
+We set `perform_illumination_correction` equal to `True` or `False` depending on the datset type we are extracting (`ic` or `no_ic`).
+
 ## Step 1: Set up `idrstream`
 
 `idrstream` is currently in development and needs to be installed via github.
@@ -51,7 +53,7 @@ bash idr_streams.sh
 Logs from each `idrstream` run will be saved to [logs/](streams/logs/).
 These logs inlcude info about each `idrstream` run, including any errors that might have occured while profiling a batch.
 
-IDR stream DP run times (CP and DP streams have nearly equivalent runtimes):
+Approximate IDR stream DP run times (CP and DP streams have nearly equivalent runtimes):
 - training data: 65 min
 - negative controls: 900 min
 - positive controls: 650 min
