@@ -35,7 +35,6 @@ def compile_mitocheck_batch_data(
         nrows=1,
     )
     cols_to_load = batch_0_row_0.columns.to_list()
-    print(cols_to_load)
 
     # remove unecessary DP column that isnt part of features
     cols_to_remove = ["DP__Metadata_Model"]
@@ -62,7 +61,6 @@ def compile_mitocheck_batch_data(
 
     print(f"Loading data from {data_path}...")
     for batch_path in data_path.iterdir():
-        print(f"Loading batch data from {batch_path}...")
         batch = pd.read_csv(
             batch_path,
             compression="gzip",
