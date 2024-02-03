@@ -14,6 +14,7 @@ The `batch_size` parameter tells `idrstream` how many frames to process in one b
 We set this to `10` for MitoCheck data, meaning that the features for cells in 10 images (unique plate/well/frame combination) are extracted in each batch.
 
 We set `perform_illumination_correction` equal to `True` or `False` depending on the datset type we are extracting (`ic` or `no_ic`).
+Because the impact of irregular illumination and PyBasic illumination correction are unclear, we compare the performance of models trained on `ic` and `no_ic` datasets in [phenotypic_profiling_model](https://github.com/WayScience/phenotypic_profiling_model).
 
 ## Step 1: Set up `idrstream`
 
