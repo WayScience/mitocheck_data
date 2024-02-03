@@ -1,8 +1,9 @@
 import pathlib
-import pandas as pd
 import shutil
-
 import sys
+import itertools
+
+import pandas as pd
 
 sys.path.append("../IDR_stream/")
 from idrstream.DP_idr import DeepProfilerRun
@@ -20,6 +21,7 @@ home_dir_path = pathlib.Path.home()
 aspera_path = pathlib.Path(f"{home_dir_path}/.aspera/ascli/sdk/ascp")
 aspera_key_path = pathlib.Path("../stream_files/asperaweb_id_dsa.openssh")
 screens_path = pathlib.Path("../stream_files/idr0013-screenA-plates.tsv")
+idr_index_name = "idr0013-neumann-mitocheck"
 
 # set fiji path
 fiji_path = pathlib.Path(f"{home_dir_path}/Desktop/Fiji.app")
@@ -34,9 +36,12 @@ nuclei_model_specs = {
     "remove_edge_masks": True,
 }
 
-for data_locations_path in sorted(locations_dir.iterdir()):
+data_locations_paths = sorted(locations_dir.iterdir())
+dataset_types = ["ic", "no_ic"]
+
+for data_locations_path, dataset_type in itertools.product(data_locations_paths, dataset_types):
     # name of data being processed (training_data, negative_control_data, or positive_control_data)
-    data_name = data_locations_path.name.replace("_locations.tsv", "_data")
+    data_name = data_locations_path.name.replace("_locations.tsv", f"_data__{dataset_type}")
     print(f"Running IDR_stream DP for {data_name}")
 
     # path to temporary data directory that holds intermediate idrstream files
@@ -59,10 +64,11 @@ for data_locations_path in sorted(locations_dir.iterdir()):
     data_to_process = pd.read_csv(data_locations_path, sep="\t", index_col=0)
 
     # initialize aspera downloader
-    stream.init_downloader(aspera_path, aspera_key_path, screens_path)
+    stream.init_downloader(aspera_path, aspera_key_path, screens_path, idr_index_name)
 
-    # initialize fiji preprocessor
-    stream.init_preprocessor(fiji_path)
+    # init preprocessor
+    perform_illumination_correction = True if dataset_type == "ic" else False
+    stream.init_preprocessor(fiji_path, perform_illumination_correction)
 
     # initialize CellPose segmentor for MitoCheck data
     stream.init_segmentor(nuclei_model_specs)
@@ -81,12 +87,11 @@ for data_locations_path in sorted(locations_dir.iterdir()):
     if data_name == "training_data":
         stream.run_dp_stream(
             data_to_process,
-            batch_size=3,
+            batch_size=10,
             start_batch=0,
-            batch_nums=[0],
             extra_metadata=["object_outlines"],
         )
     else:
         stream.run_dp_stream(
-            data_to_process, batch_size=3, start_batch=0, batch_nums=[0]
+            data_to_process, batch_size=3, start_batch=0,
         )

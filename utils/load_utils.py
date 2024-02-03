@@ -59,6 +59,7 @@ def compile_mitocheck_batch_data(
     if dataset == "DP":
         cols_to_load = [col for col in cols_to_load if "CP__" not in col]
 
+    print(f"Loading data from {data_path}...")
     for batch_path in data_path.iterdir():
         batch = pd.read_csv(
             batch_path,

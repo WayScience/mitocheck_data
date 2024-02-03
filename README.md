@@ -53,6 +53,11 @@ Because `idrstream` can only extract features from a single frame, we choose and
 Mitocheck mitosis movies are 93 frames long, so a random frame between frames 31 and 62 are chosen to extract features from.
 Because we cannot exactly align the movies in time, we opt to randomly sample from the middle of the movies.
 
+## Dataset Types
+
+We extract all single-cell features with and without illumination correction.
+We refer to these dataset types in the code as `dataset_type`, where `ic` corresponds to the dataset with illumination correction and `no_ic` corresponds to the dataset without illumination correction.
+
 ## Setup
 
 Perform the following steps to set up the `mitocheck_data` environment necessary for processing data in this repository.

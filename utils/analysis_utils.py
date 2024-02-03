@@ -94,6 +94,8 @@ def show_2D_umap_from_embeddings(
     # save umap
     if not save_path == None:
         plt.savefig(save_path, bbox_inches="tight")
+        
+    plt.plot()
 
 
 def get_class_colors(classes_list: list, palette: str) -> dict:

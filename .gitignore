@@ -4,12 +4,17 @@
 __pycache__/
 # aspera key
 1.idr_streams/stream_files/asperaweb_id_dsa.openssh
+
 # tmp files
 1.idr_streams/streams/tmp
+1.idr_streams/streams__no_ic/tmp
 # IDR stream logs
 1.idr_streams/streams/logs
+1.idr_streams/streams__no_ic/logs
 # extracted features
 1.idr_streams/extracted_features
+1.idr_streams/extracted_features__no_ic
+
 # normalized control features
-3.normalize_data/normalized_data/negative_control_data.csv.gz
-3.normalize_data/normalized_data/positive_control_data.csv.gz
+3.normalize_data/normalized_data
+3.normalize_data/normalized_data__no_ic
