@@ -21,7 +21,7 @@ This repository is structured as follows:
 | [0.locate_data](0.locate_data/) | Locate mitosis movies | Find locations (plate, well, frame) for training and control movies |
 | [1.idr_streams](1.idr_streams/) | Extract features from mitosis movies | Use `idrstream` to extract features from training and control movies |
 | [2.format_training_data](2.format_training_data/) | Format training data | Compile metadata, phenotypic class, and feature data for Mitocheck-labeled movies |
-| [3.normalize_data](3.normalize_data/) | Normalize data | Use UMAP to suggest batch effects are not dominant signal and normalize with data with negative controls as normalization population |
+| [3.normalize_data](3.normalize_data/) | Normalize data | Use UMAP to suggest batch effects are not dominant signal and normalize with data using negative controls as normalization population |
 | [4.analyze_data](4.analyze_data/) | Analyze data | Analyze normalized data |
 
 Other necessary folders/files:
@@ -42,15 +42,15 @@ This dataset contains the following files:
 - [features/](mitocheck_metadata/features) : Mitocheck-assigned object IDs and bounding boxes for cells from a specified frame, well, and plate.
 
 We use `trainingset.dat` to locate the frame, well, and plate of labeled cells in [0.locate_data](0.locate_data/).
-After extracting the features from these labeled frames with `idrstream`, we associate the bounding boxes of cells from `features/` with their `idrstream`-derived coordinates to assign cells their phenotypic class (as assigned by Mitocheck).
+After extracting the features from these labeled frames with `idrstream`, we associate the bounding boxes of cells from `features/` with their `idrstream`-derived coordinates to assign cells their phenotypic class (as labeled by Mitocheck).
 
 ## Control Data
 
 We extract single-cell features from positive and negative controls, which are useful for normalizing all Mitocheck data and suggesting that batch effects are not a dominant signal.
 
 We use [IDR-curated mitocheck metadata](mitocheck_metadata/idr0013-screenA-annotation.csv.gz) to locate the well and plate of each control movie.
-Because `idrstream` can only extract features from a single frame, we choose and random frame from the middle 33% of the movie.
-Mitocheck mitosis movies are 93 frames long, so a random frame between frames 31 and 62 are chosen to extract features from.
+Because `idrstream` can only extract features from a single frame, we choose a random frame from the middle 33% of the movie.
+Mitocheck mitosis movies are about 93 frames long, so a random frame between frames 31 and 62 are chosen to extract features from.
 Because we cannot exactly align the movies in time, we opt to randomly sample from the middle of the movies.
 
 ## Dataset Types
