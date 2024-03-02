@@ -8,7 +8,7 @@ As shown in the `Metadata_Gene` UMAPS of [raw_data_umaps.ipynb](raw_data_umaps.i
 This demonstrates that the biological changes induced by gene pertubations have manifested in the `CellProfiler` and `DeepProfiler` features extracted with `idrstream`.
 The other UMAPs in [raw_data_umaps.ipynb](raw_data_umaps.ipynb) suggest that batch effects from plate, well, and frame are not the dominant signal in the feature data.
 
-**Note:** UMAPs were generated with 10% random subsample (without replacement) of data from positive and negative controls.
+**Note:** We generate UMAPs with 10% random subsample (without replacement) of data from positive and negative controls.
 
 Next, we derive a normalization scaler with [sklearn.preprocessing.StandardScaler](https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.StandardScaler.html) from the negative control features and apply this scaler to all mitosis movie features ([normalize_data.py](normalize_data.py)).
 [Caicedo et al, 2017](https://www.nature.com/articles/nmeth.4397) explain why the negative control features are a good normalization population for our use case:
@@ -21,7 +21,7 @@ In other words, we create one normalization scaler from all negative control fea
 
 Use the commands below to normalize all data.
 All normalized data will be saved to [normalized_data/](normalized_data/).
-Only the normalized training data has been uploaded to github as the positive and negative control datasets are very large.
+Only the normalized training data has been uploaded to GitHub as the positive and negative control datasets are very large.
 
 ```sh
 # Make sure you are located in 3.normalize_data
