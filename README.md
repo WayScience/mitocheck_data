@@ -1,3 +1,5 @@
+[![DOI](https://zenodo.org/badge/503932079.svg)](https://zenodo.org/doi/10.5281/zenodo.10814989)
+
 # MitoCheck Data
 
 ## Data
