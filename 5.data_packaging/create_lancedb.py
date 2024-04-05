@@ -2,12 +2,12 @@
 Python module for packaging data in lancedb database.
 """
 
-import duckdb
 import pathlib
-import lancedb
-import pyarrow as pa
-import pandas as pd
 
+import duckdb
+import lancedb
+import pandas as pd
+import pyarrow as pa
 from constants import DATA_FILES_W_COLNAMES
 
 # specify a dir where the lancedb database may go and create lancedb client

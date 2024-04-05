@@ -3,11 +3,12 @@ Python module for gathering schema of data related to this project
 for visibility of relative data.
 """
 
-import duckdb
 import pathlib
 import pprint
-import pyarrow as pa
+
+import duckdb
 import pandas as pd
+import pyarrow as pa
 from constants import DATA_FILES
 
 # specify a dir where the schema may go

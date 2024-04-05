@@ -2,14 +2,19 @@
 # See https://pre-commit.com/hooks.html for more hooks
 default_language_version:
   python: python3.11
-files: 5.data_packaging/.*
+files: >
+  (?x)^(
+    5.data_packaging/.* |
+    pyproject.toml |
+    poetry.lock |
+    README.md
+  )$
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.5.0
     hooks:
       - id: trailing-whitespace
       - id: end-of-file-fixer
-      - id: check-yaml
       - id: check-added-large-files
       - id: check-toml
   - repo: https://github.com/codespell-project/codespell
@@ -32,7 +37,3 @@ repos:
     rev: "1.8.0"
     hooks:
       - id: poetry-check
-  - repo: https://github.com/hadolint/hadolint
-    rev: v2.12.1-beta
-    hooks:
-      - id: hadolint-docker
