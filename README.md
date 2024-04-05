@@ -79,3 +79,18 @@ conda env create -f mitocheck_data_env.yml
 
 conda activate mitocheck_data
 ```
+
+### Step 5: Data Packaging
+
+In this module, we collect and package data created by this project.
+This module leverages system-available Python, Poetry, and Poe the Poet (among other dependencies) to complete tasks.
+We recommend installing Python and Poetry, then using the following to run the processes related to this step.
+
+```sh
+# after installing poetry, create the environment
+poetry install
+
+# run the poe the poet task related to this step
+# (triggers multiple Python modules)
+poetry run poe package_data
+```

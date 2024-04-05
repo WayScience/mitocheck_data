@@ -1,0 +1,7 @@
+column0: int64
+Mitocheck_Phenotypic_Class: string
+Dataset_Type: string
+Feature_Type: string
+Cell_UUID: string
+UMAP_Embedding: string
+Embedding_Value: double

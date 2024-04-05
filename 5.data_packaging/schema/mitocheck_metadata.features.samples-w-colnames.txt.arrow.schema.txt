@@ -1,0 +1,2 @@
+Mitocheck_Phenotypic_Class: string
+frame_details: string
