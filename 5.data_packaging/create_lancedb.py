@@ -27,9 +27,9 @@ def get_arrow_tbl_from_csv(filename_read: str) -> str:
         with duckdb.connect() as ddb:
             return ddb.execute(
                 f"""
-                    SELECT *
-                    FROM read_csv('{filename_read}');
-                    """
+                SELECT *
+                FROM read_csv('{filename_read}');
+                """
             ).arrow()
     except duckdb.duckdb.ConversionException:
         return pa.Table.from_pandas(
