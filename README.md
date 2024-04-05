@@ -83,8 +83,8 @@ conda activate mitocheck_data
 ### Step 5: Data Packaging
 
 In this module, we collect and package data created by this project.
-This module leverages system-available Python, Poetry, and Poe the Poet (among other dependencies) to complete tasks.
-We recommend installing Python and Poetry, then using the following to run the processes related to this step.
+This module leverages system-available Python, [Poetry](https://github.com/python-poetry/poetry), and [Poe the Poet](https://poethepoet.natn.io/index.html) (among other dependencies found in the `pyproject.toml` file) to complete tasks.
+We recommend installing Python (suggested through [pyenv](https://github.com/pyenv/pyenv)) and Poetry (suggested through `pip install poetry`), then using the following to run the processes related to this step.
 
 ```sh
 # after installing poetry, create the environment
