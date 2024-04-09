@@ -21,3 +21,4 @@ __pycache__/
 
 # data packaging ignores
 5.data_packaging/packaged
+5.data_packaging/images
