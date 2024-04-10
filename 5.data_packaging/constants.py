@@ -39,3 +39,5 @@ FTP_IDR_USER = "anonymous"
 FTP_IDR_MITOCHECK_CH5_DIR = (
     "/pub/databases/IDR/idr0013-neumann-mitocheck/20150916-mitocheck-analysis/mitocheck"
 )
+
+DOCKER_PLATFORM = "linux/amd64"

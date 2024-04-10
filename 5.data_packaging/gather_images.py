@@ -2,20 +2,20 @@
 Python module for gathering images from Image Data Resource (IDR).
 """
 
-from ftplib import FTP
+import os
 import pathlib
-import pyarrow as pa
-
-import duckdb
-from constants import FTP_IDR_URL, FTP_IDR_USER, FTP_IDR_MITOCHECK_CH5_DIR
-
-
-import shutil
-import sys
+from ftplib import FTP
 from typing import List
 
-import anyio
-import dagger
+import docker
+import duckdb
+import pyarrow as pa
+from constants import (
+    DOCKER_PLATFORM,
+    FTP_IDR_MITOCHECK_CH5_DIR,
+    FTP_IDR_URL,
+    FTP_IDR_USER,
+)
 
 
 def retrieve_ftp_file(
@@ -66,7 +66,7 @@ def get_image_union_table() -> pa.Table:
                 FROM read_csv('0.locate_data/locations/training_locations.tsv')
             )
             /* join locations with additional plate location data */
-            SELECT 
+            SELECT
                 locations_union.*,
                 /* create a dotted notation filename for extracting image frames from ch5 files */
                 replace(locations_union.DNA, '/', '.') AS DNA_dotted_notation,
@@ -80,7 +80,7 @@ def get_image_union_table() -> pa.Table:
                 https://github.com/WayScience/IDR_stream/blob/main/idrstream/download.py#L95 */
                 concat(
                     '{FTP_IDR_MITOCHECK_CH5_DIR}',
-                    '/', 
+                    '/',
                     Screen_cleaned,
                     '/hdf5/00',
                     format('{{:03d}}', locations_union."Well Number"),
@@ -94,86 +94,68 @@ def get_image_union_table() -> pa.Table:
         ).arrow()
 
 
-# referenced with modifications from:
-# https://docs.dagger.io/sdk/python/628797/get-started
-async def run_bfconvert(
-    bfconvert_opts: List[str],
-    source_convert_filepath: str,
-    dest_convert_filepath: str,
-    source_volume_mount_dir: str,
-    debug: bool,
+def run_dockerfile_container(
+    dockerfile: str,
+    image_name: str,
+    volumes: List[str],
+    command: str,
 ) -> None:
     """
-    Dagger pipeline for running containerized work
+    Build, run, and stream logs from a Dockerfile-based container
     """
 
-    # create dagger conf based on debug arg
-    dagger_conf = dagger.Config(log_output=sys.stderr) if debug else dagger.Config()
+    print(
+        f"Running Docker container {image_name} based on {dockerfile} with command {command}."
+    )
 
-    async with dagger.Connection(dagger_conf) as client:
-        # get reference to the local project
-        dockerfile_dir = client.host().directory(".")
+    # Initialize the Docker client
+    client = docker.from_env()
 
-        # build a python container based on Dockerfile and run test
-        container = (
-            client.container(
-                # explicitly set the container to be a certain platform type
-                platform=dagger.Platform("linux/amd64")
-            )
-            .build(
-                context=dockerfile_dir,
-                # uses a dockerfile to create the container
-                dockerfile="./5.data_packaging/Dockerfile.bfconvert",
-            )
-            .with_mounted_directory(
-                path="/app", source=client.host().directory(source_volume_mount_dir)
-            )
-            # run the python test through a poetry environment
-            .with_exec(
-                bfconvert_opts + [source_convert_filepath, dest_convert_filepath]
-            )
-        )
+    # Build the Docker image using the Dockerfile
+    client.images.build(
+        path=str(pathlib.Path(dockerfile).parent),
+        dockerfile=pathlib.Path(dockerfile).name,
+        tag=image_name,
+        platform=DOCKER_PLATFORM,
+    )
 
-        # execute and show the results of the last executed command
-        result = await container.stdout()
-        await container.sync()
+    # Run a container based on the built image, mounting a local directory
+    container = client.containers.run(
+        image=image_name,
+        volumes=volumes,
+        command=command,
+        remove=True,
+        detach=True,
+    )
 
-    print(result)
+    # capture log messages from detached container
+    process = container.logs(stream=True, follow=True)
+
+    # print the lines of output from the container as it runs
+    for line in process:
+        print(line.decode("utf-8").strip())
 
 
-if __name__ == "__main__":
+# specify an image download dir and create it
+image_download_dir = "./5.data_packaging/images/extracted_frame"
+pathlib.Path(image_download_dir).mkdir(parents=True, exist_ok=True)
 
-    # specify an image download dir and create it
-    image_download_dir = "./5.data_packaging/images/extracted_frame"
-    pathlib.Path(image_download_dir).mkdir(parents=True, exist_ok=True)
+# get a table of image-relevant data
+table = get_image_union_table()
 
-    # get a table of image-relevant data
-    table = get_image_union_table()
+# unpack tuples in batches of 1 for row-wise operations from the table
+for (frame,), (ftp_file,), (local_frame_tif,) in table.select(
+    ["Frames", "IDR_FTP_ch5_location", "DNA_dotted_notation"]
+).to_batches(max_chunksize=1):
+    print("Working on: ", frame, ftp_file, local_frame_tif)
+    # download the ch5 file
+    local_file = retrieve_ftp_file(
+        ftp_file=str(ftp_file), download_dir=image_download_dir
+    )
 
-    # unpack tuples in batches of 1 for row-wise operations from the table
-    for (frame,), (ftp_file,), (local_frame_tif,) in table.select(
-        ["Frames", "IDR_FTP_ch5_location", "DNA_dotted_notation"]
-    ).to_batches(max_chunksize=1):
-        print("Working on: ", frame, ftp_file, local_frame_tif)
-        # download the ch5 file
-        """local_file = retrieve_ftp_file(
-            ftp_file=str(ftp_file), download_dir=image_download_dir
-        )"""
-
-        local_file = "./5.data_packaging/images/extracted_frame/00015_01.ch5"
-
-        anyio.run(
-            run_bfconvert,
-            # options for bfconvert
-            # see here for more:
-            # https://bio-formats.readthedocs.io/en/stable/users/comlinetools/conversion.html
-            ["-timepoint", str(frame)],
-            # source file to use with bfconvert
-            pathlib.Path(local_file).name,
-            # destination file to use with bfconvert
-            str(local_frame_tif),
-            # local source volume dir for use with bfconvert container
-            image_download_dir,
-            # debug mode
-            True,
-        )
+    run_dockerfile_container(
+        dockerfile="./5.data_packaging/Dockerfile.bfconvert",
+        image_name="ome_bfconvert",
+        volumes=[f"{os.getcwd()}/5.data_packaging/images/extracted_frame:/app"],
+        command=f"-timepoint {frame} {pathlib.Path(local_file).name} {local_frame_tif}",
+    )

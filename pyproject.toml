@@ -14,7 +14,7 @@ duckdb = "^0.10.1"
 pyarrow = ">=12,<15.0.1"
 lancedb = "^0.6.7"
 pandas = "^2.2.1"
-dagger-io = "^0.11.0"
+docker = "^7.0.0"
 
 [tool.poe.tasks.package_data]
 # run a task to package data

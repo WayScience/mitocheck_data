@@ -10,29 +10,29 @@ All data are publicly available.
 
 #### Confocal Microscopy
 
-| Data | Level | Location | Notes |
-| :---- | :---- | :------ | :---- |
-| Images | 1 | Image Data Resource ([IDR](https://idr.openmicroscopy.org/)) | Accession `idr0013(screenA)` |
+| Data   | Level | Location                                                     | Notes                        |
+| :----- | :---- | :----------------------------------------------------------- | :--------------------------- |
+| Images | 1     | Image Data Resource ([IDR](https://idr.openmicroscopy.org/)) | Accession `idr0013(screenA)` |
 
 ## Repository Structure:
 
 This repository is structured as follows:
 
-| Order | Module | Description |
-| :---- | :----- | :---------- |
-| [0.locate_data](0.locate_data/) | Locate mitosis movies | Find locations (plate, well, frame) for training and control movies |
-| [1.idr_streams](1.idr_streams/) | Extract features from mitosis movies | Use `idrstream` to extract features from training and control movies |
-| [2.format_training_data](2.format_training_data/) | Format training data | Compile metadata, phenotypic class, and feature data for Mitocheck-labeled movies |
-| [3.normalize_data](3.normalize_data/) | Normalize data | Use UMAP to suggest batch effects are not dominant signal and normalize with data using negative controls as normalization population |
-| [4.analyze_data](4.analyze_data/) | Analyze data | Analyze normalized data |
+| Order                                             | Module                               | Description                                                                                                                           |
+| :------------------------------------------------ | :----------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------ |
+| [0.locate_data](0.locate_data/)                   | Locate mitosis movies                | Find locations (plate, well, frame) for training and control movies                                                                   |
+| [1.idr_streams](1.idr_streams/)                   | Extract features from mitosis movies | Use `idrstream` to extract features from training and control movies                                                                  |
+| [2.format_training_data](2.format_training_data/) | Format training data                 | Compile metadata, phenotypic class, and feature data for Mitocheck-labeled movies                                                     |
+| [3.normalize_data](3.normalize_data/)             | Normalize data                       | Use UMAP to suggest batch effects are not dominant signal and normalize with data using negative controls as normalization population |
+| [4.analyze_data](4.analyze_data/)                 | Analyze data                         | Analyze normalized data                                                                                                               |
 
 Other necessary folders/files:
 
-| Folder/File | Description |
-| :--------- | :---------- |
-| [mitocheck_metadata](mitocheck_metadata/) | IDR curated metadata, `trainingset` file and `features` dataset necessary for locating Mitocheck-labeled training data |
-| [utils](utils/) | Python files with functions used throughout repository |
-| [mitocheck_data_env.yml](mitocheck_data_env.yml) | Environment file with packages necessary to process mitocheck data |
+| Folder/File                                      | Description                                                                                                            |
+| :----------------------------------------------- | :--------------------------------------------------------------------------------------------------------------------- |
+| [mitocheck_metadata](mitocheck_metadata/)        | IDR curated metadata, `trainingset` file and `features` dataset necessary for locating Mitocheck-labeled training data |
+| [utils](utils/)                                  | Python files with functions used throughout repository                                                                 |
+| [mitocheck_data_env.yml](mitocheck_data_env.yml) | Environment file with packages necessary to process mitocheck data                                                     |
 
 ## Training Data
 
@@ -84,7 +84,8 @@ conda activate mitocheck_data
 
 In this module, we collect and package data created by this project.
 This module leverages system-available Python, [Poetry](https://github.com/python-poetry/poetry), and [Poe the Poet](https://poethepoet.natn.io/index.html) (among other dependencies found in the `pyproject.toml` file) to complete tasks.
-We recommend installing Python (suggested through [pyenv](https://github.com/pyenv/pyenv)) and Poetry (suggested through `pip install poetry`), then using the following to run the processes related to this step.
+This module also leverages Docker to reproducibly leverage additional tooling outside of Python dependencies.
+We recommend installing Docker (suggested through [Docker Desktop](https://www.docker.com/products/docker-desktop/)), Python (suggested through [pyenv](https://github.com/pyenv/pyenv)) and Poetry (suggested through `pip install poetry`), then using the following to run the processes related to this step.
 
 ```sh
 # after installing poetry, create the environment
