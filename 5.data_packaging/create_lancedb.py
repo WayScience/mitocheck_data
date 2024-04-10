@@ -8,7 +8,8 @@ import duckdb
 import lancedb
 import pandas as pd
 import pyarrow as pa
-from constants import DATA_FILES_W_COLNAMES
+from constants import DATA_FILES_W_COLNAMES, PACKAGING_FILES
+from pyarrow import parquet
 
 # specify a dir where the lancedb database may go and create lancedb client
 lancedb_dir = pathlib.Path("5.data_packaging/packaged/lancedb/mitocheck_data")
@@ -42,6 +43,15 @@ def get_arrow_tbl_from_csv(filename_read: str) -> str:
 # send csv file data as arrow tables to a lancedb database
 for filename in DATA_FILES_W_COLNAMES:
     table = get_arrow_tbl_from_csv(filename_read=filename)
+    ldb.create_table(
+        name=f"{filename.replace('/','.')}",
+        data=table,
+        schema=table.schema,
+        mode="overwrite",
+    )
+
+for filename in PACKAGING_FILES:
+    table = parquet.read_table(source=filename)
     ldb.create_table(
         name=f"{filename.replace('/','.')}",
         data=table,

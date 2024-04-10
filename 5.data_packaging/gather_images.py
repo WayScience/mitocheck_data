@@ -7,15 +7,18 @@ import pathlib
 from ftplib import FTP
 from typing import List
 
+import awkward as ak
 import docker
 import duckdb
 import pyarrow as pa
+import tifffile
 from constants import (
     DOCKER_PLATFORM,
     FTP_IDR_MITOCHECK_CH5_DIR,
     FTP_IDR_URL,
     FTP_IDR_USER,
 )
+from pyarrow import parquet
 
 
 def retrieve_ftp_file(
@@ -105,7 +108,7 @@ def run_dockerfile_container(
     """
 
     print(
-        f"Running Docker container {image_name} based on {dockerfile} with command {command}."
+        f"Running Docker container {image_name} based on {dockerfile} with command '{command}'."
     )
 
     # Initialize the Docker client
@@ -136,6 +139,36 @@ def run_dockerfile_container(
         print(line.decode("utf-8").strip())
 
 
+def get_frame_tiff_from_idr_ch5(frame: str, ftp_file: str, local_frame_tif: str) -> str:
+    """
+    Gather IDR ch5 file and extract a frame as a tiff, returning the local filepath
+    and cleaning up the ch5 afterwards.
+    """
+    print(
+        "Working on ",
+        f"frame: {frame}",
+        f"ftp file: {ftp_file}",
+        f"tiff: {local_frame_tif}",
+    )
+    # download the ch5 file
+    local_ch5_file = retrieve_ftp_file(
+        ftp_file=str(ftp_file), download_dir=image_download_dir
+    )
+
+    # extract a frame from the ch5 file using bfconvert through a docker container
+    run_dockerfile_container(
+        dockerfile="./5.data_packaging/Dockerfile.bfconvert",
+        image_name="ome_bfconvert",
+        volumes=[f"{os.getcwd()}/5.data_packaging/images/extracted_frame:/app"],
+        command=f"-timepoint {frame} {pathlib.Path(local_ch5_file).name} {str(local_frame_tif)}",
+    )
+
+    # remove the ch5 file as we no longer need it
+    pathlib.Path(local_ch5_file).unlink()
+
+    return f"{image_download_dir}/{str(local_frame_tif)}"
+
+
 # specify an image download dir and create it
 image_download_dir = "./5.data_packaging/images/extracted_frame"
 pathlib.Path(image_download_dir).mkdir(parents=True, exist_ok=True)
@@ -143,19 +176,30 @@ pathlib.Path(image_download_dir).mkdir(parents=True, exist_ok=True)
 # get a table of image-relevant data
 table = get_image_union_table()
 
-# unpack tuples in batches of 1 for row-wise operations from the table
-for (frame,), (ftp_file,), (local_frame_tif,) in table.select(
-    ["Frames", "IDR_FTP_ch5_location", "DNA_dotted_notation"]
-).to_batches(max_chunksize=1):
-    print("Working on: ", frame, ftp_file, local_frame_tif)
-    # download the ch5 file
-    local_file = retrieve_ftp_file(
-        ftp_file=str(ftp_file), download_dir=image_download_dir
+# create a new table from awkward array to help join the multi-dim image data
+table = ak.to_arrow_table(
+    # join a pyarrow table as an awkward array with a new field for multi-dim tiff data
+    ak.with_field(
+        array=ak.from_arrow(array=table),
+        what=[
+            # read the tiff as a numpy array
+            tifffile.imread(
+                # gather tiff frame from ch5 for every row in location union data
+                get_frame_tiff_from_idr_ch5(
+                    frame=frame, ftp_file=ftp_file, local_frame_tif=local_frame_tif
+                )
+            )
+            # iterate through location union data
+            for (frame,), (ftp_file,), (local_frame_tif,) in table.select(
+                ["Frames", "IDR_FTP_ch5_location", "DNA_dotted_notation"]
+            ).to_batches(max_chunksize=1)
+        ],
+        # name the new field / column
+        where="ch5_frame_tiff_unaltered",
     )
+)
 
-    run_dockerfile_container(
-        dockerfile="./5.data_packaging/Dockerfile.bfconvert",
-        image_name="ome_bfconvert",
-        volumes=[f"{os.getcwd()}/5.data_packaging/images/extracted_frame:/app"],
-        command=f"-timepoint {frame} {pathlib.Path(local_file).name} {local_frame_tif}",
-    )
+# write the table to parquet file
+parquet.write_table(
+    table=table, where="5.data_packaging/location_and_ch5_frame_image_data.parquet"
+)

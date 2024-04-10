@@ -31,6 +31,80 @@ tests-mypy = ["mypy (>=1.6)", "pytest-mypy-plugins"]
 tests-no-zope = ["attrs[tests-mypy]", "cloudpickle", "hypothesis", "pympler", "pytest (>=4.3.0)", "pytest-xdist[psutil]"]
 
 [[package]]
+name = "awkward"
+version = "2.6.3"
+description = "Manipulate JSON-like data with NumPy-like idioms."
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "awkward-2.6.3-py3-none-any.whl", hash = "sha256:2a87dccc13de843600f09b16561e689a3cdcdb5d13ebcbb69c80bfa525179cbb"},
+    {file = "awkward-2.6.3.tar.gz", hash = "sha256:481a1640760aa174cd34bf60d45920f70cfe8b555403962c4e5864929b0548e8"},
+]
+
+[package.dependencies]
+awkward-cpp = "32"
+fsspec = ">=2022.11.0"
+importlib-metadata = {version = ">=4.13.0", markers = "python_version < \"3.12\""}
+numpy = ">=1.18.0"
+packaging = "*"
+
+[[package]]
+name = "awkward-cpp"
+version = "32"
+description = "CPU kernels and compiled extensions for Awkward Array"
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "awkward-cpp-32.tar.gz", hash = "sha256:ad8c5af86206fb0f434b16749cc5cca69a15a88e16ca43e91e56c5cca77421f0"},
+    {file = "awkward_cpp-32-cp310-cp310-macosx_10_9_universal2.whl", hash = "sha256:478182d275d020f76e85c461be9b297075267ce78fa7395db1206d1e69b46366"},
+    {file = "awkward_cpp-32-cp310-cp310-macosx_10_9_x86_64.whl", hash = "sha256:cb75345214f1c773b0c61eb02a850bbf560390bdd8c973827119432b971ec2b0"},
+    {file = "awkward_cpp-32-cp310-cp310-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:06e666e8ebe5a0d6769a5995366306073647b17446b28062807f70a7904dd3b9"},
+    {file = "awkward_cpp-32-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:3c452da573de52b92f4f66819aa74521225543bf028b2f6d7b1477cbac52063f"},
+    {file = "awkward_cpp-32-cp310-cp310-musllinux_1_1_aarch64.whl", hash = "sha256:7b347e5283703b188fde4baea32408cf5c5d9569173d7a7f4e8183d9fe070153"},
+    {file = "awkward_cpp-32-cp310-cp310-musllinux_1_1_x86_64.whl", hash = "sha256:2a083bb1cc458b2cfb2bcf371bab47ac07054c211fa38b633815e3748e9c9832"},
+    {file = "awkward_cpp-32-cp310-cp310-win_amd64.whl", hash = "sha256:0c80213069e4c80c568dcae9c29b8c4f973ae59bb9bc2b09af372f1e6929cc28"},
+    {file = "awkward_cpp-32-cp311-cp311-macosx_10_9_universal2.whl", hash = "sha256:cf43a6a90adb96c366ac6234320e2c6117a8b662e12b01b0e11441c188eeb121"},
+    {file = "awkward_cpp-32-cp311-cp311-macosx_10_9_x86_64.whl", hash = "sha256:91b583980e947a397358b4de484204a2d7e8558296cf8be3b321a8b19abb8ec0"},
+    {file = "awkward_cpp-32-cp311-cp311-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:3686d45c3c7775679fad8f3de25ce298f8dca36ab025f41dfd68c24d7cdb5178"},
+    {file = "awkward_cpp-32-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:37decc9a65e81a9e71ce5d90090b669a2aed2c25d689c5d7547f84979cc08cbb"},
+    {file = "awkward_cpp-32-cp311-cp311-musllinux_1_1_aarch64.whl", hash = "sha256:7fdd9b91433f4c1f8a3dd92a19646e305632df6982f49a48b7e3cfaeeadfa690"},
+    {file = "awkward_cpp-32-cp311-cp311-musllinux_1_1_x86_64.whl", hash = "sha256:abd521e015c376409e45a1490dea208b2e6d11d5706d62801d63c93b75f102e3"},
+    {file = "awkward_cpp-32-cp311-cp311-win_amd64.whl", hash = "sha256:a28879cc09e907fe30389a1c965f07174ec3135f96e90cc9e1201dad4eea6284"},
+    {file = "awkward_cpp-32-cp312-cp312-macosx_10_9_universal2.whl", hash = "sha256:0be90b78ea46cbbf0eb666e9ca5841a13ee17c8efdc54b25c65b8f0f2629ec64"},
+    {file = "awkward_cpp-32-cp312-cp312-macosx_10_9_x86_64.whl", hash = "sha256:13a2194e26177db16e1185ba5fbf739bc6c22d6fa980ee65708a572f9dda1043"},
+    {file = "awkward_cpp-32-cp312-cp312-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:01ec097ee682c5ddef548289f2e64ed76e0c97aa4def3531767560c16d4856cd"},
+    {file = "awkward_cpp-32-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:fc0dc0822c4a96ff7b803486e090bd7cf1cb57a0a7eb671822628ac32a06b38c"},
+    {file = "awkward_cpp-32-cp312-cp312-musllinux_1_1_aarch64.whl", hash = "sha256:d8bc60081c3ea9208c28a7e0202d553164c72a7d7c5c95e27803396a9bc9399b"},
+    {file = "awkward_cpp-32-cp312-cp312-musllinux_1_1_x86_64.whl", hash = "sha256:093402c045d39a226081d24ebbc9f026860d52f3f7924bc5b27b00ed8a3400f9"},
+    {file = "awkward_cpp-32-cp312-cp312-win_amd64.whl", hash = "sha256:1fb40099ef94ab6d860a8e6f8fd8100cdcc08260289dcbecc00acd383b6ef324"},
+    {file = "awkward_cpp-32-cp38-cp38-macosx_10_9_universal2.whl", hash = "sha256:d5ea4c9dea75b46c31421677d3a13e593620abaf99edf50d432364ff5f593b0c"},
+    {file = "awkward_cpp-32-cp38-cp38-macosx_10_9_x86_64.whl", hash = "sha256:23f09805c3bb48eb5095ed59e775717d90e3f5afe2c48774b8b431bba0e4c4fc"},
+    {file = "awkward_cpp-32-cp38-cp38-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:231b764dfef4283ff1629e675e6ed36f5d57516b12e86779c0bbf622281e45aa"},
+    {file = "awkward_cpp-32-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:c685f31d738f220a101eb190ec0e7755613f6f3e1cb77d24a6f11ea30153c99a"},
+    {file = "awkward_cpp-32-cp38-cp38-musllinux_1_1_aarch64.whl", hash = "sha256:dbb21befb2196de769eae2454de495dc92a1696c38d5d0b002ee7123cfd6abbc"},
+    {file = "awkward_cpp-32-cp38-cp38-musllinux_1_1_x86_64.whl", hash = "sha256:dbf6aa671bc6499d9c50691ae8184b3570fb192c7181c9781f342f566b779620"},
+    {file = "awkward_cpp-32-cp38-cp38-win32.whl", hash = "sha256:04d31a86f976979b4f778ecfe71c8e52052d354755050bbde21fa14310cf824f"},
+    {file = "awkward_cpp-32-cp38-cp38-win_amd64.whl", hash = "sha256:97af36657c6e9d2181b3d7293d1a9680268c9110a21a3bd5377c31567e062e31"},
+    {file = "awkward_cpp-32-cp39-cp39-macosx_10_9_universal2.whl", hash = "sha256:1e13f22f85e019b30f9bfeb269bb79d6d56cd27820527dc8628f4e0a2869075a"},
+    {file = "awkward_cpp-32-cp39-cp39-macosx_10_9_x86_64.whl", hash = "sha256:0c36c2b5d35b0dfcab44362b42b5e5903f87d553995efe7d5d0b8273d15eb861"},
+    {file = "awkward_cpp-32-cp39-cp39-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:46b3ac7db0016ea64ba49b35ca1a72e8ce2ed74f6dfa56ba3539e4f92079d716"},
+    {file = "awkward_cpp-32-cp39-cp39-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:6a411b93f889ea82ee424b4938fe935bfe00d9333c8d1a657ca607758a77b8e1"},
+    {file = "awkward_cpp-32-cp39-cp39-musllinux_1_1_aarch64.whl", hash = "sha256:5b26828ba35ca1f5fd497f3fcdb536468d7a9410c71a9c4eb61d9b624c801b6c"},
+    {file = "awkward_cpp-32-cp39-cp39-musllinux_1_1_x86_64.whl", hash = "sha256:5d60428504ba063e4ad5e5150dbcd12a353370a2806079574ddc0c0cef640f88"},
+    {file = "awkward_cpp-32-cp39-cp39-win32.whl", hash = "sha256:9f0f72490fc7aecb3c20e939dbcea8cefeadac016fc3be3772da45f6d8fce806"},
+    {file = "awkward_cpp-32-cp39-cp39-win_amd64.whl", hash = "sha256:3df95196c43cb1f2c1071596d5011af620cf3da7e9e797ba734fdb251fe7333e"},
+    {file = "awkward_cpp-32-pp310-pypy310_pp73-macosx_10_9_x86_64.whl", hash = "sha256:4d79f5f477b75c3617002cbb7e23550a7accdb657a5b160ee1cac4bd0d17fc32"},
+    {file = "awkward_cpp-32-pp310-pypy310_pp73-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:565c10a38fc1f56c02a9cc0538c9285e5722ddbbec566c8c526f38c9f3b44358"},
+    {file = "awkward_cpp-32-pp38-pypy38_pp73-macosx_10_9_x86_64.whl", hash = "sha256:76d545c872ca0ed0ab09890e60336b57a8255d731fb4c95efeec7005649ef058"},
+    {file = "awkward_cpp-32-pp38-pypy38_pp73-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:526ab7546a002feeaac91fc7779dfe419420bf74ca036c4dba59970dc6e4022f"},
+    {file = "awkward_cpp-32-pp39-pypy39_pp73-macosx_10_9_x86_64.whl", hash = "sha256:15e829dd6156e76d2390e348b24da9e54bebe7c66240338d4bff83c099402dba"},
+    {file = "awkward_cpp-32-pp39-pypy39_pp73-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:292f6552e74cbb076a4d9871426661c232196d31a4111ce392bb2be49b5694c1"},
+]
+
+[package.dependencies]
+numpy = ">=1.18.0"
+
+[[package]]
 name = "cachetools"
 version = "5.3.3"
 description = "Extensible memoizing collections and decorators"
@@ -279,6 +353,41 @@ files = [
 ]
 
 [[package]]
+name = "fsspec"
+version = "2024.3.1"
+description = "File-system specification"
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "fsspec-2024.3.1-py3-none-any.whl", hash = "sha256:918d18d41bf73f0e2b261824baeb1b124bcf771767e3a26425cd7dec3332f512"},
+    {file = "fsspec-2024.3.1.tar.gz", hash = "sha256:f39780e282d7d117ffb42bb96992f8a90795e4d0fb0f661a70ca39fe9c43ded9"},
+]
+
+[package.extras]
+abfs = ["adlfs"]
+adl = ["adlfs"]
+arrow = ["pyarrow (>=1)"]
+dask = ["dask", "distributed"]
+devel = ["pytest", "pytest-cov"]
+dropbox = ["dropbox", "dropboxdrivefs", "requests"]
+full = ["adlfs", "aiohttp (!=4.0.0a0,!=4.0.0a1)", "dask", "distributed", "dropbox", "dropboxdrivefs", "fusepy", "gcsfs", "libarchive-c", "ocifs", "panel", "paramiko", "pyarrow (>=1)", "pygit2", "requests", "s3fs", "smbprotocol", "tqdm"]
+fuse = ["fusepy"]
+gcs = ["gcsfs"]
+git = ["pygit2"]
+github = ["requests"]
+gs = ["gcsfs"]
+gui = ["panel"]
+hdfs = ["pyarrow (>=1)"]
+http = ["aiohttp (!=4.0.0a0,!=4.0.0a1)"]
+libarchive = ["libarchive-c"]
+oci = ["ocifs"]
+s3 = ["s3fs"]
+sftp = ["paramiko"]
+smb = ["smbprotocol"]
+ssh = ["paramiko"]
+tqdm = ["tqdm"]
+
+[[package]]
 name = "idna"
 version = "3.6"
 description = "Internationalized Domain Names in Applications (IDNA)"
@@ -288,6 +397,25 @@ files = [
     {file = "idna-3.6-py3-none-any.whl", hash = "sha256:c05567e9c24a6b9faaa835c4821bad0590fbb9d5779e7caa6e1cc4978e7eb24f"},
     {file = "idna-3.6.tar.gz", hash = "sha256:9ecdbbd083b06798ae1e86adcbfe8ab1479cf864e4ee30fe4e46a003d12491ca"},
 ]
+
+[[package]]
+name = "importlib-metadata"
+version = "7.1.0"
+description = "Read metadata from Python packages"
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "importlib_metadata-7.1.0-py3-none-any.whl", hash = "sha256:30962b96c0c223483ed6cc7280e7f0199feb01a0e40cfae4d4450fc6fab1f570"},
+    {file = "importlib_metadata-7.1.0.tar.gz", hash = "sha256:b78938b926ee8d5f020fc4772d487045805a55ddbad2ecf21c6d60938dc7fcd2"},
+]
+
+[package.dependencies]
+zipp = ">=0.5"
+
+[package.extras]
+docs = ["furo", "jaraco.packaging (>=9.3)", "jaraco.tidelift (>=1.4)", "rst.linker (>=1.9)", "sphinx (>=3.5)", "sphinx-lint"]
+perf = ["ipython"]
+testing = ["flufl.flake8", "importlib-resources (>=1.3)", "jaraco.test (>=5.4)", "packaging", "pyfakefs", "pytest (>=6)", "pytest-checkdocs (>=2.4)", "pytest-cov", "pytest-enabler (>=2.2)", "pytest-mypy", "pytest-perf (>=0.9.2)", "pytest-ruff (>=0.2.1)"]
 
 [[package]]
 name = "lancedb"
@@ -870,6 +998,23 @@ files = [
 ]
 
 [[package]]
+name = "tifffile"
+version = "2024.2.12"
+description = "Read and write TIFF files"
+optional = false
+python-versions = ">=3.9"
+files = [
+    {file = "tifffile-2024.2.12-py3-none-any.whl", hash = "sha256:870998f82fbc94ff7c3528884c1b0ae54863504ff51dbebea431ac3fa8fb7c21"},
+    {file = "tifffile-2024.2.12.tar.gz", hash = "sha256:4920a3ec8e8e003e673d3c6531863c99eedd570d1b8b7e141c072ed78ff8030d"},
+]
+
+[package.dependencies]
+numpy = "*"
+
+[package.extras]
+all = ["defusedxml", "fsspec", "imagecodecs (>=2023.8.12)", "lxml", "matplotlib", "zarr"]
+
+[[package]]
 name = "tomli"
 version = "2.0.1"
 description = "A lil' TOML parser"
@@ -939,7 +1084,22 @@ h2 = ["h2 (>=4,<5)"]
 socks = ["pysocks (>=1.5.6,!=1.5.7,<2.0)"]
 zstd = ["zstandard (>=0.18.0)"]
 
+[[package]]
+name = "zipp"
+version = "3.18.1"
+description = "Backport of pathlib-compatible object wrapper for zip files"
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "zipp-3.18.1-py3-none-any.whl", hash = "sha256:206f5a15f2af3dbaee80769fb7dc6f249695e940acca08dfb2a4769fe61e538b"},
+    {file = "zipp-3.18.1.tar.gz", hash = "sha256:2884ed22e7d8961de1c9a05142eb69a247f120291bc0206a00a7642f09b5b715"},
+]
+
+[package.extras]
+docs = ["furo", "jaraco.packaging (>=9.3)", "jaraco.tidelift (>=1.4)", "rst.linker (>=1.9)", "sphinx (>=3.5)", "sphinx-lint"]
+testing = ["big-O", "jaraco.functools", "jaraco.itertools", "more-itertools", "pytest (>=6)", "pytest-checkdocs (>=2.4)", "pytest-cov", "pytest-enabler (>=2.2)", "pytest-ignore-flaky", "pytest-mypy", "pytest-ruff (>=0.2.1)"]
+
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "e136e663875442ff6fe31ccd546498082bb02c123466f5b506136fa51f935ef8"
+content-hash = "37885f4cc48dbd59ecdc84c2f46bc48b189ff1e71171f842454846005037fd43"
