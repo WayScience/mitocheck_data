@@ -1,3 +1,7 @@
+# This Dockerfile is for running bfconvert for this project.
+# See here for more:
+# https://bio-formats.readthedocs.io/en/v7.3.0/users/comlinetools/conversion.html
+
 # base image java
 FROM openjdk:22-slim
 

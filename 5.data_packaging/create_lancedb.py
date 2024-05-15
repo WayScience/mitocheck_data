@@ -19,6 +19,15 @@ ldb = lancedb.connect(lancedb_dir)
 def get_arrow_tbl_from_csv(filename_read: str) -> str:
     """
     Get an Arrow table from a CSV file through DuckDB.
+
+    Args:
+        filename_read (str):
+            The path to the CSV file to be read.
+
+    Returns:
+        str:
+            A string representing the Arrow table obtained from the CSV file.
+
     """
 
     # try to read a typed arrow table

@@ -22,6 +22,15 @@ if not schema_dir.is_dir():
 def get_arrow_schema_str_from_csv(filename_read: str) -> str:
     """
     Get an Arrow schema from a CSV file through DuckDB.
+
+    Args:
+        filename_read (str):
+            The path to the CSV file to be read.
+
+    Returns:
+        str:
+            A string representing the Arrow schema obtained from the CSV file.
+
     """
 
     # try to read a typed arrow table

@@ -29,8 +29,25 @@ def retrieve_ftp_file(
     ftp_pass: str = "",
 ) -> str:
     """
-    Retrieve a file using FTP
+    Retrieve a file using FTP.
+
+    Args:
+        ftp_file (str):
+            The name of the file to retrieve.
+        download_dir (str):
+            The directory where the file will be downloaded.
+        ftp_url (str, optional):
+            The URL of the FTP server. Defaults to FTP_IDR_URL.
+        ftp_user (str, optional):
+            The username for accessing the FTP server. Defaults to FTP_IDR_USER.
+        ftp_pass (str, optional):
+            The password for accessing the FTP server. Defaults to "".
+
+    Returns:
+        str:
+            A string indicating the path to the downloaded file.
     """
+
     try:
         # Connect to the FTP server
         with FTP(ftp_url) as ftp:
@@ -53,7 +70,14 @@ def retrieve_ftp_file(
 
 
 def get_image_union_table() -> pa.Table:
-    # build a table with relevant information to extract images
+    """
+    Build a table with relevant information to extract images.
+
+    Returns:
+        pa.Table:
+            A PyArrow table containing relevant information for image extraction.
+    """
+
     with duckdb.connect() as ddb:
         return ddb.execute(
             f"""
@@ -104,7 +128,20 @@ def run_dockerfile_container(
     command: str,
 ) -> None:
     """
-    Build, run, and stream logs from a Dockerfile-based container
+    Build, run, and stream logs from a Dockerfile-based container.
+
+    Args:
+        dockerfile (str):
+            The path to the Dockerfile.
+        image_name (str):
+            The name of the Docker image to build.
+        volumes (List[str]):
+            List of volume mounts for the container.
+        command (str):
+            The command to execute inside the container.
+
+    Returns:
+        None
     """
 
     print(
@@ -141,9 +178,22 @@ def run_dockerfile_container(
 
 def get_frame_tiff_from_idr_ch5(frame: str, ftp_file: str, local_frame_tif: str) -> str:
     """
-    Gather IDR ch5 file and extract a frame as a tiff, returning the local filepath
+    Gather IDR ch5 file and extract a frame as a TIFF, returning the local filepath
     and cleaning up the ch5 afterwards.
+
+    Args:
+        frame (str):
+            The frame number to extract from the IDR ch5 file.
+        ftp_file (str):
+            The name of the IDR ch5 file to retrieve.
+        local_frame_tif (str):
+            The local filepath where the extracted TIFF will be saved.
+
+    Returns:
+        str:
+            The local filepath of the extracted TIFF image.
     """
+
     print(
         "Working on ",
         f"frame: {frame}",
