@@ -1,0 +1,36 @@
+[tool.poetry]
+name = "mitocheck-data"
+version = "3.0.0"
+description = "All information regarding the download and processing of Mitocheck data from IDR study with accession idr0013 (screenA)."
+authors = ["Way Science Community"]
+license = "CC0-1.0"
+readme = "README.md"
+package-mode = false
+
+[tool.poetry.dependencies]
+python = "^3.11"
+poethepoet = "^0.25.0"
+duckdb = "^0.10.1"
+pyarrow = ">=12,<15.0.1"
+lancedb = "^0.6.7"
+pandas = "^2.2.1"
+docker = "^7.0.0"
+tifffile = "^2024.2.12"
+awkward = "^2.6.3"
+
+[tool.poe.tasks.package_data]
+# run a task to package data
+shell = """
+  python 5.data_packaging/infer_schema.py &&
+  python 5.data_packaging/gather_images.py &&
+  python 5.data_packaging/create_lancedb.py
+"""
+
+[tool.isort]
+profile = "black"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.setuptools_scm]

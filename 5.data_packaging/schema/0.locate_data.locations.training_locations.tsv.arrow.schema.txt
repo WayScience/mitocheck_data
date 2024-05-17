@@ -1,0 +1,10 @@
+column0: int64
+Plate: string
+Well: string
+Well Number: int64
+Frames: int64
+Original Gene Target: string
+Plate_Map_Name: string
+Gene_Replicate: int64
+Site: int64
+DNA: string

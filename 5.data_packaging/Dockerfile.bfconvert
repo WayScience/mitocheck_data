@@ -1,0 +1,33 @@
+# This Dockerfile is for running bfconvert for this project.
+# See here for more:
+# https://bio-formats.readthedocs.io/en/v7.3.0/users/comlinetools/conversion.html
+
+# base image java
+FROM openjdk:22-slim
+
+# provide a version argument
+ARG version=7.2.0
+
+# set the workdir to /app
+WORKDIR /app
+
+# create a directory for the application files
+RUN mkdir -p /opt/bftools
+
+# install required packages
+# hadolint ignore=DL3008
+RUN apt-get update \
+    && apt-get install --no-install-recommends -y \
+    wget \
+    unzip \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
+# download and unzip bftools
+RUN wget --progress=dot:giga \
+    https://downloads.openmicroscopy.org/bio-formats/$version/artifacts/bftools.zip \
+    -O /opt/bftools/bftools.zip \
+    && unzip /opt/bftools/bftools.zip -d /opt
+
+# Set the entrypoint for bfconvert
+ENTRYPOINT ["/opt/bftools/bfconvert"]

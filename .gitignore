@@ -18,3 +18,7 @@ __pycache__/
 # normalized control features
 3.normalize_data/normalized_data/negative_control_data*
 3.normalize_data/normalized_data/positive_control_data*
+
+# data packaging ignores
+5.data_packaging/packaged
+5.data_packaging/images

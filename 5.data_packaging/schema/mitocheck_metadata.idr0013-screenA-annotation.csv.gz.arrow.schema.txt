@@ -1,0 +1,145 @@
+Plate: string
+Well Number: int64
+Well: string
+Plate_Well: string
+Characteristics [Organism]: string
+Term Source 1 REF: string
+Term Source 1 Accession: string
+Characteristics [Cell Line]: string
+Term Source 2 REF: string
+Term Source 2 Accession: string
+siRNA Identifier: string
+Mitocheck siRNA Identifier: string
+Sense Sequence: string
+Antisense Sequence: string
+Original Gene Target: string
+Reagent Design Gene Annotation Build: string
+Gene Identifier: string
+Gene Symbol: string
+Gene Annotation Comments: string
+Analysis Gene Annotation Build: string
+Control Type: string
+Control Comments: string
+Quality Control: bool
+Channels: string
+Comments: string
+Plate Issues: string
+Score - nuclei stay close together (manual): string
+Score - strange nuclear shape (manual): string
+Score - segregation problems/chromatin bridges/lagging chromosomes/multiple DNA masses (manual): string
+Score - cell migration (manual): double
+Score - metaphase delay/arrest (manual): string
+Score - cell death (manual): string
+Score - metaphase alignment problems/including no metaphase (manual): string
+Score - pulsating nuclei (manual): string
+Score - small nucleus (manual): double
+Score - prometaphase delay/arrest (manual): string
+Score - condensation followed by decondensation without completion of mitosis (manual): string
+Score - large nucleus (manual): string
+Score - failure in decondensation (manual): string
+Score - condensation without mitosis/collapse of nucleus (manual): string
+Score - reduced mitotic index (manual): string
+Score - other (manual): string
+Score - no phenotype (manual): string
+Score - cell death (automatic): double
+Score - binuclear (automatic): string
+Score - polylobed (automatic): string
+Score - large (automatic): double
+Score - dynamic changes (automatic): double
+Score - mitotic delay/arrest (automatic): string
+Score - grape (automatic): string
+Score - migration (speed) (automatic): double
+Score - migration (distance) (automatic): double
+Score - increased proliferation (automatic): double
+siRNA phenotype reproducibility - nuclei stay close together (manual): string
+siRNA phenotype reproducibility - strange nuclear shape (manual): string
+siRNA phenotype reproducibility - segregation problems/chromatin bridges/lagging chromosomes/multiple DNA masses (manual): string
+siRNA phenotype reproducibility - cell migration (manual): double
+siRNA phenotype reproducibility - metaphase delay/arrest (manual): string
+siRNA phenotype reproducibility - cell death (manual): double
+siRNA phenotype reproducibility - metaphase alignment problems/including no metaphase (manual): string
+siRNA phenotype reproducibility - pulsating nuclei (manual): double
+siRNA phenotype reproducibility - small nucleus (manual): double
+siRNA phenotype reproducibility - prometaphase delay/arrest (manual): string
+siRNA phenotype reproducibility - condensation followed by decondensation without completion of mitosis (manual): string
+siRNA phenotype reproducibility - large nucleus (manual): double
+siRNA phenotype reproducibility - failure in decondensation (manual): string
+siRNA phenotype reproducibility - condensation without mitosis/collapse of nucleus (manual): double
+siRNA phenotype reproducibility - cell death (automatic): string
+siRNA phenotype reproducibility - binuclear (automatic): string
+siRNA phenotype reproducibility - polylobed (automatic): string
+siRNA phenotype reproducibility - large (automatic): string
+siRNA phenotype reproducibility - dynamic changes (automatic): string
+siRNA phenotype reproducibility - mitotic delay/arrest (automatic): string
+siRNA phenotype reproducibility - grape (automatic): string
+siRNA phenotype reproducibility - migration (speed) (automatic): string
+siRNA phenotype reproducibility - migration (distance) (automatic): string
+siRNA phenotype reproducibility - increased proliferation (automatic): string
+Potential Mitotic Hit At Gene Level: string
+Validated Mitotic Hit At Gene Level: string
+Has Phenotype: string
+Phenotype Annotation Level: string
+Phenotype 1: string
+Phenotype 1 Term Name: string
+Phenotype 1 Term Accession: string
+Phenotype 2: string
+Phenotype 2 Term Name: string
+Phenotype 2 Term Accession: string
+Phenotype 3: string
+Phenotype 3 Term Name: string
+Phenotype 3 Term Accession: string
+Phenotype 4: string
+Phenotype 4 Term Name a: string
+Phenotype 4 Term Accession a: string
+Phenotype 4 Term Name b: string
+Phenotype 4 Term Accession b: string
+Phenotype 5: string
+Phenotype 5 Term Name a: string
+Phenotype 5 Term Accession a: string
+Phenotype 5 Term Name b: string
+Phenotype 5 Term Accession b: string
+Phenotype 6: string
+Phenotype 6 Term Name a: string
+Phenotype 6 Term Accession a: string
+Phenotype 6 Term Name b: string
+Phenotype 6 Term Accession b: string
+Phenotype 7: string
+Phenotype 7 Term Name: string
+Phenotype 7 Term Accession: string
+Phenotype 8: string
+Phenotype 8 Term Name: string
+Phenotype 8 Term Accession: string
+Phenotype 9: string
+Phenotype 9 Term Name: string
+Phenotype 9 Term Accession: string
+Phenotype 10: string
+Phenotype 10 Term Name: string
+Phenotype 10 Term Accession: string
+Phenotype 11: string
+Phenotype 11 Term Name: string
+Phenotype 11 Term Accession: string
+Phenotype 12: string
+Phenotype 12 Term Name: string
+Phenotype 12 Term Accession: string
+Phenotype 13: string
+Phenotype 13 Term Name: string
+Phenotype 13 Term Accession: string
+Phenotype 14: string
+Phenotype 14 Term Name a: string
+Phenotype 14 Term Accession a: string
+Phenotype 14 Term Name b: string
+Phenotype 14 Term Accession b: string
+Phenotype 15: string
+Phenotype 15 Term Name: string
+Phenotype 15 Term Accession: string
+Phenotype 16: string
+Phenotype 16 Term Name: string
+Phenotype 16 Term Accession: string
+Phenotype 17: string
+Phenotype 17 Term Name: string
+Phenotype 17 Term Accession: string
+Phenotype 18: string
+Phenotype 18 Term Name: string
+Phenotype 18 Term Accession: string
+-- schema metadata --
+pandas: '{"index_columns": [{"kind": "range", "name": null, "start": 0, "' + 23696
