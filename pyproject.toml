@@ -17,6 +17,7 @@ pandas = "^2.2.1"
 docker = "^7.0.0"
 tifffile = "^2024.2.12"
 awkward = "^2.6.3"
+h5py = "^3.11.0"
 
 [tool.poe.tasks.package_data]
 # run a task to package data
