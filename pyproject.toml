@@ -18,6 +18,7 @@ docker = "^7.0.0"
 tifffile = "^2024.2.12"
 awkward = "^2.6.3"
 h5py = "^3.11.0"
+basicpy = { git = "https://github.com/peng-lab/BaSiCPy.git", rev = "f3fcf1987db47c4a29506d240d0f69f117c82d2b" }
 
 [tool.poe.tasks.package_data]
 # run a task to package data

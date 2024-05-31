@@ -184,36 +184,37 @@ def run_dockerfile_container(
         print(line.decode("utf-8").strip())
 
 
-def find_time_lapse_len(name, obj):
-    """
-    Recursively search for a dataset named "time_lapse" within the HDF5 file.
-    Return the dataset object when found.
-    """
-
-    if isinstance(obj, h5py.Dataset):
-        if "sample" in name and "time_lapse" in name:
-            print("Found 'time_lapse' dataset at:", obj.name)
-            # Return the dataset object
-            return obj.size
-        
-    elif isinstance(obj, h5py.Group):
-        # Traverse the group's children recursively
-        for key, value in obj.items():
-            # Recursively search within the group
-            result = find_time_lapse_len(name, value)
-            if result is not None:
-                # If "time_lapse" is found in a subgroup, return the result
-                return result
-
-
 def find_frame_len(ch5_file: str):
+    def find_time_lapse_len(name, obj):
+        """
+        Recursively search for a dataset named "time_lapse"
+        within an HDF5 (or HDF5-like) file.
+
+        Return the dataset object when found.
+        """
+
+        if isinstance(obj, h5py.Dataset):
+            if "sample" in name and "time_lapse" in name:
+                print("Found 'time_lapse' dataset at:", obj.name)
+                # Return the dataset object
+                return obj.size
+
+        elif isinstance(obj, h5py.Group):
+            # Traverse the group's children recursively
+            for key, value in obj.items():
+                # Recursively search within the group
+                result = find_time_lapse_len(name, value)
+                if result is not None:
+                    # If "time_lapse" is found in a subgroup, return the result
+                    return result
+
     # Open the HDF5 file in read-only mode
     with h5py.File(ch5_file, "r") as f:
         # Start the search from the root group
         return f.visititems(find_time_lapse_len)
 
 
-def get_frame_tiff_from_idr_ch5(frame: str, ftp_file: str, local_frame_tif: str) -> str:
+def get_frame_tiff_from_idr_ch5(frame: str, local_frame_tif: str) -> str:
     """
     Gather IDR ch5 file and extract a frame as a TIFF, returning the local filepath
     and cleaning up the ch5 afterwards.
@@ -221,8 +222,6 @@ def get_frame_tiff_from_idr_ch5(frame: str, ftp_file: str, local_frame_tif: str)
     Args:
         frame (str):
             The frame number to extract from the IDR ch5 file.
-        ftp_file (str):
-            The name of the IDR ch5 file to retrieve.
         local_frame_tif (str):
             The local filepath where the extracted TIFF will be saved.
 
@@ -234,57 +233,48 @@ def get_frame_tiff_from_idr_ch5(frame: str, ftp_file: str, local_frame_tif: str)
     print(
         "Working on",
         f"frame: {frame}",
-        f"ftp file: {ftp_file}",
         f"tiff: {local_frame_tif}",
     )
 
-    # determine number of frames
+    # if we don't already have a file, create it
+    if not pathlib.Path(
+        (return_path := f"{image_download_dir}/{str(local_frame_tif)}")
+    ).is_file():
+        # extract a frame from the ch5 file using bfconvert through a docker container
+        run_dockerfile_container(
+            dockerfile="./5.data_packaging/Dockerfile.bfconvert",
+            image_name="ome_bfconvert",
+            volumes=[f"{os.getcwd()}/5.data_packaging/images/extracted_frame:/app"],
+            command=(
+                f"-timepoint {frame} {pathlib.Path(local_ch5_file).name} {str(local_frame_tif)}"
+                " -overwrite"
+            ),
+        )
 
-    # extract a frame from the ch5 file using bfconvert through a docker container
-    run_dockerfile_container(
-        dockerfile="./5.data_packaging/Dockerfile.bfconvert",
-        image_name="ome_bfconvert",
-        volumes=[f"{os.getcwd()}/5.data_packaging/images/extracted_frame:/app"],
-        command=f"-timepoint {frame} {pathlib.Path(local_ch5_file).name} {str(local_frame_tif)}",
-    )
-
-    return f"{image_download_dir}/{str(local_frame_tif)}"
+    return return_path
 
 
-# referenced from:
+# modified from:
 # https://github.com/WayScience/IDR_stream/blob/main/idrstream/preprocess.py#L194C1-L227C76
-def get_corrected_frame(self, original_movie: np.ndarray, frame_num: int) -> np.ndarray:
+def get_ic_context_frames(target_frame: int, movie_len: int) -> List[int]:
     """
-    correct a single frame with pybasic
-    if the desired frame has 2 frames available after it, use those 2 next frames as context
-    else use the 2 previous frames as context
+    Gather additional non-target frames for use with PyBasic IC.
 
-    Parameters
-    ----------
-    original_movie : np.ndarray
-        array of frames
-    frame_num : int
-        desired frame for correction
-
-    Returns
-    -------
-    np.ndarray
-        corrected frame
+    Note: frames are 0-indexed while movie length is not.
     """
-    if (
-        frame_num + 2 <= original_movie.shape[0]
-    ):  # if 2 frames after desired frame are available (towards beginning of movie)
-        short_org_movie = original_movie[
-            frame_num - 1 : frame_num + 2
-        ]  # get desired frame + 2 frames after
-        short_cor_movie = self.pybasic_illumination_correction(short_org_movie)
-        return short_cor_movie[0]  # return first frame (desired frame)
-    else:  # 2 frames after desired frame are not available (towards end of movie)
-        short_org_movie = original_movie[
-            frame_num - 3 : frame_num
-        ]  # get 2 frames before desired frame + desired frame
-        short_cor_movie = self.pybasic_illumination_correction(short_org_movie)
-        return short_cor_movie[-1]  # return last frame (desired frame)
+
+    # "sandwich" the frames using one frame before and one frame after
+    # the target frame provided from frame_num.
+    if target_frame + 1 <= movie_len:
+        return [target_frame - 1, target_frame, target_frame + 1]
+
+    # else if we have the first frame, use two frames after
+    elif target_frame == 0:
+        return [target_frame, target_frame + 1, target_frame + 2]
+
+    # otherwise we have the last frame, so use two frames prior
+    else:
+        return [target_frame - 2, target_frame - 1, target_frame]
 
 
 # specify an image download dir and create it
@@ -305,9 +295,12 @@ table = get_image_union_table()
 # 2. determine frame length
 # 3. calculate additional non-target frames for IC
 # 4. extract target and non-target frames for IC
-# 5. remove movie file
-# 6. read raw images with tiffile, store in final table
-# 7. remove raw images?
+# 5. read all frames as arrays for use within pybasic IC
+# 6. run IC to gain IC image
+# 7. read target frame and IC frame as blobs into file
+# 8. read with tiffile, store in final table
+# 9. remove movie file
+# 10. remove raw images?
 
 # iterate through location union data
 for unique_file in pc.unique(table["IDR_FTP_ch5_location"]).to_pylist():
@@ -320,12 +313,62 @@ for unique_file in pc.unique(table["IDR_FTP_ch5_location"]).to_pylist():
     # find the movie length
     movie_length = find_frame_len(ch5_file=local_ch5_file)
 
+    # reference rows with the same ch5 file
     for batch in table.filter(
         pc.equal(table["IDR_FTP_ch5_location"], unique_file)
     ).to_batches(max_chunksize=1):
 
         # convert to a dictionary row
+        # use a comprehension to access single values outside of a list
         row = batch.to_pydict()
+        
+        # reference a target frame as an integer
+        target_frame = int(row["Frames"][0])
+
+        # loop through frames to extract them
+        frames_to_tiffs = {
+            # for each frame, extract a tiff from the ch5
+            frame: get_frame_tiff_from_idr_ch5(
+                frame=frame,
+                local_frame_tif=row["DNA_dotted_notation"][0].replace(
+                    f"_{target_frame}.tif", f"_{frame}.tif"
+                ),
+            )
+            # gather all frames based on a target frame
+            for frame in get_ic_context_frames(
+                target_frame=target_frame, movie_len=movie_length
+            )
+        }
+
+        # create record batches from the frames_to_tiffs
+        rows = [
+            pa.RecordBatch.from_pydict(
+                # retain data from original row if our frame matches the original
+                row
+                if row["Frames"][0] == str(frame_number)
+                # otherwise, create new rows with relevant IC-focused frame data
+                else {
+                    key: (
+                        [str(frame_number)]
+                        if key == "Frames"
+                        else (
+                            [frame_tiff]
+                            if key == "DNA_dotted_notation"
+                            else ["IC_FRAME"] if key == "Frame_type" else val
+                        )
+                    )
+                    for key, val in row.copy().items()
+                }
+            )
+            for frame_number, frame_tiff in frames_to_tiffs.items()
+        ]
+
+        # write a table with the row baches
+        parquet.write_table(
+            # create a table from the row batches
+            table=pa.Table.from_batches(rows),
+            where=f"{export_dir}/",
+        )
 
     # remove the ch5 file as we no longer need it
     # pathlib.Path(local_ch5_file).unlink()
