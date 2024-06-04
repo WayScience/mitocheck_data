@@ -4,23 +4,24 @@ Python module for gathering images from Image Data Resource (IDR).
 
 import os
 import pathlib
+import warnings
 from ftplib import FTP
 from typing import List
-import warnings
-import skimage
-import pybasic
+
 import docker
 import duckdb
+import h5py
+import numpy as np
 import pyarrow as pa
+import pyarrow.compute as pc
+import pybasic
+import skimage
 from constants import (
     DOCKER_PLATFORM,
     FTP_IDR_MITOCHECK_CH5_DIR,
     FTP_IDR_URL,
     FTP_IDR_USER,
 )
-import numpy as np
-import pyarrow.compute as pc
-import h5py
 from pyarrow import parquet
 
 
@@ -207,6 +208,7 @@ def find_frame_len(ch5_file: str):
         This function returns None if the 'time_lapse' dataset is not found
         within the HDF5 file.
     """
+
     def find_time_lapse_len(name, obj):
         """
         Recursively search for a dataset named "time_lapse"
@@ -236,7 +238,9 @@ def find_frame_len(ch5_file: str):
         return f.visititems(find_time_lapse_len)
 
 
-def get_frame_tiff_from_idr_ch5(frame: str, local_ch5_file: str, local_frame_tif: str) -> str:
+def get_frame_tiff_from_idr_ch5(
+    frame: str, local_ch5_file: str, local_frame_tif: str
+) -> str:
     """
     Gather IDR ch5 file and extract a frame as a TIFF, returning the local filepath
     and cleaning up the ch5 afterwards.
@@ -289,7 +293,7 @@ def get_ic_context_frames(target_frame: int, movie_len: int) -> List[int]:
     the last frame, it returns the target frame and the two preceding frames.
 
     Args:
-        target_frame (int): 
+        target_frame (int):
             The index of the target frame (0-indexed).
         movie_len (int):
             The length of the movie (1-indexed).
@@ -389,13 +393,13 @@ def pybasic_IC_target_frame_to_tiff(
 def read_image_as_binary(image_path: str) -> bytes:
     """
     Reads an image file and returns its content as binary data.
-    
+
     Args:
         image_path (str): The path to the image file to be read.
-    
+
     Returns:
         bytes: The binary content of the image file.
-    
+
     Example:
         binary_data = read_image_as_binary("path/to/image.jpg")
         print(binary_data)
