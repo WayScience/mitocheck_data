@@ -55,26 +55,24 @@ def retrieve_ftp_file(
     # Specify the file to download
     download_filepath = f"{download_dir}/{pathlib.Path(ftp_file).name}"
 
-    # if we already have the file, avoid a re-download by returning early
-    if pathlib.Path(download_filepath).is_file():
-        return download_filepath
+    # if we don't already have the file, download it
+    if not pathlib.Path(download_filepath).is_file():
+        try:
+            # Connect to the FTP server
+            with FTP(ftp_url) as ftp:
+                # Log in to the FTP server
+                ftp.login(user=ftp_user, passwd=ftp_pass)
 
-    try:
-        # Connect to the FTP server
-        with FTP(ftp_url) as ftp:
-            # Log in to the FTP server
-            ftp.login(user=ftp_user, passwd=ftp_pass)
+                # Open a local file for writing in binary mode
+                with open(download_filepath, "wb") as local_file:
+                    # Download the file from the FTP server
+                    ftp.retrbinary(f"RETR {ftp_file}", local_file.write)
 
-            # Open a local file for writing in binary mode
-            with open(download_filepath, "wb") as local_file:
-                # Download the file from the FTP server
-                ftp.retrbinary(f"RETR {ftp_file}", local_file.write)
+        except Exception as e:
+            print("An error occurred:", e)
 
-        # return the download filepath
-        return download_filepath
-
-    except Exception as e:
-        print("An error occurred:", e)
+    # return the download filepath
+    return download_filepath
 
 
 def get_image_union_table() -> pa.Table:
@@ -530,8 +528,8 @@ for unique_file in pc.unique(table["IDR_FTP_ch5_location"]).to_pylist():
         )
 
         # remove the tiff files as we no longer need them
-        for tiff in frames_to_tiffs.values():
-            pathlib.Path(tiff).unlink()
+        """for tiff in frames_to_tiffs.values():
+            pathlib.Path(tiff).unlink()"""
 
     # remove the ch5 file as we no longer need it
-    pathlib.Path(local_ch5_file).unlink()
+    # pathlib.Path(local_ch5_file).unlink()
