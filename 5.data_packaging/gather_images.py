@@ -391,6 +391,9 @@ def pybasic_IC_target_frame_to_tiff(
 def read_image_as_binary(image_path: str) -> bytes:
     """
     Reads an image file and returns its content as binary data.
+    We read image data files as bytearrays in order to retain their
+    full representation within the data package without data loss or
+    transformation.
 
     Args:
         image_path (str): The path to the image file to be read.
