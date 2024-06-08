@@ -420,21 +420,6 @@ pathlib.Path(export_dir).mkdir(parents=True, exist_ok=True)
 # get a table of image-relevant data
 table = get_image_union_table()
 
-# add additional frames for IC-based work which required multiple frames of context
-#
-# Steps are roughly:
-#
-# 0. group by movie file source
-# 1. download movie
-# 2. determine frame length
-# 3. calculate additional non-target frames for IC
-# 4. extract target and non-target frames for IC
-# 5. read all frames as arrays for use within pybasic IC
-# 6. run IC to gain IC image
-# 8. store the data within a table including blobs for target and IC images
-# 9. remove frame images
-# 10. remove ch5 file
-
 # iterate through location union data
 for unique_file in pc.unique(table["IDR_FTP_ch5_location"]).to_pylist():
 
