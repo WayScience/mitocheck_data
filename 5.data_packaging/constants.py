@@ -31,7 +31,7 @@ DATA_FILES_W_COLNAMES = [
     ]
 ]
 
-PACKAGING_FILES = ["5.data_packaging/location_and_ch5_frame_image_data.parquet"]
+PACKAGING_DATASETS = ["5.data_packaging/location_and_ch5_frame_image_data"]
 
 # FTP resources for accessing IDR
 # See here for more:
