@@ -436,8 +436,9 @@ for unique_file in pc.unique(table["IDR_FTP_ch5_location"]).to_pylist():
         pc.equal(table["IDR_FTP_ch5_location"], unique_file)
     ).to_batches(max_chunksize=1):
 
-        # convert to a dictionary row
-        # use a comprehension to access single values outside of a list
+        # convert to a dictionary for the row, where the dictionary
+        # elements include the column name as key and
+        # value as the value from a single row in the table.
         row = batch.to_pydict()
 
         # reference a target frame as an integer
