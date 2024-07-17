@@ -8,7 +8,7 @@ import duckdb
 import lancedb
 import pandas as pd
 import pyarrow as pa
-from constants import DATA_FILES_W_COLNAMES, PACKAGING_FILES
+from constants import DATA_FILES_W_COLNAMES, PACKAGING_DATASETS
 from pyarrow import parquet
 
 # specify a dir where the lancedb database may go and create lancedb client
@@ -59,10 +59,10 @@ for filename in DATA_FILES_W_COLNAMES:
         mode="overwrite",
     )
 
-for filename in PACKAGING_FILES:
-    table = parquet.read_table(source=filename)
+for dir in PACKAGING_DATASETS:
+    table = parquet.ParquetDataset(path_or_paths=dir).read()
     ldb.create_table(
-        name=f"{filename.replace('/','.')}",
+        name=f"{dir.replace('/','.')}",
         data=table,
         schema=table.schema,
         mode="overwrite",

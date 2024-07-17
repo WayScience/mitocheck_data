@@ -15,8 +15,9 @@ pyarrow = ">=12,<15.0.1"
 lancedb = "^0.6.7"
 pandas = "^2.2.1"
 docker = "^7.0.0"
-tifffile = "^2024.2.12"
-awkward = "^2.6.3"
+h5py = "^3.11.0"
+pybasic = { git = "https://github.com/WayScience/BaSiCPy.git", branch="mitocheck_data" }
+scikit-image = "^0.23.2"
 
 [tool.poe.tasks.package_data]
 # run a task to package data
